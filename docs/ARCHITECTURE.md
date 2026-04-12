@@ -1,18 +1,18 @@
-# Pause — Technical Architecture
+# Level — Technical Architecture
 
 ## Overview
-Pause is a native iOS app built with SwiftUI. It uses Apple's Screen Time API (FamilyControls, ManagedSettings, DeviceActivity) to monitor and manage app usage. All data is stored on-device using SwiftData. No server, no network calls, no analytics.
+Level is a native iOS app built with SwiftUI. It uses Apple's Screen Time API (FamilyControls, ManagedSettings, DeviceActivity) to monitor and manage app usage. All data is stored on-device using SwiftData. No server, no network calls, no analytics.
 
 ## Targets
 The app requires three targets:
-1. **Pause** — Main app target
-2. **PauseMonitor** — DeviceActivityMonitor extension (monitors usage events)
-3. **PauseShield** — ShieldConfiguration extension (customises the shield/pause screen)
+1. **Level** — Main app target
+2. **LevelMonitor** — DeviceActivityMonitor extension (monitors usage events)
+3. **LevelShield** — ShieldConfiguration extension (customises the shield/level screen)
 
 All three targets must belong to the same App Group for shared data access.
 
 ## App Group
-- Identifier: `group.com.yourcompany.pause`
+- Identifier: `group.com.yourcompany.level`
 - Used for: Sharing UserDefaults, SwiftData store, and FamilyActivitySelection tokens between the main app and extensions
 - Both extensions MUST have this App Group configured
 
@@ -85,7 +85,7 @@ All three targets must belong to the same App Group for shared data access.
 - Daily adjustment based on:
   - Stayed under screen time goal: +3
   - Used fewer unlocks than limit: +2
-  - Closed app during pause (didn't wait): +1 per close
+  - Closed app during level (didn't wait): +1 per close
   - Exceeded screen time goal: -2
   - Used all unlocks: -1
   - No usage data (didn't open app): no change
@@ -97,7 +97,7 @@ A bad day costs 2-3 points. A good day gains 2-5 points. This means recovery fro
 
 ## Shield Flow
 1. User tries to open a managed app
-2. iOS shows the shield (PauseShield extension)
+2. iOS shows the shield (LevelShield extension)
 3. Shield displays: random personal reason, countdown timer
 4. Timer starts at base delay + (increment × opens today for this app)
 5. User can:
@@ -131,8 +131,8 @@ Based on developer reports, be aware of:
 
 ## File Structure
 ```
-Pause/
-├── PauseApp.swift                    # App entry point
+Level/
+├── LevelApp.swift                    # App entry point
 ├── Models/
 │   ├── UserProfile.swift
 │   ├── DailyRecord.swift
@@ -159,7 +159,7 @@ Pause/
 │   │   ├── TriggerPatternsView.swift
 │   │   └── NotificationSettingsView.swift
 │   └── Components/
-│       ├── PauseCard.swift           # Reusable card component
+│       ├── LevelCard.swift           # Reusable card component
 │       ├── ProgressBar.swift
 │       ├── BarChart.swift
 │       └── MomentumBadge.swift
@@ -178,16 +178,16 @@ Pause/
 ├── Resources/
 │   └── Assets.xcassets/
 │       └── AppIcon.appiconset/
-├── PauseMonitor/                     # DeviceActivityMonitor extension target
-│   └── PauseMonitorExtension.swift
-└── PauseShield/                      # ShieldConfiguration extension target
-    └── PauseShieldExtension.swift
+├── LevelMonitor/                     # DeviceActivityMonitor extension target
+│   └── LevelMonitorExtension.swift
+└── LevelShield/                      # ShieldConfiguration extension target
+    └── LevelShieldExtension.swift
 ```
 
 ## Build Order
 1. Set up Xcode project with all three targets and App Group
 2. Implement FamilyControls authorisation and app selection
-3. Build the shield/pause screen (extension)
+3. Build the shield/level screen (extension)
 4. Build the DeviceActivityMonitor extension
 5. Build the home screen UI
 6. Implement momentum engine

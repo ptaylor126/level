@@ -1,7 +1,7 @@
-# Pause — iOS Screen Time App
+# Level — iOS Screen Time App
 
 ## Project Overview
-Pause is a screen time management app for iOS. It helps people reduce phone usage through intentional friction, self-awareness, and positive reinforcement — not lectures or guilt.
+Level is a screen time management app for iOS. It helps people reduce phone usage through intentional friction, self-awareness, and positive reinforcement — not lectures or guilt.
 
 **Business model:** One-time purchase, $4.99. No subscription, no server, no data collection. Everything runs on-device.
 
@@ -36,8 +36,8 @@ Read these before starting any work:
 
 ## Project Structure
 ```
-Pause/
-├── PauseApp.swift
+Level/
+├── LevelApp.swift
 ├── Models/
 ├── Views/
 │   ├── Home/

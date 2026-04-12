@@ -1,9 +1,9 @@
-# Pause — Design System
+# Level — Design System
 
 ## Brand Identity
 
 ### Name
-**Pause** — styled as a bold italic wordmark. Never in all caps. Never with a logo mark separate from the text at this stage.
+**Level** — styled as a bold italic wordmark. Never in all caps. Never with a logo mark separate from the text at this stage.
 
 ### Personality
 Calm, warm, trustworthy, slightly playful. The app should feel like a deep breath. Not clinical, not techy, not preachy.
@@ -45,7 +45,7 @@ Include weights: 400 (Regular), 500 (Medium), 700 (Bold), 800 (ExtraBold).
 ### Type Scale
 | Role | Size | Weight | Usage |
 |------|------|--------|-------|
-| Wordmark | 28pt | 800 Italic | App name "Pause" only |
+| Wordmark | 28pt | 800 Italic | App name "Level" only |
 | Display | 36pt | 800 | Large stat numbers (screen time, momentum score) |
 | Heading 1 | 20pt | 700 | Section headers |
 | Heading 2 | 17pt | 700 | Card titles |
@@ -109,7 +109,7 @@ Include weights: 400 (Regular), 500 (Medium), 700 (Bold), 800 (ExtraBold).
 - Bar width: proportional, with 8pt gaps
 - Day labels: 11pt, Label style, Muted Grape
 
-### Shield/Pause Screen
+### Shield/Level Screen
 - Full screen overlay
 - Background: Vintage Grape (#473144)
 - Personal reason text: Cream (#FFF8F0), 20pt, 400 weight, centred
@@ -122,7 +122,7 @@ Include weights: 400 (Regular), 500 (Medium), 700 (Bold), 800 (ExtraBold).
 ### Home Screen Structure (Bento Grid)
 ```
 ┌──────────────────────────┐
-│     Pause (wordmark)     │
+│     Level (wordmark)     │
 │     Saturday, April 11   │
 ├──────────────────────────┤
 │                          │
@@ -153,7 +153,7 @@ Include weights: 400 (Regular), 500 (Medium), 700 (Bold), 800 (ExtraBold).
 - No bounces, no springs, no playful animations. Calm.
 
 ## App Icon
-- Two vertical bars (pause symbol)
+- Two vertical bars (level symbol)
 - Bars: Cream (#FFF8F0) or Tea Green (#DDF4C9)
 - Background: Vintage Grape (#473144)
 - Simple, recognisable at any size

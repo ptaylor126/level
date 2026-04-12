@@ -1,6 +1,6 @@
-name: Pause
+name: Level
 options:
-  bundleIdPrefix: com.paultaylor.pause
+  bundleIdPrefix: com.paultaylor.level
   deploymentTarget:
     iOS: "17.0"
   developmentLanguage: en
@@ -18,27 +18,27 @@ settings:
     SUPPORTS_MACCATALYST: NO
     ENABLE_USER_SCRIPT_SANDBOXING: NO
     CODE_SIGN_STYLE: Automatic
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: 7HHDW86546
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
 
 targets:
-  Pause:
+  Level:
     type: application
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: Pause
+      - path: Level
         excludes:
           - "Resources/Fonts/**/*.txt"
     resources:
-      - path: Pause/Resources/Assets.xcassets
-      - path: Pause/Resources/Fonts
+      - path: Level/Resources/Assets.xcassets
+      - path: Level/Resources/Fonts
         optional: true
     info:
-      path: SupportingFiles/Pause-Info.plist
+      path: SupportingFiles/Level-Info.plist
       properties:
-        CFBundleDisplayName: Pause
+        CFBundleDisplayName: Level
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen:
@@ -59,74 +59,72 @@ targets:
           - Fraunces-VariableItalic.ttf
           - Fraunces72pt-Bold.ttf
     entitlements:
-      path: SupportingFiles/Pause.entitlements
+      path: SupportingFiles/Level.entitlements
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.paultaylor.pause
+          - group.com.paultaylor.level
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.pause
-        PRODUCT_NAME: Pause
+        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.level
+        PRODUCT_NAME: Level
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_UIUserInterfaceStyle: ""
         GENERATE_INFOPLIST_FILE: NO
     dependencies:
-      - target: PauseMonitor
-      - target: PauseShield
-        embed: false
-        link: false
+      - target: LevelMonitor
+      - target: LevelShield
 
-  PauseMonitor:
-    type: app-extension
+  LevelMonitor:
+    type: extensionkit-extension
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: PauseMonitor
+      - path: LevelMonitor
     info:
-      path: SupportingFiles/PauseMonitor-Info.plist
+      path: SupportingFiles/LevelMonitor-Info.plist
       properties:
-        CFBundleDisplayName: PauseMonitor
+        CFBundleDisplayName: LevelMonitor
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        NSExtension:
-          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
-          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).PauseMonitorExtension
+        EXAppExtensionAttributes:
+          EXExtensionPointIdentifier: com.apple.deviceactivity.monitor
+          EXPrincipalClass: $(PRODUCT_MODULE_NAME).LevelMonitorExtension
     entitlements:
-      path: SupportingFiles/PauseMonitor.entitlements
+      path: SupportingFiles/LevelMonitor.entitlements
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.paultaylor.pause
+          - group.com.paultaylor.level
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.pause.monitor
-        PRODUCT_NAME: PauseMonitor
+        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.level.monitor
+        PRODUCT_NAME: LevelMonitor
         GENERATE_INFOPLIST_FILE: NO
 
-  PauseShield:
-    type: app-extension
+  LevelShield:
+    type: extensionkit-extension
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: PauseShield
+      - path: LevelShield
     info:
-      path: SupportingFiles/PauseShield-Info.plist
+      path: SupportingFiles/LevelShield-Info.plist
       properties:
-        CFBundleDisplayName: PauseShield
+        CFBundleDisplayName: LevelShield
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        NSExtension:
-          NSExtensionPointIdentifier: com.apple.ManagedSettings.shield-configuration-service
-          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).PauseShieldExtension
+        EXAppExtensionAttributes:
+          EXExtensionPointIdentifier: com.apple.ManagedSettings.shield-configuration
+          EXPrincipalClass: $(PRODUCT_MODULE_NAME).LevelShieldExtension
     entitlements:
-      path: SupportingFiles/PauseShield.entitlements
+      path: SupportingFiles/LevelShield.entitlements
       properties:
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.paultaylor.pause
+          - group.com.paultaylor.level
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.pause.shield
-        PRODUCT_NAME: PauseShield
+        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.level.shield
+        PRODUCT_NAME: LevelShield
         GENERATE_INFOPLIST_FILE: NO

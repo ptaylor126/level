@@ -1,4 +1,4 @@
-# Pause — Claude Code Setup Guide
+# Level — Claude Code Setup Guide
 
 ## Prerequisites
 - macOS with Xcode 16+ installed
@@ -35,12 +35,12 @@ This is the most important non-coding step. Without it, you can develop and test
 Start Claude Code in your project directory and use this initial prompt:
 
 ```
-Create a new Xcode project called "Pause" with the following configuration:
+Create a new Xcode project called "Level" with the following configuration:
 - SwiftUI App lifecycle
 - Deployment target iOS 16.0
 - iPhone only
-- Add two extension targets: "PauseMonitor" (DeviceActivityMonitor) and "PauseShield" (ShieldConfiguration)
-- Set up an App Group "group.com.[yourid].pause" shared across all three targets
+- Add two extension targets: "LevelMonitor" (DeviceActivityMonitor) and "LevelShield" (ShieldConfiguration)
+- Set up an App Group "group.com.[yourid].level" shared across all three targets
 - Add FamilyControls capability to all targets
 - Read the CLAUDE.md and all files in docs/ before starting
 
@@ -57,7 +57,7 @@ Copy the docs/ folder into your project as well.
 
 ### Starting a session
 ```bash
-cd /path/to/Pause
+cd /path/to/Level
 claude
 ```
 

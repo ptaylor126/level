@@ -1,13 +1,13 @@
-# Pause — Feature Specifications
+# Level — Feature Specifications
 
 ## F1: Onboarding
 
 ### Flow
-1. Welcome screen → "Pause helps you take back your time" → single CTA button "Get Started"
+1. Welcome screen → "Level helps you take back your time" → single CTA button "Get Started"
 2. System requests FamilyControls authorisation (iOS system dialog)
 3. App selection screen using FamilyActivityPicker → "Choose the apps you want to manage"
 4. Reasons screen → "Why do you want to spend less time on your phone?" → 1-3 text inputs with placeholder examples
-5. Confirmation → "You're all set" → CTA "Start using Pause"
+5. Confirmation → "You're all set" → CTA "Start using Level"
 
 ### Acceptance Criteria
 - Onboarding completes in under 60 seconds
@@ -17,7 +17,7 @@
 - Onboarding state persisted — never shown again after completion
 - Placeholder reason examples: "Be more present with my family", "Read more books", "Sleep better", "Get more work done"
 
-## F2: Pause Screen (Shield)
+## F2: Level Screen (Shield)
 
 ### Behaviour
 - Triggered by iOS when user tries to open a managed app
@@ -48,7 +48,7 @@
 
 ### Behaviour
 - Each managed app has a daily unlock limit (default: 10)
-- An "unlock" = user waited through the pause timer and tapped "Open anyway"
+- An "unlock" = user waited through the level timer and tapped "Open anyway"
 - Closing the shield without opening ("Not now") does NOT count
 - Counter resets at midnight local time
 - When limit reached, app is fully blocked until midnight

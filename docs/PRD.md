@@ -1,7 +1,7 @@
-# Pause — Product Requirements Document
+# Level — Product Requirements Document
 
 ## Vision
-Pause helps people take back their time from their phones. It creates a moment of friction before mindless app usage, tracks progress through a forgiving momentum system, and helps users understand their own triggers — all without guilt or lecturing.
+Level helps people take back their time from their phones. It creates a moment of friction before mindless app usage, tracks progress through a forgiving momentum system, and helps users understand their own triggers — all without guilt or lecturing.
 
 ## Target User
 Adults who know they use their phone too much and want to change, but have tried Apple's Screen Time or other apps and found them too easy to bypass, too expensive (subscriptions), or too preachy. They want something that works, looks good, and doesn't cost a fortune.
@@ -14,9 +14,9 @@ Adults who know they use their phone too much and want to change, but have tried
 - This is a key differentiator: most competitors charge $50-100/year
 
 ## Competitive Positioning
-- **vs ScreenZen:** ScreenZen is free and donation-supported with strong features. Pause differentiates through design quality, momentum system (not binary streaks), and trigger tracking.
-- **vs Opal:** Opal charges ~$100/year and has known bugs with inconsistent blocking. Pause is 20x cheaper as a one-time fee with a focus on reliability.
-- **vs Be Present:** Be Present forces category-level blocking. Pause offers per-app control.
+- **vs ScreenZen:** ScreenZen is free and donation-supported with strong features. Level differentiates through design quality, momentum system (not binary streaks), and trigger tracking.
+- **vs Opal:** Opal charges ~$100/year and has known bugs with inconsistent blocking. Level is 20x cheaper as a one-time fee with a focus on reliability.
+- **vs Be Present:** Be Present forces category-level blocking. Level offers per-app control.
 - **vs Apple Screen Time:** Too easy to bypass ("Ignore for today"), no behavioural insights.
 
 ## MVP Features (v1.0)
@@ -27,7 +27,7 @@ Adults who know they use their phone too much and want to change, but have tried
 - Screen 3: Write 1-3 personal reasons for reducing screen time
 - No account creation. No tutorials. No feature tours.
 
-### 2. Pause Screen (Shield)
+### 2. Level Screen (Shield)
 - Appears when user tries to open a managed app
 - Shows one of their personal reasons (randomly selected)
 - Countdown timer starting at 10 seconds (configurable)
@@ -37,12 +37,12 @@ Adults who know they use their phone too much and want to change, but have tried
 
 ### 3. Daily Unlock Limits
 - Users set a daily unlock limit per app (default: 10)
-- Each time they wait through the pause and open the app, it counts as an unlock
+- Each time they wait through the level and open the app, it counts as an unlock
 - When unlocks are exhausted, the app is fully blocked for the rest of the day
 - Reset at midnight
 
 ### 4. Home Screen (Bento Grid)
-- App name "Pause" as bold italic wordmark
+- App name "Level" as bold italic wordmark
 - Today's screen time card (Tea Green when improving, Cream when neutral)
 - Momentum score card (Pastel Pink)
 - Unlocks remaining card (Cream with subtle border)
@@ -53,7 +53,7 @@ Adults who know they use their phone too much and want to change, but have tried
 
 ### 5. Momentum System
 - Score from 0-100
-- Increases when user stays under their goals, declines open counts, or closes apps during the pause
+- Increases when user stays under their goals, declines open counts, or closes apps during the level
 - Decreases gradually on bad days — NOT binary like streaks
 - A bad day reduces momentum by a few points, not to zero
 - Displayed prominently on home screen
