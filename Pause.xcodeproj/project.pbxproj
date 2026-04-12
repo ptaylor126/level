@@ -12,9 +12,11 @@
 		284F9F3A2AFEC142C0D5EF5F /* PlusJakartaSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 653C3C15B3C0C8F2D6373705 /* PlusJakartaSans-Regular.ttf */; };
 		2CE27EB55BAE74C85F77094C /* MomentumCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0028A77A4EB38179D4E3CD7B /* MomentumCard.swift */; };
 		31C917591E1AFC9EED606681 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA6D8308D4C00A37EA3D99 /* HomeView.swift */; };
+		388EA2A9A9AE587D51D90827 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CDC4E7F55EECB735FB6DBE /* NotificationManager.swift */; };
 		43CD79EB2FA4E74F5BFD599F /* PauseShieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD3CBD51233D34BBE3A8983 /* PauseShieldExtension.swift */; };
 		45952A22E9D0ECF01256B92E /* PlusJakartaSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B00CDEC78290EDD4E3379F23 /* PlusJakartaSans-ExtraBold.ttf */; };
 		46219B5218AFA06C98202313 /* Fraunces-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E67A6D0819020EAFC99E7D3 /* Fraunces-Variable.ttf */; };
+		4C1342E1F3465982B9992A2C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954680CCAF4D903D930B6D5E /* SettingsView.swift */; };
 		4E954C6D234F826E928C03F5 /* ScreenTimeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F63342F7B556532154D06A8 /* ScreenTimeCard.swift */; };
 		537F0308462020E410A85E5D /* PauseMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A48FDD029FA956CB069A91 /* PauseMonitorExtension.swift */; };
 		555D4555F7B3BA78E802E39B /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F77EC8C8B3D7DD3A1B0794 /* UserProfile.swift */; };
@@ -29,6 +31,7 @@
 		73B938E32B4CACFA887187B6 /* PauseIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309251B72045A33B7FD8B7F5 /* PauseIcon.swift */; };
 		7433C0D792B45D7AB46708A6 /* AppLimitsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7524A363169AEC18768E0048 /* AppLimitsCard.swift */; };
 		746E4895612E45A83798564D /* WeeklyChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37434D2F84EEDE7E5BD80A35 /* WeeklyChartCard.swift */; };
+		748E17B48D25AA419E2E65E0 /* TriggerTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3CFD76B29FDF5D22A2EB15 /* TriggerTracker.swift */; };
 		7AC16DF20BC2E89BBEB9A8AE /* TriggerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CDE86249B46232C178EA4 /* TriggerLog.swift */; };
 		7E1026796AFAB6DEE5F6C285 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C6CDED2A4C0FA88713F47D /* AppSettings.swift */; };
 		7F4F70807C8AF23D49A101DC /* Fraunces-VariableItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47EEE36D34B24DBA1EACA7CA /* Fraunces-VariableItalic.ttf */; };
@@ -42,12 +45,14 @@
 		A4228C4B908AADDF84A7DBDA /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE490CB50C86E71F2740A8AD /* SharedStore.swift */; };
 		AD827C3AC55EEDB66F90C6BB /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83379BA09CF1240E245080C3 /* Color+Hex.swift */; };
 		B1934D2469850B1E25A6C915 /* Font+Pause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A66FAA27FAD60162DF7EFCA /* Font+Pause.swift */; };
+		B1C0418D6CC231EA6CEC2323 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4442FD8BE00CC2B7A6F9B0E /* SettingsViewModel.swift */; };
 		B701C3227A65527379BC9B26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92BFB26EE5BCD3CA6B45623D /* Assets.xcassets */; };
 		CFF7D120BDC2641D23ECD50A /* StagedEntrance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */; };
 		D6D19C49EDD1BC2A2111A76C /* PauseMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9736227BE838E021C3995474 /* PauseMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DD127CD07C27212194332357 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6BAFEB4626DEAEA643272B /* WelcomeView.swift */; };
 		E07E3DE1F83C76190F439753 /* MomentumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2373CF6DA271A2DDEA767 /* MomentumEngine.swift */; };
 		F18F9451F650B19EFEA220D9 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC83A358BF31593807F2C4 /* HomeViewModel.swift */; };
+		F3260AC00DC53C7C1EDB6AC6 /* TriggerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC3A5F3EC398724B45F7E6 /* TriggerPromptView.swift */; };
 		FEF01C66FC7E0D3F16D26B64 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A792F11B499E7CA5820526A1 /* RootView.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +100,7 @@
 		3CDC83A358BF31593807F2C4 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3E1E00FA6D75478D4EC2985F /* PauseWordmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseWordmark.swift; sourceTree = "<group>"; };
 		3E67A6D0819020EAFC99E7D3 /* Fraunces-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-Variable.ttf"; sourceTree = "<group>"; };
+		40EC3A5F3EC398724B45F7E6 /* TriggerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerPromptView.swift; sourceTree = "<group>"; };
 		47EEE36D34B24DBA1EACA7CA /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
 		4C8FCC1A0EF3FAA6937FBC32 /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
 		4DD3CBD51233D34BBE3A8983 /* PauseShieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseShieldExtension.swift; sourceTree = "<group>"; };
@@ -114,15 +120,19 @@
 		89685CA9AB6F16C31E81F945 /* PauseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseApp.swift; sourceTree = "<group>"; };
 		92BFB26EE5BCD3CA6B45623D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		93C2373CF6DA271A2DDEA767 /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
+		954680CCAF4D903D930B6D5E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9736227BE838E021C3995474 /* PauseMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PauseMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedEntrance.swift; sourceTree = "<group>"; };
 		A792F11B499E7CA5820526A1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		AD3CFD76B29FDF5D22A2EB15 /* TriggerTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerTracker.swift; sourceTree = "<group>"; };
 		AE490CB50C86E71F2740A8AD /* SharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStore.swift; sourceTree = "<group>"; };
 		AF7DBD9B61AAC42E57126B11 /* PauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
 		B00CDEC78290EDD4E3379F23 /* PlusJakartaSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-ExtraBold.ttf"; sourceTree = "<group>"; };
 		B4BEAE62C947DA6FDB5245FB /* PauseShield.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PauseShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B76893609DE12360FB93334E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		B8CDC4E7F55EECB735FB6DBE /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C7C6CDED2A4C0FA88713F47D /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		E4442FD8BE00CC2B7A6F9B0E /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		E9E92459312A8DE167B41978 /* UnlocksCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlocksCard.swift; sourceTree = "<group>"; };
 		EE6CDE86249B46232C178EA4 /* TriggerLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerLog.swift; sourceTree = "<group>"; };
 		F1921D1AB57DC259B4945E0F /* ReasonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonsView.swift; sourceTree = "<group>"; };
@@ -135,8 +145,10 @@
 			children = (
 				B76893609DE12360FB93334E /* DataStore.swift */,
 				93C2373CF6DA271A2DDEA767 /* MomentumEngine.swift */,
+				B8CDC4E7F55EECB735FB6DBE /* NotificationManager.swift */,
 				28AC11D1608974E47D56614A /* ScreenTimeManager.swift */,
 				AE490CB50C86E71F2740A8AD /* SharedStore.swift */,
+				AD3CFD76B29FDF5D22A2EB15 /* TriggerTracker.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -145,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				3CDC83A358BF31593807F2C4 /* HomeViewModel.swift */,
+				E4442FD8BE00CC2B7A6F9B0E /* SettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -207,6 +220,7 @@
 				A3B1CDC54C707572DD44BD9E /* Components */,
 				6D48756B8FD01C230E515473 /* Home */,
 				CC88458EFF125C6082B5FC91 /* Onboarding */,
+				CA8CE2EDB0051C9C07C19BDA /* Settings */,
 				A792F11B499E7CA5820526A1 /* RootView.swift */,
 			);
 			path = Views;
@@ -219,6 +233,7 @@
 				2A74A5B43773305E1F81E5AC /* PauseCard.swift */,
 				3E1E00FA6D75478D4EC2985F /* PauseWordmark.swift */,
 				9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */,
+				40EC3A5F3EC398724B45F7E6 /* TriggerPromptView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -263,6 +278,14 @@
 				4DD3CBD51233D34BBE3A8983 /* PauseShieldExtension.swift */,
 			);
 			path = PauseShield;
+			sourceTree = "<group>";
+		};
+		CA8CE2EDB0051C9C07C19BDA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				954680CCAF4D903D930B6D5E /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		CC88458EFF125C6082B5FC91 /* Onboarding */ = {
@@ -433,6 +456,7 @@
 				F18F9451F650B19EFEA220D9 /* HomeViewModel.swift in Sources */,
 				2CE27EB55BAE74C85F77094C /* MomentumCard.swift in Sources */,
 				E07E3DE1F83C76190F439753 /* MomentumEngine.swift in Sources */,
+				388EA2A9A9AE587D51D90827 /* NotificationManager.swift in Sources */,
 				62C01C2F16A99DA24609D696 /* OnboardingFlow.swift in Sources */,
 				86C8192AA8DC9DF097F3D141 /* PauseApp.swift in Sources */,
 				8E04A135A35DBE8AEEEA3C81 /* PauseButton.swift in Sources */,
@@ -444,9 +468,13 @@
 				FEF01C66FC7E0D3F16D26B64 /* RootView.swift in Sources */,
 				4E954C6D234F826E928C03F5 /* ScreenTimeCard.swift in Sources */,
 				9D894822F1FDA425511634CA /* ScreenTimeManager.swift in Sources */,
+				4C1342E1F3465982B9992A2C /* SettingsView.swift in Sources */,
+				B1C0418D6CC231EA6CEC2323 /* SettingsViewModel.swift in Sources */,
 				A4228C4B908AADDF84A7DBDA /* SharedStore.swift in Sources */,
 				CFF7D120BDC2641D23ECD50A /* StagedEntrance.swift in Sources */,
 				7AC16DF20BC2E89BBEB9A8AE /* TriggerLog.swift in Sources */,
+				F3260AC00DC53C7C1EDB6AC6 /* TriggerPromptView.swift in Sources */,
+				748E17B48D25AA419E2E65E0 /* TriggerTracker.swift in Sources */,
 				09A2F7A4779FC985042DFA1A /* UnlocksCard.swift in Sources */,
 				555D4555F7B3BA78E802E39B /* UserProfile.swift in Sources */,
 				746E4895612E45A83798564D /* WeeklyChartCard.swift in Sources */,

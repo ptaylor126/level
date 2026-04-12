@@ -6,6 +6,7 @@ struct HomeView: View {
   @Environment(\.scenePhase) private var scenePhase
   @StateObject private var viewModel = HomeViewModel()
   @State private var appeared = false
+  @State private var showSettings = false
 
   private var dateString: String {
     let formatter = DateFormatter()
@@ -51,6 +52,14 @@ struct HomeView: View {
         viewModel.refresh(context: context)
       }
     }
+    .sheet(isPresented: $showSettings) {
+      SettingsView()
+    }
+    .onChange(of: showSettings) { _, showing in
+      if !showing {
+        viewModel.refresh(context: context)
+      }
+    }
   }
 
   private var headerRow: some View {
@@ -62,8 +71,11 @@ struct HomeView: View {
           .foregroundStyle(Color.mutedGrape)
       }
       Spacer()
-      PauseIconView(icon: .gear, size: 22, color: .mutedGrape)
-        .padding(.bottom, 2)
+      Button { showSettings = true } label: {
+        PauseIconView(icon: .gear, size: 22, color: .mutedGrape)
+      }
+      .buttonStyle(.plain)
+      .padding(.bottom, 2)
     }
     .padding(.vertical, 8)
   }
