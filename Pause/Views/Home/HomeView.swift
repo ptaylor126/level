@@ -60,6 +60,7 @@ struct HomeView: View {
         viewModel.refresh(context: context)
       }
     }
+    .preferredColorScheme(.dark)
   }
 
   private var headerRow: some View {

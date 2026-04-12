@@ -4,17 +4,14 @@ import SwiftUI
 /// Heart icon, "Why I'm Doing This" label, rotating reason text.
 struct ReasonCard: View {
   /// The user's reasons. The card displays one at a time, cycling on each app open.
-  var reasons: [String] = [
-    "Be more present with my family.",
-    "Read more books.",
-    "Sleep better.",
-    "Get more work done.",
-  ]
+  var reasons: [String] = []
   var displayIndex: Int = 0
 
   private var currentReason: String {
-    guard !reasons.isEmpty else { return "" }
-    return reasons[displayIndex % reasons.count]
+    guard !reasons.isEmpty else { return "Add a reason in settings." }
+    let dayOffset = Calendar.current.component(.hour, from: Date()) / 6
+    let index = (displayIndex + dayOffset) % reasons.count
+    return reasons[index]
   }
 
   var body: some View {

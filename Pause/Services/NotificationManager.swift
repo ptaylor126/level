@@ -36,14 +36,13 @@ final class NotificationManager {
 
   private func scheduleWeeklyRecap() {
     let content = UNMutableNotificationContent()
-    content.title = "Your week in review"
-    content.body = "See how you did this week."
+    content.title = "Your week"
+    content.body = "See how you did. Might be good news."
     content.sound = .default
 
     var components = DateComponents()
     components.weekday = 1
     components.hour = 19
-    components.minute = 0
 
     let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
     let request = UNNotificationRequest(identifier: "weekly-recap", content: content, trigger: trigger)
@@ -52,13 +51,12 @@ final class NotificationManager {
 
   private func scheduleMorningSummary() {
     let content = UNMutableNotificationContent()
-    content.title = "Yesterday's screen time"
-    content.body = "Check how you did."
+    content.title = "Yesterday"
+    content.body = "Here's how your screen time looked."
     content.sound = .default
 
     var components = DateComponents()
     components.hour = 9
-    components.minute = 0
 
     let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
     let request = UNNotificationRequest(identifier: "morning-summary", content: content, trigger: trigger)
@@ -67,13 +65,12 @@ final class NotificationManager {
 
   private func scheduleStreakAtRisk() {
     let content = UNMutableNotificationContent()
-    content.title = "Today's looking close"
-    content.body = "You've still got time to keep the streak going."
+    content.title = "Heads up"
+    content.body = "Today's looking close. You've still got time."
     content.sound = .default
 
     var components = DateComponents()
     components.hour = 20
-    components.minute = 0
 
     let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
     let request = UNNotificationRequest(identifier: "streak-at-risk", content: content, trigger: trigger)

@@ -1,15 +1,13 @@
 import SwiftUI
 
-/// Half-width card showing the user's momentum score and streak.
-/// Always uses Pastel Pink background — the ONE pink card on the home screen.
 struct MomentumCard: View {
   var score: Int = 74
   var streak: Int = 9
+  @State private var displayedScore: Int = 0
 
   var body: some View {
     PauseCard(background: .pastelPink) {
       VStack(alignment: .leading, spacing: 0) {
-        // Label
         Text("MOMENTUM")
           .font(.pauseLabel)
           .tracking(0.5)
@@ -17,10 +15,10 @@ struct MomentumCard: View {
 
         Spacer(minLength: 12)
 
-        // Score badge
-        Text("\(score)")
+        Text("\(displayedScore)")
           .font(.pauseDisplay)
           .foregroundStyle(Color.darkGreen)
+          .contentTransition(.numericText(value: Double(displayedScore)))
           .padding(.horizontal, 14)
           .padding(.vertical, 6)
           .background(Color.teaGreen)
@@ -28,15 +26,24 @@ struct MomentumCard: View {
 
         Spacer(minLength: 12)
 
-        // Streak
         HStack(spacing: 4) {
           PauseIconView(icon: .flame, size: 14, color: .rose)
-          Text("\(streak) day streak")
+          Text(streak == 1 ? "1 day streak" : "\(streak) day streak")
             .font(.pauseCaption)
             .foregroundStyle(Color.rose)
         }
       }
       .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    .onAppear {
+      withAnimation(.easeOut(duration: 0.6).delay(0.3)) {
+        displayedScore = score
+      }
+    }
+    .onChange(of: score) { _, newValue in
+      withAnimation(.easeOut(duration: 0.5)) {
+        displayedScore = newValue
+      }
     }
   }
 }

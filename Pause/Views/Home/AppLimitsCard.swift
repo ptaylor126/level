@@ -72,6 +72,7 @@ struct AppLimitsCard: View {
 
 private struct AppLimitRow: View {
   let limit: AppLimitData
+  @State private var animatedFraction: Double = 0
 
   var body: some View {
     VStack(spacing: 6) {
@@ -88,21 +89,23 @@ private struct AppLimitRow: View {
           .foregroundStyle(Color.mutedGrape)
       }
 
-      // Progress bar
       GeometryReader { geo in
         ZStack(alignment: .leading) {
-          // Track
           RoundedRectangle(cornerRadius: 3, style: .continuous)
             .fill(Color.warmGrey)
             .frame(height: 6)
-
-          // Fill
           RoundedRectangle(cornerRadius: 3, style: .continuous)
-            .fill(Color.teaGreen)
-            .frame(width: geo.size.width * limit.fraction, height: 6)
+            .fill(limit.fraction > 0.85 ? Color.pastelPink : Color.teaGreen)
+            .frame(width: geo.size.width * animatedFraction, height: 6)
+            .animation(.easeOut(duration: 0.3), value: animatedFraction)
         }
       }
       .frame(height: 6)
+    }
+    .onAppear {
+      withAnimation(.easeOut(duration: 0.4).delay(0.1)) {
+        animatedFraction = limit.fraction
+      }
     }
   }
 }

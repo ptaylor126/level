@@ -36,16 +36,22 @@ struct WeeklyChartCard: View {
           PauseIconView(icon: .chart, size: 16, color: .mutedGrape)
         }
 
-        // Bar chart
-        HStack(alignment: .bottom, spacing: 8) {
-          ForEach(days) { day in
-            DayBar(
-              day: day,
-              heightFraction: maxSeconds > 0 ? day.seconds / maxSeconds : 0
-            )
+        if days.allSatisfy({ $0.seconds == 0 }) {
+          Text("Check back tomorrow for your first chart.")
+            .font(.pauseCaption)
+            .foregroundStyle(Color.mutedGrape)
+            .frame(height: 80)
+        } else {
+          HStack(alignment: .bottom, spacing: 8) {
+            ForEach(days) { day in
+              DayBar(
+                day: day,
+                heightFraction: maxSeconds > 0 ? day.seconds / maxSeconds : 0
+              )
+            }
           }
+          .frame(height: 80)
         }
-        .frame(height: 80)
       }
     }
   }
