@@ -4,9 +4,22 @@ import SwiftUI
 struct HomeView: View {
   @Environment(\.modelContext) private var context
   @Environment(\.scenePhase) private var scenePhase
+  @Environment(\.colorScheme) private var colorScheme
   @StateObject private var viewModel = HomeViewModel()
   @State private var appeared = false
   @State private var showSettings = false
+
+  private var backgroundColor: Color {
+    colorScheme == .dark ? .vintageGrape : .cream
+  }
+
+  private var primaryTextColor: Color {
+    colorScheme == .dark ? .cream : .vintageGrape
+  }
+
+  private var secondaryTextColor: Color {
+    colorScheme == .dark ? .mutedGrape : .mutedGrape
+  }
 
   private var dateString: String {
     let formatter = DateFormatter()
@@ -16,7 +29,7 @@ struct HomeView: View {
 
   var body: some View {
     ZStack {
-      Color.vintageGrape.ignoresSafeArea()
+      backgroundColor.ignoresSafeArea()
 
       ScrollView(showsIndicators: false) {
         VStack(spacing: 12) {
@@ -60,20 +73,19 @@ struct HomeView: View {
         viewModel.refresh(context: context)
       }
     }
-    .preferredColorScheme(.dark)
   }
 
   private var headerRow: some View {
     HStack(alignment: .bottom) {
       VStack(alignment: .leading, spacing: 2) {
-        PauseWordmark(size: 28, color: .cream)
+        PauseWordmark(size: 28, color: primaryTextColor)
         Text(dateString)
           .font(.pauseCaption)
-          .foregroundStyle(Color.mutedGrape)
+          .foregroundStyle(secondaryTextColor)
       }
       Spacer()
       Button { showSettings = true } label: {
-        PauseIconView(icon: .gear, size: 28, color: .cream.opacity(0.6))
+        PauseIconView(icon: .gear, size: 28, color: secondaryTextColor)
           .frame(width: 44, height: 44)
           .contentShape(Rectangle())
       }

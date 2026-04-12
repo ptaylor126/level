@@ -5,6 +5,15 @@ struct RootView: View {
   @Environment(\.modelContext) private var context
   @EnvironmentObject private var screenTime: ScreenTimeManager
   @Query private var profiles: [UserProfile]
+  @Query private var settingsRecords: [AppSettings]
+
+  private var colorScheme: ColorScheme? {
+    switch settingsRecords.first?.appearanceMode {
+    case "light": .light
+    case "dark": .dark
+    default: nil
+    }
+  }
 
   var body: some View {
     Group {
@@ -21,6 +30,7 @@ struct RootView: View {
           .task { seedProfile() }
       }
     }
+    .preferredColorScheme(colorScheme)
   }
 
   private func seedProfile() {
