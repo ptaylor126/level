@@ -1,0 +1,131 @@
+name: Pause
+options:
+  bundleIdPrefix: com.paultaylor.pause
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+  groupSortPosition: top
+  createIntermediateGroups: true
+  usesTabs: false
+  indentWidth: 2
+  tabWidth: 2
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    SUPPORTS_MACCATALYST: NO
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  Pause:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: Pause
+        excludes:
+          - "Resources/Fonts/**/*.txt"
+    resources:
+      - path: Pause/Resources/Assets.xcassets
+      - path: Pause/Resources/Fonts
+        optional: true
+    info:
+      path: SupportingFiles/Pause-Info.plist
+      properties:
+        CFBundleDisplayName: Pause
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UIRequiredDeviceCapabilities:
+          - arm64
+        UIAppFonts:
+          - PlusJakartaSans-Regular.ttf
+          - PlusJakartaSans-Medium.ttf
+          - PlusJakartaSans-Bold.ttf
+          - PlusJakartaSans-ExtraBold.ttf
+          - PlusJakartaSans-ExtraBoldItalic.ttf
+          - Fraunces-Variable.ttf
+          - Fraunces-VariableItalic.ttf
+    entitlements:
+      path: SupportingFiles/Pause.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups:
+          - group.com.paultaylor.pause
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.pause
+        PRODUCT_NAME: Pause
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UIUserInterfaceStyle: ""
+        GENERATE_INFOPLIST_FILE: NO
+    dependencies:
+      - target: PauseMonitor
+      - target: PauseShield
+        embed: false
+        link: false
+
+  PauseMonitor:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: PauseMonitor
+    info:
+      path: SupportingFiles/PauseMonitor-Info.plist
+      properties:
+        CFBundleDisplayName: PauseMonitor
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).PauseMonitorExtension
+    entitlements:
+      path: SupportingFiles/PauseMonitor.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups:
+          - group.com.paultaylor.pause
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.pause.monitor
+        PRODUCT_NAME: PauseMonitor
+        GENERATE_INFOPLIST_FILE: NO
+
+  PauseShield:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: PauseShield
+    info:
+      path: SupportingFiles/PauseShield-Info.plist
+      properties:
+        CFBundleDisplayName: PauseShield
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettings.shield-configuration-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).PauseShieldExtension
+    entitlements:
+      path: SupportingFiles/PauseShield.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups:
+          - group.com.paultaylor.pause
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.pause.shield
+        PRODUCT_NAME: PauseShield
+        GENERATE_INFOPLIST_FILE: NO
