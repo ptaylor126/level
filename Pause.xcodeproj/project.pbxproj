@@ -46,6 +46,8 @@
 		CFF7D120BDC2641D23ECD50A /* StagedEntrance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */; };
 		D6D19C49EDD1BC2A2111A76C /* PauseMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9736227BE838E021C3995474 /* PauseMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DD127CD07C27212194332357 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6BAFEB4626DEAEA643272B /* WelcomeView.swift */; };
+		E07E3DE1F83C76190F439753 /* MomentumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C2373CF6DA271A2DDEA767 /* MomentumEngine.swift */; };
+		F18F9451F650B19EFEA220D9 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC83A358BF31593807F2C4 /* HomeViewModel.swift */; };
 		FEF01C66FC7E0D3F16D26B64 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A792F11B499E7CA5820526A1 /* RootView.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,7 @@
 		2A74A5B43773305E1F81E5AC /* PauseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseCard.swift; sourceTree = "<group>"; };
 		309251B72045A33B7FD8B7F5 /* PauseIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseIcon.swift; sourceTree = "<group>"; };
 		37434D2F84EEDE7E5BD80A35 /* WeeklyChartCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChartCard.swift; sourceTree = "<group>"; };
+		3CDC83A358BF31593807F2C4 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3E1E00FA6D75478D4EC2985F /* PauseWordmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseWordmark.swift; sourceTree = "<group>"; };
 		3E67A6D0819020EAFC99E7D3 /* Fraunces-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-Variable.ttf"; sourceTree = "<group>"; };
 		47EEE36D34B24DBA1EACA7CA /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 		83379BA09CF1240E245080C3 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		89685CA9AB6F16C31E81F945 /* PauseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseApp.swift; sourceTree = "<group>"; };
 		92BFB26EE5BCD3CA6B45623D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		93C2373CF6DA271A2DDEA767 /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
 		9736227BE838E021C3995474 /* PauseMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PauseMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedEntrance.swift; sourceTree = "<group>"; };
 		A792F11B499E7CA5820526A1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -130,10 +134,19 @@
 			isa = PBXGroup;
 			children = (
 				B76893609DE12360FB93334E /* DataStore.swift */,
+				93C2373CF6DA271A2DDEA767 /* MomentumEngine.swift */,
 				28AC11D1608974E47D56614A /* ScreenTimeManager.swift */,
 				AE490CB50C86E71F2740A8AD /* SharedStore.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1575C0059D62725A1FFE3A0B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				3CDC83A358BF31593807F2C4 /* HomeViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		1CBCD7B19A322FEABE9EBCEB = {
@@ -156,6 +169,7 @@
 				BA193D844487DF2F2CBC3260 /* Resources */,
 				03AE62EBFD6EB71A338877C0 /* Services */,
 				F0242DA845D6909CEE2F7943 /* Utilities */,
+				1575C0059D62725A1FFE3A0B /* ViewModels */,
 				9F8B4F14B8455DF2615974B8 /* Views */,
 				89685CA9AB6F16C31E81F945 /* PauseApp.swift */,
 			);
@@ -416,7 +430,9 @@
 				659C781880380FBD1EB3F43D /* DataStore.swift in Sources */,
 				B1934D2469850B1E25A6C915 /* Font+Pause.swift in Sources */,
 				31C917591E1AFC9EED606681 /* HomeView.swift in Sources */,
+				F18F9451F650B19EFEA220D9 /* HomeViewModel.swift in Sources */,
 				2CE27EB55BAE74C85F77094C /* MomentumCard.swift in Sources */,
+				E07E3DE1F83C76190F439753 /* MomentumEngine.swift in Sources */,
 				62C01C2F16A99DA24609D696 /* OnboardingFlow.swift in Sources */,
 				86C8192AA8DC9DF097F3D141 /* PauseApp.swift in Sources */,
 				8E04A135A35DBE8AEEEA3C81 /* PauseButton.swift in Sources */,
