@@ -29,6 +29,19 @@ struct RootView: View {
     try? context.save()
   }
 
+  #if DEBUG
+  private func seedProfileCompleted() {
+    guard profiles.isEmpty else { return }
+    let profile = UserProfile(
+      reasons: ["Read more books", "Stop scrolling in bed", "Actually get work done"],
+      onboardingComplete: true,
+      createdAt: .now
+    )
+    context.insert(profile)
+    try? context.save()
+  }
+  #endif
+
   private func resumeMonitoring(profile: UserProfile) {
     guard screenTime.isAuthorized else { return }
     screenTime.syncReasonsToDefaults(profile.reasons)
