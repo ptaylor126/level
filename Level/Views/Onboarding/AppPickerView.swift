@@ -59,29 +59,49 @@ struct AppPickerView: View {
   }
 
   private var pickedList: some View {
-    ScrollView(showsIndicators: false) {
-      VStack(alignment: .leading, spacing: 12) {
-        ForEach(Array(screenTime.selection.categoryTokens), id: \.self) { token in
-          Label(token)
-            .labelStyle(.titleAndIcon)
+    ZStack(alignment: .topTrailing) {
+      ScrollView(showsIndicators: false) {
+        VStack(alignment: .leading, spacing: 12) {
+          ForEach(Array(screenTime.selection.categoryTokens), id: \.self) { token in
+            Label(token)
+              .labelStyle(.titleAndIcon)
+          }
+          ForEach(Array(screenTime.selection.applicationTokens), id: \.self) { token in
+            Label(token)
+              .labelStyle(.titleAndIcon)
+          }
+          ForEach(Array(screenTime.selection.webDomainTokens), id: \.self) { token in
+            Label(token)
+              .labelStyle(.titleAndIcon)
+          }
         }
-        ForEach(Array(screenTime.selection.applicationTokens), id: \.self) { token in
-          Label(token)
-            .labelStyle(.titleAndIcon)
-        }
-        ForEach(Array(screenTime.selection.webDomainTokens), id: \.self) { token in
-          Label(token)
-            .labelStyle(.titleAndIcon)
-        }
+        .font(.levelBody)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
+        .padding(.trailing, 24)
       }
-      .font(.levelBody)
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .padding(16)
+      .frame(maxWidth: .infinity, maxHeight: 180)
+      .background(
+        RoundedRectangle(cornerRadius: 16, style: .continuous)
+          .fill(Color.cream)
+      )
+
+      CountBadge(count: screenTime.selectedItemCount)
+        .offset(x: -12, y: 12)
     }
-    .frame(maxWidth: .infinity, maxHeight: 180)
-    .background(
-      RoundedRectangle(cornerRadius: 16, style: .continuous)
-        .fill(Color.cream)
-    )
+  }
+}
+
+private struct CountBadge: View {
+  let count: Int
+
+  var body: some View {
+    Text("\(count)")
+      .font(LevelFont.bold(14))
+      .foregroundStyle(Color.vintageGrape)
+      .frame(width: 32, height: 32)
+      .background(Circle().fill(Color.teaGreen))
+      .contentTransition(.numericText(value: Double(count)))
+      .animation(.spring(response: 0.35, dampingFraction: 0.7), value: count)
   }
 }

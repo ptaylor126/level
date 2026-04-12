@@ -18,6 +18,7 @@
 		2582930BAE5CADAC094B6967 /* Font+Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B14785CC45B8A69458A97 /* Font+Level.swift */; };
 		3423084D6FDBD96404C9838B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A472FD57D2B4E71E38F03 /* HomeView.swift */; };
 		39059FBCEE52F24DE34B8DC1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0688E7CCBC9C234D3A67EB /* SettingsView.swift */; };
+		3D27F3238CDAD145C0429373 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE468813CD9FA8596F20F966 /* SummaryView.swift */; };
 		3D5EBB7A6C09B7BECD35A49B /* TriggerTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BF3E09F84FAADE9BFE0A1A /* TriggerTracker.swift */; };
 		43929A97BBC491DC8ABAE9BF /* LevelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D345BAB1E98CD779E5AAFA0 /* LevelApp.swift */; };
 		49319AA4BBB3CBCE726B2D51 /* LevelShield.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 6944DA0CE3BAD8312F92D617 /* LevelShield.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -126,6 +127,7 @@
 		A27E277A2012069889E2FD18 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		ADD47CDA66B8653DA6D8A80A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BC60AE929DAC4875AFB4EC5E /* PlusJakartaSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Regular.ttf"; sourceTree = "<group>"; };
+		BE468813CD9FA8596F20F966 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		C2435F479F1256F6B1F33CA2 /* LevelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCard.swift; sourceTree = "<group>"; };
 		C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMonitorExtension.swift; sourceTree = "<group>"; };
 		CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */,
 				EC6AE7B97481E5015C47426D /* OnboardingFlow.swift */,
 				35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */,
+				BE468813CD9FA8596F20F966 /* SummaryView.swift */,
 				7CD6FCAA5ACC2C75DF5BBDB3 /* WelcomeView.swift */,
 			);
 			path = Onboarding;
@@ -494,6 +497,7 @@
 				1CC05752C8E1B1DC9DC6AFA4 /* SettingsViewModel.swift in Sources */,
 				FAF8B8F86BAF1F0ABE4025C7 /* SharedStore.swift in Sources */,
 				B32000239E81C1F26D1C08E5 /* StagedEntrance.swift in Sources */,
+				3D27F3238CDAD145C0429373 /* SummaryView.swift in Sources */,
 				DCA8D0951E206C749D0F1581 /* TriggerLog.swift in Sources */,
 				BCD05E96C6618CB42E273EC6 /* TriggerPromptView.swift in Sources */,
 				3D5EBB7A6C09B7BECD35A49B /* TriggerTracker.swift in Sources */,

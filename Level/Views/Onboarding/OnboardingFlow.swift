@@ -6,6 +6,7 @@ enum OnboardingStep: Int, CaseIterable {
   case welcome
   case appPicker
   case reasons
+  case summary
   case confirmation
 
   var canGoBack: Bool {
@@ -48,7 +49,7 @@ struct OnboardingFlow: View {
           .padding(.top, 4)
           .animation(.easeInOut(duration: 0.2), value: step.canGoBack)
 
-          if step == .reasons {
+          if step == .reasons || step == .summary {
             Color.clear.frame(height: max(0, proxy.size.height * 0.06))
           } else {
             Color.clear.frame(height: max(0, proxy.size.height * 0.24))
@@ -92,6 +93,8 @@ struct OnboardingFlow: View {
       AppPickerView(onPickTapped: { isAppPickerPresented = true })
     case .reasons:
       ReasonsView(reasons: $draftReasons)
+    case .summary:
+      SummaryView(reasons: draftReasons, onGoBack: { goBack() })
     case .confirmation:
       ConfirmationView()
     }
@@ -114,13 +117,14 @@ struct OnboardingFlow: View {
     case .welcome: return "Get started"
     case .appPicker: return "Next"
     case .reasons: return "Next"
+    case .summary: return "Looks good"
     case .confirmation: return "Got it"
     }
   }
 
   private var isButtonEnabled: Bool {
     switch step {
-    case .welcome, .confirmation:
+    case .welcome, .confirmation, .summary:
       return true
     case .appPicker:
       return screenTime.selectedItemCount > 0
@@ -155,6 +159,8 @@ struct OnboardingFlow: View {
         .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
         .filter { !$0.isEmpty }
       try? context.save()
+      step = .summary
+    case .summary:
       step = .confirmation
     case .confirmation:
       profile.onboardingComplete = true
