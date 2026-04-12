@@ -124,6 +124,9 @@ struct OnboardingFlow: View {
       profile.onboardingComplete = true
       try? context.save()
       screenTime.persistSelection()
+      screenTime.syncReasonsToDefaults(profile.reasons)
+      screenTime.syncSettingsToDefaults(delay: 10, increment: 10, unlockLimit: 10)
+      screenTime.startMonitoring()
     }
   }
 }
