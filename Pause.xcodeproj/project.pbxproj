@@ -20,11 +20,13 @@
 		62C01C2F16A99DA24609D696 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0131E89A15BD69F5B930951D /* OnboardingFlow.swift */; };
 		659C781880380FBD1EB3F43D /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76893609DE12360FB93334E /* DataStore.swift */; };
 		681FF7A2739E19717025D32C /* AppPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E2E75D03566347C3A03A99 /* AppPickerView.swift */; };
+		687E5D900172655855820509 /* Fraunces72pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72A6EE6D966234E53F722AE4 /* Fraunces72pt-Bold.ttf */; };
 		71BEBDFFF64C696EDF466FAF /* DailyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1047A006B1D04CB173A7F455 /* DailyRecord.swift */; };
 		73B938E32B4CACFA887187B6 /* PauseIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309251B72045A33B7FD8B7F5 /* PauseIcon.swift */; };
 		7AC16DF20BC2E89BBEB9A8AE /* TriggerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6CDE86249B46232C178EA4 /* TriggerLog.swift */; };
 		7E1026796AFAB6DEE5F6C285 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C6CDED2A4C0FA88713F47D /* AppSettings.swift */; };
 		7F4F70807C8AF23D49A101DC /* Fraunces-VariableItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47EEE36D34B24DBA1EACA7CA /* Fraunces-VariableItalic.ttf */; };
+		837D8A491B213E4B7168E52D /* PauseWordmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1E00FA6D75478D4EC2985F /* PauseWordmark.swift */; };
 		848FF16E5BA6C9408B0E981C /* ReasonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1921D1AB57DC259B4945E0F /* ReasonsView.swift */; };
 		86C8192AA8DC9DF097F3D141 /* PauseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89685CA9AB6F16C31E81F945 /* PauseApp.swift */; };
 		8E04A135A35DBE8AEEEA3C81 /* PauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7DBD9B61AAC42E57126B11 /* PauseButton.swift */; };
@@ -34,6 +36,7 @@
 		AD827C3AC55EEDB66F90C6BB /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83379BA09CF1240E245080C3 /* Color+Hex.swift */; };
 		B1934D2469850B1E25A6C915 /* Font+Pause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A66FAA27FAD60162DF7EFCA /* Font+Pause.swift */; };
 		B701C3227A65527379BC9B26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92BFB26EE5BCD3CA6B45623D /* Assets.xcassets */; };
+		CFF7D120BDC2641D23ECD50A /* StagedEntrance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */; };
 		D6D19C49EDD1BC2A2111A76C /* PauseMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9736227BE838E021C3995474 /* PauseMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DD127CD07C27212194332357 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6BAFEB4626DEAEA643272B /* WelcomeView.swift */; };
 		FEF01C66FC7E0D3F16D26B64 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A792F11B499E7CA5820526A1 /* RootView.swift */; };
@@ -77,6 +80,7 @@
 		1A66FAA27FAD60162DF7EFCA /* Font+Pause.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Pause.swift"; sourceTree = "<group>"; };
 		28AC11D1608974E47D56614A /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
 		309251B72045A33B7FD8B7F5 /* PauseIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseIcon.swift; sourceTree = "<group>"; };
+		3E1E00FA6D75478D4EC2985F /* PauseWordmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseWordmark.swift; sourceTree = "<group>"; };
 		3E67A6D0819020EAFC99E7D3 /* Fraunces-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-Variable.ttf"; sourceTree = "<group>"; };
 		47EEE36D34B24DBA1EACA7CA /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
 		4C8FCC1A0EF3FAA6937FBC32 /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
@@ -87,12 +91,14 @@
 		69E964507A8571EA8AECD75D /* PlusJakartaSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		6B6BAFEB4626DEAEA643272B /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		6CEF498E73E00F4093077EB6 /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
+		72A6EE6D966234E53F722AE4 /* Fraunces72pt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces72pt-Bold.ttf"; sourceTree = "<group>"; };
 		73E2E75D03566347C3A03A99 /* AppPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPickerView.swift; sourceTree = "<group>"; };
 		79AA6D8308D4C00A37EA3D99 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		83379BA09CF1240E245080C3 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		89685CA9AB6F16C31E81F945 /* PauseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseApp.swift; sourceTree = "<group>"; };
 		92BFB26EE5BCD3CA6B45623D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9736227BE838E021C3995474 /* PauseMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PauseMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedEntrance.swift; sourceTree = "<group>"; };
 		A792F11B499E7CA5820526A1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AE490CB50C86E71F2740A8AD /* SharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStore.swift; sourceTree = "<group>"; };
 		AF7DBD9B61AAC42E57126B11 /* PauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseButton.swift; sourceTree = "<group>"; };
@@ -176,6 +182,8 @@
 			isa = PBXGroup;
 			children = (
 				AF7DBD9B61AAC42E57126B11 /* PauseButton.swift */,
+				3E1E00FA6D75478D4EC2985F /* PauseWordmark.swift */,
+				9B858248D52AF2CD5A0030E3 /* StagedEntrance.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -185,6 +193,7 @@
 			children = (
 				3E67A6D0819020EAFC99E7D3 /* Fraunces-Variable.ttf */,
 				47EEE36D34B24DBA1EACA7CA /* Fraunces-VariableItalic.ttf */,
+				72A6EE6D966234E53F722AE4 /* Fraunces72pt-Bold.ttf */,
 				6CEF498E73E00F4093077EB6 /* PlusJakartaSans-Bold.ttf */,
 				B00CDEC78290EDD4E3379F23 /* PlusJakartaSans-ExtraBold.ttf */,
 				69E964507A8571EA8AECD75D /* PlusJakartaSans-ExtraBoldItalic.ttf */,
@@ -361,6 +370,7 @@
 				B701C3227A65527379BC9B26 /* Assets.xcassets in Resources */,
 				46219B5218AFA06C98202313 /* Fraunces-Variable.ttf in Resources */,
 				7F4F70807C8AF23D49A101DC /* Fraunces-VariableItalic.ttf in Resources */,
+				687E5D900172655855820509 /* Fraunces72pt-Bold.ttf in Resources */,
 				0A7F741543B32CB2EED02720 /* PlusJakartaSans-Bold.ttf in Resources */,
 				45952A22E9D0ECF01256B92E /* PlusJakartaSans-ExtraBold.ttf in Resources */,
 				612BC818BBE086C7B52892C6 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */,
@@ -388,10 +398,12 @@
 				86C8192AA8DC9DF097F3D141 /* PauseApp.swift in Sources */,
 				8E04A135A35DBE8AEEEA3C81 /* PauseButton.swift in Sources */,
 				73B938E32B4CACFA887187B6 /* PauseIcon.swift in Sources */,
+				837D8A491B213E4B7168E52D /* PauseWordmark.swift in Sources */,
 				848FF16E5BA6C9408B0E981C /* ReasonsView.swift in Sources */,
 				FEF01C66FC7E0D3F16D26B64 /* RootView.swift in Sources */,
 				9D894822F1FDA425511634CA /* ScreenTimeManager.swift in Sources */,
 				A4228C4B908AADDF84A7DBDA /* SharedStore.swift in Sources */,
+				CFF7D120BDC2641D23ECD50A /* StagedEntrance.swift in Sources */,
 				7AC16DF20BC2E89BBEB9A8AE /* TriggerLog.swift in Sources */,
 				555D4555F7B3BA78E802E39B /* UserProfile.swift in Sources */,
 				DD127CD07C27212194332357 /* WelcomeView.swift in Sources */,

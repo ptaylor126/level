@@ -9,7 +9,7 @@ struct PauseApp: App {
     WindowGroup {
       RootView()
         .environmentObject(screenTime)
-        .tint(Color.vintageGrape)
+        .tint(Color.teaGreen)
     }
     .modelContainer(DataStore.shared.container)
   }

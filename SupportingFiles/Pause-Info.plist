@@ -29,6 +29,7 @@
 		<string>PlusJakartaSans-ExtraBoldItalic.ttf</string>
 		<string>Fraunces-Variable.ttf</string>
 		<string>Fraunces-VariableItalic.ttf</string>
+		<string>Fraunces72pt-Bold.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

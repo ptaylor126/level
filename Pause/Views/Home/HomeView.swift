@@ -5,12 +5,10 @@ struct HomeView: View {
     ZStack {
       Color.vintageGrape.ignoresSafeArea()
       VStack(spacing: 16) {
-        Text("Pause")
-          .font(.pauseWordmark)
-          .foregroundStyle(Color.cream)
-        Text("Setup complete. Build order begins here.")
+        PauseWordmark()
+        Text("Home screen coming next.")
           .font(.pauseBody)
-          .foregroundStyle(Color.cream.opacity(0.8))
+          .foregroundStyle(Color.cream.opacity(0.6))
           .multilineTextAlignment(.center)
           .padding(.horizontal, 32)
       }

@@ -3,62 +3,82 @@ import SwiftUI
 
 struct AppPickerView: View {
   @EnvironmentObject private var screenTime: ScreenTimeManager
-  @State private var isPickerPresented = false
-  let onContinue: () -> Void
+  let onPickTapped: () -> Void
 
   var body: some View {
-    VStack(spacing: 28) {
-      VStack(spacing: 12) {
-        Text("Choose apps to manage")
-          .font(PauseFont.bold(28))
+    VStack(alignment: .leading, spacing: 24) {
+      VStack(alignment: .leading, spacing: 12) {
+        Text("Which apps suck you in?")
+          .font(PauseFont.bold(32))
           .foregroundStyle(Color.cream)
-          .multilineTextAlignment(.center)
-        Text("Pick the apps and categories that pull you in most. You can change this anytime.")
+          .multilineTextAlignment(.leading)
+          .staged(0.05)
+        Text("Pick the ones you're on too much.\nYou can change this later.")
           .font(.pauseBody)
           .foregroundStyle(Color.cream.opacity(0.75))
-          .multilineTextAlignment(.center)
+          .multilineTextAlignment(.leading)
           .lineSpacing(4)
+          .staged(0.18)
       }
-      .padding(.horizontal, 8)
 
       selectionSummary
+        .staged(0.3)
 
-      VStack(spacing: 12) {
-        PauseButton(
-          title: screenTime.selectedItemCount == 0 ? "Choose apps" : "Update selection",
-          style: .ghostOnDark,
-          action: { isPickerPresented = true }
-        )
-        PauseButton(
-          title: "Continue",
-          style: .primaryOnDark,
-          isEnabled: screenTime.selectedItemCount > 0,
-          action: onContinue
-        )
-      }
-    }
-    .familyActivityPicker(isPresented: $isPickerPresented, selection: $screenTime.selection)
-    .onChange(of: screenTime.selection) { _, _ in
-      screenTime.persistSelection()
+      PauseButton(
+        title: screenTime.selectedItemCount == 0 ? "Pick apps" : "Change picks",
+        style: .ghostOnDark,
+        action: onPickTapped
+      )
+      .staged(0.42)
     }
   }
 
   private var selectionSummary: some View {
-    VStack(spacing: 4) {
-      Text("\(screenTime.selectedItemCount)")
-        .font(.pauseDisplay)
-        .foregroundStyle(Color.cream)
-      Text(screenTime.selectedItemCount == 1 ? "item selected" : "items selected")
-        .font(PauseFont.bold(11))
-        .tracking(0.5)
-        .textCase(.uppercase)
-        .foregroundStyle(Color.cream.opacity(0.6))
+    Group {
+      if screenTime.selectedItemCount == 0 {
+        emptyState
+      } else {
+        pickedList
+      }
     }
-    .frame(maxWidth: .infinity)
-    .padding(.vertical, 24)
+    .frame(maxWidth: .infinity, alignment: .leading)
     .background(
       RoundedRectangle(cornerRadius: 16, style: .continuous)
         .fill(Color.cream.opacity(0.08))
     )
+  }
+
+  private var emptyState: some View {
+    HStack {
+      Text("Nothing picked yet.")
+        .font(.pauseBody)
+        .foregroundStyle(Color.cream.opacity(0.55))
+      Spacer()
+    }
+    .padding(20)
+  }
+
+  private var pickedList: some View {
+    ScrollView(showsIndicators: false) {
+      VStack(alignment: .leading, spacing: 12) {
+        ForEach(Array(screenTime.selection.categoryTokens), id: \.self) { token in
+          Label(token)
+            .labelStyle(.titleAndIcon)
+        }
+        ForEach(Array(screenTime.selection.applicationTokens), id: \.self) { token in
+          Label(token)
+            .labelStyle(.titleAndIcon)
+        }
+        ForEach(Array(screenTime.selection.webDomainTokens), id: \.self) { token in
+          Label(token)
+            .labelStyle(.titleAndIcon)
+        }
+      }
+      .font(.pauseBody)
+      .foregroundStyle(Color.cream)
+      .environment(\.colorScheme, .dark)
+      .padding(16)
+    }
+    .frame(maxHeight: 180)
   }
 }

@@ -2,7 +2,6 @@ import SwiftUI
 
 enum PauseFont {
   static let family = "PlusJakartaSans"
-  static let wordmarkFamily = "PlusJakartaSans"
 
   static func regular(_ size: CGFloat) -> Font {
     .custom("\(family)-Regular", size: size)
@@ -17,7 +16,7 @@ enum PauseFont {
     .custom("\(family)-ExtraBold", size: size)
   }
   static func wordmark(_ size: CGFloat = 28) -> Font {
-    .custom("\(wordmarkFamily)-ExtraBoldItalic", size: size)
+    .custom("Fraunces72pt-Bold", size: size)
   }
 }
 

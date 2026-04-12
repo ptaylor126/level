@@ -1,28 +1,19 @@
 import SwiftUI
 
 struct WelcomeView: View {
-  let onContinue: () -> Void
-
   var body: some View {
-    VStack(spacing: 32) {
-      Spacer()
-      Text("Pause")
-        .font(.pauseWordmark)
+    VStack(alignment: .leading, spacing: 16) {
+      Text("Use your phone less.")
+        .font(PauseFont.bold(32))
         .foregroundStyle(Color.cream)
-      VStack(spacing: 16) {
-        Text("Take back your time.")
-          .font(PauseFont.bold(28))
-          .foregroundStyle(Color.cream)
-          .multilineTextAlignment(.center)
-        Text("Pause adds a small moment of friction before the apps that pull you in. No lectures. No guilt. Just a breath.")
-          .font(.pauseBody)
-          .foregroundStyle(Color.cream.opacity(0.75))
-          .multilineTextAlignment(.center)
-          .lineSpacing(4)
-          .padding(.horizontal, 12)
-      }
-      Spacer()
-      PauseButton(title: "Get started", style: .primaryOnDark, action: onContinue)
+        .multilineTextAlignment(.leading)
+        .staged(0.05)
+      Text("Pause makes you wait a few seconds before opening the apps that suck you in. That's it.")
+        .font(.pauseBody)
+        .foregroundStyle(Color.cream.opacity(0.75))
+        .multilineTextAlignment(.leading)
+        .lineSpacing(4)
+        .staged(0.18)
     }
   }
 }
@@ -30,7 +21,7 @@ struct WelcomeView: View {
 #Preview {
   ZStack {
     Color.vintageGrape.ignoresSafeArea()
-    WelcomeView(onContinue: {})
+    WelcomeView()
       .padding(20)
   }
 }

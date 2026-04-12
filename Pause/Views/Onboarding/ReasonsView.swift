@@ -2,50 +2,139 @@ import SwiftUI
 
 struct ReasonsView: View {
   @Binding var reasons: [String]
-  let onContinue: () -> Void
+  @FocusState private var focusedIndex: Int?
 
-  private let placeholders = [
-    "Be more present with my family",
+  private static let suggestions: [String] = [
+    "Sleep better",
+    "Be present with family",
+    "Focus at work",
     "Read more books",
-    "Sleep better"
+    "Stop doomscrolling",
+    "Reduce anxiety",
+    "Exercise more",
+    "Have real conversations",
+    "Stop comparing myself",
+    "Learn something new",
+    "Get outside more",
+    "Improve attention span"
   ]
 
-  private var hasAtLeastOne: Bool {
-    reasons.contains { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-  }
-
   var body: some View {
-    VStack(spacing: 24) {
-      VStack(spacing: 12) {
-        Text("Why are you doing this?")
-          .font(PauseFont.bold(28))
+    VStack(alignment: .leading, spacing: 20) {
+      VStack(alignment: .leading, spacing: 12) {
+        Text("Why bother?")
+          .font(PauseFont.bold(32))
           .foregroundStyle(Color.cream)
-          .multilineTextAlignment(.center)
-        Text("Write one to three reasons. You'll see them whenever you reach for a managed app.")
+          .multilineTextAlignment(.leading)
+          .staged(0.05)
+        Text("Write as many as you want. You'll see one every time you try to open an app.")
           .font(.pauseBody)
           .foregroundStyle(Color.cream.opacity(0.75))
-          .multilineTextAlignment(.center)
+          .multilineTextAlignment(.leading)
           .lineSpacing(4)
+          .staged(0.18)
       }
-      .padding(.horizontal, 8)
 
-      VStack(spacing: 12) {
-        ForEach(0..<3, id: \.self) { index in
+      suggestionStrip
+        .staged(0.28)
+
+      VStack(spacing: 10) {
+        ForEach(reasons.indices, id: \.self) { index in
           ReasonField(
             text: $reasons[index],
-            placeholder: placeholders[index]
+            placeholder: placeholder(for: index),
+            canRemove: reasons.count > 1,
+            onRemove: { removeReason(at: index) }
           )
+          .focused($focusedIndex, equals: index)
+          .staged(0.32 + Double(min(index, 3)) * 0.06)
+        }
+
+        if reasons.count < 10 {
+          Button(action: addReason) {
+            HStack(spacing: 8) {
+              Image(systemName: "plus")
+                .font(PauseFont.bold(14))
+              Text("Add another")
+                .font(PauseFont.bold(14))
+            }
+            .foregroundStyle(Color.cream.opacity(0.7))
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .background(
+              RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .strokeBorder(
+                  Color.cream.opacity(0.25),
+                  style: StrokeStyle(lineWidth: 1, dash: [4, 4])
+                )
+            )
+          }
+          .buttonStyle(.plain)
+          .staged(0.5)
         }
       }
+    }
+  }
 
-      Spacer(minLength: 0)
+  private func placeholder(for index: Int) -> String {
+    let defaults = [
+      "Read more books",
+      "Stop scrolling in bed",
+      "Actually get work done",
+      "Sleep better",
+      "Focus at work"
+    ]
+    return defaults[index % defaults.count]
+  }
 
-      PauseButton(
-        title: "Continue",
-        style: .primaryOnDark,
-        isEnabled: hasAtLeastOne,
-        action: onContinue
-      )
+  private func addReason() {
+    withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+      reasons.append("")
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+      focusedIndex = reasons.count - 1
+    }
+  }
+
+  private func removeReason(at index: Int) {
+    guard reasons.indices.contains(index) else { return }
+    withAnimation(.easeInOut(duration: 0.2)) {
+      reasons.remove(at: index)
+    }
+  }
+
+  private func applySuggestion(_ suggestion: String) {
+    if let emptyIndex = reasons.firstIndex(where: { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) {
+      reasons[emptyIndex] = suggestion
+      focusedIndex = emptyIndex
+    } else {
+      reasons.append(suggestion)
+      focusedIndex = reasons.count - 1
+    }
+  }
+
+  private var suggestionStrip: some View {
+    ScrollView(.horizontal, showsIndicators: false) {
+      HStack(spacing: 8) {
+        ForEach(Self.suggestions, id: \.self) { suggestion in
+          Button {
+            applySuggestion(suggestion)
+          } label: {
+            Text(suggestion)
+              .font(PauseFont.medium(13))
+              .foregroundStyle(Color.cream.opacity(0.9))
+              .padding(.horizontal, 14)
+              .padding(.vertical, 8)
+              .background(
+                Capsule().fill(Color.cream.opacity(0.1))
+              )
+              .overlay(
+                Capsule().strokeBorder(Color.cream.opacity(0.2), lineWidth: 1)
+              )
+          }
+          .buttonStyle(.plain)
+        }
+      }
+      .padding(.horizontal, 1)
     }
   }
 }
@@ -53,20 +142,37 @@ struct ReasonsView: View {
 private struct ReasonField: View {
   @Binding var text: String
   let placeholder: String
+  let canRemove: Bool
+  let onRemove: () -> Void
+  @FocusState private var focused: Bool
 
   var body: some View {
-    TextField("", text: $text, prompt: Text(placeholder).foregroundColor(Color.cream.opacity(0.35)))
-      .font(.pauseBody)
-      .foregroundStyle(Color.cream)
-      .padding(.horizontal, 16)
-      .padding(.vertical, 14)
-      .background(
-        RoundedRectangle(cornerRadius: 10, style: .continuous)
-          .fill(Color.cream.opacity(0.08))
-      )
-      .overlay(
-        RoundedRectangle(cornerRadius: 10, style: .continuous)
-          .strokeBorder(Color.cream.opacity(0.15), lineWidth: 1)
-      )
+    HStack(spacing: 8) {
+      TextField("", text: $text, prompt: Text(placeholder).foregroundColor(Color.cream.opacity(0.35)))
+        .font(.pauseBody)
+        .foregroundStyle(Color.cream)
+        .focused($focused)
+      if canRemove && !text.isEmpty {
+        Button(action: onRemove) {
+          Image(systemName: "xmark.circle.fill")
+            .font(.system(size: 18))
+            .foregroundStyle(Color.cream.opacity(0.45))
+        }
+        .buttonStyle(.plain)
+        .transition(.scale.combined(with: .opacity))
+      }
+    }
+    .padding(.horizontal, 16)
+    .padding(.vertical, 14)
+    .background(
+      RoundedRectangle(cornerRadius: 10, style: .continuous)
+        .fill(Color.cream.opacity(focused ? 0.12 : 0.08))
+    )
+    .overlay(
+      RoundedRectangle(cornerRadius: 10, style: .continuous)
+        .strokeBorder(Color.cream.opacity(focused ? 0.35 : 0.15), lineWidth: 1)
+    )
+    .animation(.easeInOut(duration: 0.2), value: focused)
+    .animation(.easeInOut(duration: 0.2), value: text.isEmpty)
   }
 }

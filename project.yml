@@ -57,6 +57,7 @@ targets:
           - PlusJakartaSans-ExtraBoldItalic.ttf
           - Fraunces-Variable.ttf
           - Fraunces-VariableItalic.ttf
+          - Fraunces72pt-Bold.ttf
     entitlements:
       path: SupportingFiles/Pause.entitlements
       properties:

@@ -1,25 +1,33 @@
 import SwiftUI
 
 struct ConfirmationView: View {
-  let onFinish: () -> Void
+  @State private var heartScale: CGFloat = 0.3
+  @State private var heartOpacity: Double = 0
 
   var body: some View {
-    VStack(spacing: 32) {
-      Spacer()
+    VStack(alignment: .leading, spacing: 24) {
       PauseIconView(icon: .heart, size: 72, color: .teaGreen)
-      VStack(spacing: 12) {
-        Text("You're all set.")
-          .font(PauseFont.bold(28))
+        .scaleEffect(heartScale)
+        .opacity(heartOpacity)
+        .onAppear {
+          withAnimation(.spring(response: 0.6, dampingFraction: 0.6).delay(0.05)) {
+            heartScale = 1
+            heartOpacity = 1
+          }
+        }
+      VStack(alignment: .leading, spacing: 12) {
+        Text("Done.")
+          .font(PauseFont.bold(32))
           .foregroundStyle(Color.cream)
-          .multilineTextAlignment(.center)
-        Text("Pause is on your side. Take it one breath at a time.")
+          .multilineTextAlignment(.leading)
+          .staged(0.25)
+        Text("Now those apps will make you wait. Good luck.")
           .font(.pauseBody)
           .foregroundStyle(Color.cream.opacity(0.75))
-          .multilineTextAlignment(.center)
+          .multilineTextAlignment(.leading)
           .lineSpacing(4)
+          .staged(0.38)
       }
-      Spacer()
-      PauseButton(title: "Start using Pause", style: .primaryOnDark, action: onFinish)
     }
   }
 }

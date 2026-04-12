@@ -42,7 +42,7 @@ struct PauseButton: View {
 
   private var background: Color {
     switch style {
-    case .primaryOnDark: return .cream
+    case .primaryOnDark: return .teaGreen
     case .primaryOnLight: return .vintageGrape
     case .ghostOnDark, .ghostOnLight: return .clear
     }
