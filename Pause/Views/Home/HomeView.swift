@@ -72,10 +72,11 @@ struct HomeView: View {
       }
       Spacer()
       Button { showSettings = true } label: {
-        PauseIconView(icon: .gear, size: 22, color: .mutedGrape)
+        PauseIconView(icon: .gear, size: 28, color: .cream.opacity(0.6))
+          .frame(width: 44, height: 44)
+          .contentShape(Rectangle())
       }
       .buttonStyle(.plain)
-      .padding(.bottom, 2)
     }
     .padding(.vertical, 8)
   }

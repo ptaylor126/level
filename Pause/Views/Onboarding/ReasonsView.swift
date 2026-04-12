@@ -19,58 +19,67 @@ struct ReasonsView: View {
     "Improve attention span"
   ]
 
+  private var availableSuggestions: [String] {
+    let trimmedReasons = Set(reasons.map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() })
+    return Self.suggestions.filter { !trimmedReasons.contains($0.lowercased()) }
+  }
+
   var body: some View {
-    VStack(alignment: .leading, spacing: 20) {
-      VStack(alignment: .leading, spacing: 12) {
-        Text("Why bother?")
-          .font(PauseFont.bold(32))
-          .foregroundStyle(Color.cream)
-          .multilineTextAlignment(.leading)
-          .staged(0.05)
-        Text("Write as many as you want. You'll see one every time you try to open an app.")
-          .font(.pauseBody)
-          .foregroundStyle(Color.cream.opacity(0.75))
-          .multilineTextAlignment(.leading)
-          .lineSpacing(4)
-          .staged(0.18)
-      }
-
-      suggestionStrip
-        .staged(0.28)
-
-      VStack(spacing: 10) {
-        ForEach(reasons.indices, id: \.self) { index in
-          ReasonField(
-            text: $reasons[index],
-            placeholder: placeholder(for: index),
-            canRemove: reasons.count > 1,
-            onRemove: { removeReason(at: index) }
-          )
-          .focused($focusedIndex, equals: index)
-          .staged(0.32 + Double(min(index, 3)) * 0.06)
+    ScrollView(showsIndicators: false) {
+      VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 12) {
+          Text("Why bother?")
+            .font(PauseFont.bold(32))
+            .foregroundStyle(Color.cream)
+            .multilineTextAlignment(.leading)
+            .staged(0.05)
+          Text("Write as many as you want. You'll see one every time you try to open an app.")
+            .font(.pauseBody)
+            .foregroundStyle(Color.cream.opacity(0.75))
+            .multilineTextAlignment(.leading)
+            .lineSpacing(4)
+            .staged(0.18)
         }
 
-        if reasons.count < 10 {
-          Button(action: addReason) {
-            HStack(spacing: 8) {
-              Image(systemName: "plus")
-                .font(PauseFont.bold(14))
-              Text("Add another")
-                .font(PauseFont.bold(14))
-            }
-            .foregroundStyle(Color.cream.opacity(0.7))
-            .frame(maxWidth: .infinity, minHeight: 44)
-            .background(
-              RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .strokeBorder(
-                  Color.cream.opacity(0.25),
-                  style: StrokeStyle(lineWidth: 1, dash: [4, 4])
-                )
+        if !availableSuggestions.isEmpty {
+          suggestionStrip
+            .staged(0.28)
+        }
+
+        VStack(spacing: 10) {
+          ForEach(reasons.indices, id: \.self) { index in
+            ReasonField(
+              text: $reasons[index],
+              placeholder: placeholder(for: index),
+              canRemove: reasons.count > 1,
+              onRemove: { removeReason(at: index) }
             )
+            .focused($focusedIndex, equals: index)
           }
-          .buttonStyle(.plain)
-          .staged(0.5)
+
+          if reasons.count < 10 {
+            Button(action: addReason) {
+              HStack(spacing: 8) {
+                Image(systemName: "plus")
+                  .font(PauseFont.bold(14))
+                Text("Add another")
+                  .font(PauseFont.bold(14))
+              }
+              .foregroundStyle(Color.cream.opacity(0.7))
+              .frame(maxWidth: .infinity, minHeight: 44)
+              .background(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                  .strokeBorder(
+                    Color.cream.opacity(0.25),
+                    style: StrokeStyle(lineWidth: 1, dash: [4, 4])
+                  )
+              )
+            }
+            .buttonStyle(.plain)
+          }
         }
+
+        Spacer(minLength: 20)
       }
     }
   }
@@ -96,7 +105,7 @@ struct ReasonsView: View {
   }
 
   private func removeReason(at index: Int) {
-    guard reasons.indices.contains(index) else { return }
+    guard reasons.indices.contains(index), reasons.count > 1 else { return }
     withAnimation(.easeInOut(duration: 0.2)) {
       reasons.remove(at: index)
     }
@@ -104,18 +113,21 @@ struct ReasonsView: View {
 
   private func applySuggestion(_ suggestion: String) {
     if let emptyIndex = reasons.firstIndex(where: { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) {
-      reasons[emptyIndex] = suggestion
+      withAnimation(.easeInOut(duration: 0.2)) {
+        reasons[emptyIndex] = suggestion
+      }
       focusedIndex = emptyIndex
-    } else {
-      reasons.append(suggestion)
-      focusedIndex = reasons.count - 1
+    } else if reasons.count < 10 {
+      withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+        reasons.append(suggestion)
+      }
     }
   }
 
   private var suggestionStrip: some View {
     ScrollView(.horizontal, showsIndicators: false) {
       HStack(spacing: 8) {
-        ForEach(Self.suggestions, id: \.self) { suggestion in
+        ForEach(availableSuggestions, id: \.self) { suggestion in
           Button {
             applySuggestion(suggestion)
           } label: {
