@@ -42,10 +42,6 @@ struct AppPickerView: View {
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(
-      RoundedRectangle(cornerRadius: 16, style: .continuous)
-        .fill(Color.cream.opacity(0.08))
-    )
   }
 
   private var emptyState: some View {
@@ -56,6 +52,10 @@ struct AppPickerView: View {
       Spacer()
     }
     .padding(20)
+    .background(
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
+        .fill(Color.cream.opacity(0.08))
+    )
   }
 
   private var pickedList: some View {
@@ -75,10 +75,13 @@ struct AppPickerView: View {
         }
       }
       .font(.pauseBody)
-      .foregroundStyle(Color.cream)
-      .environment(\.colorScheme, .dark)
+      .frame(maxWidth: .infinity, alignment: .leading)
       .padding(16)
     }
-    .frame(maxHeight: 180)
+    .frame(maxWidth: .infinity, maxHeight: 180)
+    .background(
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
+        .fill(Color.cream)
+    )
   }
 }
