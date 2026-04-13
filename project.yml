@@ -114,8 +114,9 @@ targets:
       - path: LevelShield
         excludes:
           - "*.png"
+          - "Assets.xcassets"
     resources:
-      - path: LevelShield/shield-icon.png
+      - path: LevelShield/Assets.xcassets
     info:
       path: SupportingFiles/LevelShield-Info.plist
       properties:

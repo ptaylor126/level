@@ -64,7 +64,7 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
     let muted = UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
 
-    let appIcon = UIImage(named: "shield-icon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
+    let appIcon = UIImage(named: "ShieldIcon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
 
     if exhausted {
       return ShieldConfiguration(
@@ -100,15 +100,13 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       )
     }
 
-    let levelledUp = opensToday > 0 ? "\nThe delay just levelled up." : ""
-
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
       backgroundColor: grape,
       icon: appIcon,
       title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
       subtitle: ShieldConfiguration.Label(
-        text: "\u{25B8} \(reason)\n\(attemptText)\(levelledUp)",
+        text: "\u{25B8} \(reason)\n\(attemptText)",
         color: cream
       ),
       primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
