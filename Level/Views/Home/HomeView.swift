@@ -7,6 +7,7 @@ struct HomeView: View {
   @StateObject private var viewModel = HomeViewModel()
   @State private var appeared = false
   @State private var showTriggerPrompt = false
+  @State private var showPathBCountdown = false
 
   var body: some View {
     ZStack {
@@ -21,6 +22,11 @@ struct HomeView: View {
           weekDots
 
           timeSavedCard
+
+          ManagedAppsCard(onTapApp: {
+            SharedStore.defaults.set(Date(), forKey: "pendingUnlockTimestamp")
+            showPathBCountdown = true
+          })
 
           reasonCard
         }
@@ -64,6 +70,11 @@ struct HomeView: View {
         .padding(.bottom, 20)
         .transition(.move(edge: .bottom).combined(with: .opacity))
       }
+    }
+    .fullScreenCover(isPresented: $showPathBCountdown) {
+      CountdownView(path: .pathB, onDismiss: {
+        showPathBCountdown = false
+      })
     }
   }
 

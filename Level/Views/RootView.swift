@@ -36,6 +36,7 @@ struct RootView: View {
 
       if showCountdown {
         CountdownView(
+          path: .pathA,
           onDismiss: {
             withAnimation(.easeInOut(duration: 0.3)) {
               showCountdown = false
@@ -88,12 +89,13 @@ struct RootView: View {
     let limit = unlockLimit > 0 ? unlockLimit : 10
     if unlockCount >= limit { return }
 
-    let hasPendingUnlock: Bool = {
-      guard let ts = SharedStore.defaults.object(forKey: "pendingUnlockTimestamp") as? Date else { return false }
-      return Date().timeIntervalSince(ts) < 60
+    let hasRecentShield: Bool = {
+      guard let ts = SharedStore.defaults.object(forKey: "lastShieldShownTimestamp") as? Date else { return false }
+      return Date().timeIntervalSince(ts) < 120
     }()
 
-    if hasPendingUnlock {
+    if hasRecentShield {
+      SharedStore.defaults.set(Date(), forKey: "pendingUnlockTimestamp")
       withAnimation(.easeInOut(duration: 0.3)) {
         showCountdown = true
       }

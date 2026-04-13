@@ -15,44 +15,38 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
   ]
 
   override func configuration(shielding application: Application) -> ShieldConfiguration {
-    makeConfig(appName: application.localizedDisplayName)
+    makeConfig()
   }
 
   override func configuration(
     shielding application: Application,
     in category: ActivityCategory
   ) -> ShieldConfiguration {
-    makeConfig(appName: application.localizedDisplayName)
+    makeConfig()
   }
 
   override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
-    makeConfig(appName: nil)
+    makeConfig()
   }
 
   override func configuration(
     shielding webDomain: WebDomain,
     in category: ActivityCategory
   ) -> ShieldConfiguration {
-    makeConfig(appName: nil)
+    makeConfig()
   }
 
-  private func makeConfig(appName: String?) -> ShieldConfiguration {
+  private func makeConfig() -> ShieldConfiguration {
     resetIfNewDay()
 
     let reason = nextReason()
 
-    let baseDelay = defaults?.integer(forKey: "defaultDelaySeconds").nonZero ?? 10
-    let increment = defaults?.integer(forKey: "delayIncrementSeconds").nonZero ?? 10
-    let opensToday = defaults?.integer(forKey: "todayOpenAttempts") ?? 0
-
     if defaults?.object(forKey: "firstAttemptTimestamp") == nil {
       defaults?.set(Date(), forKey: "firstAttemptTimestamp")
     }
-    let firstAttempt = defaults?.object(forKey: "firstAttemptTimestamp") as? Date ?? Date()
-    let elapsed = Date().timeIntervalSince(firstAttempt)
-    let delay = baseDelay + (increment * opensToday)
-    let delayMet = elapsed >= Double(delay)
+    defaults?.set(Date(), forKey: "lastShieldShownTimestamp")
 
+    let opensToday = defaults?.integer(forKey: "todayOpenAttempts") ?? 0
     defaults?.set(opensToday + 1, forKey: "todayOpenAttempts")
 
     let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
@@ -62,7 +56,6 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
 
     let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
     let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
-    let muted = UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
 
     let appIcon = UIImage(named: "ShieldIcon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
 
@@ -73,7 +66,7 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
         icon: appIcon,
         title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
         subtitle: ShieldConfiguration.Label(
-          text: "You've used all your opens today.",
+          text: "You've used all your opens today.\n\nSee you tomorrow.",
           color: cream
         ),
         primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
@@ -82,33 +75,14 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       )
     }
 
-    if delayMet {
-      defaults?.set(Date(), forKey: "pendingUnlockTimestamp")
-
-      return ShieldConfiguration(
-        backgroundBlurStyle: .systemMaterialDark,
-        backgroundColor: grape,
-        icon: appIcon,
-        title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
-        subtitle: ShieldConfiguration.Label(
-          text: "\u{25B8} \(reason)\n\(attemptText)",
-          color: cream
-        ),
-        primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
-        primaryButtonBackgroundColor: cream,
-        secondaryButtonLabel: ShieldConfiguration.Label(text: "Continue", color: muted)
-      )
-    }
+    let subtitle = "Remember:\n\u{25B8} \(reason)\n\n\(attemptText)\n\nOpen Level to unlock this app."
 
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
       backgroundColor: grape,
       icon: appIcon,
       title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
-      subtitle: ShieldConfiguration.Label(
-        text: "\u{25B8} \(reason)\n\(attemptText)",
-        color: cream
-      ),
+      subtitle: ShieldConfiguration.Label(text: subtitle, color: cream),
       primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
       primaryButtonBackgroundColor: cream,
       secondaryButtonLabel: nil
@@ -137,9 +111,8 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     defaults?.set(0, forKey: "todayUnlockCount")
     defaults?.set(0, forKey: "todayDeclinedCount")
     defaults?.removeObject(forKey: "firstAttemptTimestamp")
-    defaults?.removeObject(forKey: "lastShieldTimestamp")
+    defaults?.removeObject(forKey: "lastShieldShownTimestamp")
     defaults?.removeObject(forKey: "reasonPlaylist")
-    defaults?.removeObject(forKey: "pendingUnlockTimestamp")
     defaults?.set(false, forKey: "triggerPromptShownThisSession")
     defaults?.set(Date(), forKey: "lastDayReset")
   }

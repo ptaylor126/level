@@ -1,14 +1,21 @@
 import SwiftUI
 
+enum UnlockPath {
+  case pathA
+  case pathB
+}
+
 struct CountdownView: View {
   @EnvironmentObject private var screenTime: ScreenTimeManager
 
+  let path: UnlockPath
   let onDismiss: () -> Void
 
   @State private var remaining: Int = 0
   @State private var showOpenButton = false
   @State private var timerActive = true
   @State private var appeared = false
+  @State private var xpGain: Int? = nil
 
   private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -38,6 +45,12 @@ struct CountdownView: View {
         exhaustedContent
       } else {
         timerContent
+      }
+
+      if let xp = xpGain {
+        XPGainBadge(amount: xp)
+          .transition(.move(edge: .top).combined(with: .opacity))
+          .zIndex(10)
       }
     }
     .preferredColorScheme(.dark)
@@ -97,16 +110,11 @@ struct CountdownView: View {
         }
 
         if showOpenButton {
-          VStack(spacing: 8) {
-            LevelButton(
-              title: "Open anyway",
-              style: .primaryOnDark,
-              action: handleOpenAnyway
-            )
-            Text("Levelling up the delay next time.")
-              .font(.levelCaption)
-              .foregroundStyle(Color.mutedGrape)
-          }
+          LevelButton(
+            title: "Open anyway",
+            style: .primaryOnDark,
+            action: handleOpenAnyway
+          )
           .padding(.horizontal, 20)
           .transition(.scale.combined(with: .opacity))
         }
@@ -167,16 +175,42 @@ struct CountdownView: View {
   }
 
   private func handleOpenAnyway() {
+    let xpEarned = path == .pathB ? 5 : 0
+    if xpEarned > 0 {
+      awardXP(xpEarned)
+    }
     SharedStore.defaults.removeObject(forKey: "pendingUnlockTimestamp")
+    SharedStore.defaults.removeObject(forKey: "lastShieldShownTimestamp")
     screenTime.startSession()
-    onDismiss()
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + (xpEarned > 0 ? 1.0 : 0.1)) {
+      onDismiss()
+    }
   }
 
   private func handleNotNow() {
     let declined = SharedStore.defaults.integer(forKey: "todayDeclinedCount")
     SharedStore.defaults.set(declined + 1, forKey: "todayDeclinedCount")
+    awardXP(10)
     SharedStore.defaults.removeObject(forKey: "pendingUnlockTimestamp")
-    onDismiss()
+    SharedStore.defaults.removeObject(forKey: "lastShieldShownTimestamp")
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+      onDismiss()
+    }
+  }
+
+  private func awardXP(_ amount: Int) {
+    let current = SharedStore.defaults.integer(forKey: "totalXP")
+    SharedStore.defaults.set(current + amount, forKey: "totalXP")
+    withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+      xpGain = amount
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
+      withAnimation(.easeOut(duration: 0.3)) {
+        xpGain = nil
+      }
+    }
   }
 
   private var formattedTime: String {
@@ -186,5 +220,32 @@ struct CountdownView: View {
       return String(format: "%d:%02d", m, s)
     }
     return "\(remaining)"
+  }
+}
+
+private struct XPGainBadge: View {
+  let amount: Int
+  @State private var offset: CGFloat = 0
+  @State private var scale: CGFloat = 0.8
+
+  var body: some View {
+    Text("+\(amount) XP")
+      .font(LevelFont.extraBold(22))
+      .foregroundStyle(Color.vintageGrape)
+      .padding(.horizontal, 20)
+      .padding(.vertical, 10)
+      .background(
+        Capsule().fill(Color.teaGreen)
+      )
+      .scaleEffect(scale)
+      .offset(y: offset)
+      .onAppear {
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.65)) {
+          scale = 1.0
+        }
+        withAnimation(.easeOut(duration: 1.2)) {
+          offset = -80
+        }
+      }
   }
 }

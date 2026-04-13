@@ -20,6 +20,7 @@
 		26CD17F6D4234252B79E3106 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A3349EE90CE02C78E22EE /* MainTabView.swift */; };
 		2ACED3071EB53D20BEEBEB72 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616AEA5D76D4EA1622578ED /* StatsView.swift */; };
 		3423084D6FDBD96404C9838B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A472FD57D2B4E71E38F03 /* HomeView.swift */; };
+		358C968134E07918BA8E533B /* HowItWorksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20D193BFA9CB1F75E564A9E /* HowItWorksView.swift */; };
 		39059FBCEE52F24DE34B8DC1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0688E7CCBC9C234D3A67EB /* SettingsView.swift */; };
 		3B8C0320DE186E71CBE7660E /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F876E9461A69FF5153B69709 /* CountdownView.swift */; };
 		3D27F3238CDAD145C0429373 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE468813CD9FA8596F20F966 /* SummaryView.swift */; };
@@ -37,6 +38,7 @@
 		75D919684CE7C14E4ABEB912 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */; };
 		77EABC8CC9C68F805CA66119 /* LevelMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */; };
 		85514328D4C62C23A4718765 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BB9622DB050DB0C2C5EEC1 /* ScheduleView.swift */; };
+		8E1CFB6503B9F5DEAE576F17 /* ManagedAppsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B562F02DF85397725E1B3 /* ManagedAppsCard.swift */; };
 		904513B8331044A52176ACE7 /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A130F6A0E5C2BD514499D87A /* PlusJakartaSans-Medium.ttf */; };
 		98982BEB2AFE908C2F375198 /* ReasonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */; };
 		9AB0DD942E6B7CD965FB1E87 /* AppPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F5C8BB881AA62CC31AF12 /* AppPickerView.swift */; };
@@ -156,6 +158,7 @@
 		BC60AE929DAC4875AFB4EC5E /* PlusJakartaSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Regular.ttf"; sourceTree = "<group>"; };
 		BE468813CD9FA8596F20F966 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		BF18D33485E14DB096E25364 /* MomentumIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumIntroView.swift; sourceTree = "<group>"; };
+		C20D193BFA9CB1F75E564A9E /* HowItWorksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowItWorksView.swift; sourceTree = "<group>"; };
 		C2435F479F1256F6B1F33CA2 /* LevelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCard.swift; sourceTree = "<group>"; };
 		C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMonitorExtension.swift; sourceTree = "<group>"; };
 		CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 		E97FF2C90CFBF45459C357F2 /* DailyRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRecord.swift; sourceTree = "<group>"; };
 		EAA3052A87F1CF61AF3B53B3 /* Fraunces72pt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces72pt-Bold.ttf"; sourceTree = "<group>"; };
 		EC6AE7B97481E5015C47426D /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
+		F10B562F02DF85397725E1B3 /* ManagedAppsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedAppsCard.swift; sourceTree = "<group>"; };
 		F876E9461A69FF5153B69709 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		FA9AC983C634C66179349F12 /* Fraunces-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-Variable.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -321,6 +325,7 @@
 			children = (
 				E65F5C8BB881AA62CC31AF12 /* AppPickerView.swift */,
 				4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */,
+				C20D193BFA9CB1F75E564A9E /* HowItWorksView.swift */,
 				BF18D33485E14DB096E25364 /* MomentumIntroView.swift */,
 				EC6AE7B97481E5015C47426D /* OnboardingFlow.swift */,
 				35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */,
@@ -363,6 +368,7 @@
 			children = (
 				296A7E02C2425FF84029B878 /* AppLimitsCard.swift */,
 				CB4A472FD57D2B4E71E38F03 /* HomeView.swift */,
+				F10B562F02DF85397725E1B3 /* ManagedAppsCard.swift */,
 				1FAA1F4A99B294F370822B25 /* MomentumCard.swift */,
 				9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */,
 				7198A78BBE42C18326A72C49 /* ReasonCard.swift */,
@@ -576,12 +582,14 @@
 				2582930BAE5CADAC094B6967 /* Font+Level.swift in Sources */,
 				3423084D6FDBD96404C9838B /* HomeView.swift in Sources */,
 				EBFC0F25007D2161D47AD88D /* HomeViewModel.swift in Sources */,
+				358C968134E07918BA8E533B /* HowItWorksView.swift in Sources */,
 				43929A97BBC491DC8ABAE9BF /* LevelApp.swift in Sources */,
 				1793846445A76E098F06F0A5 /* LevelButton.swift in Sources */,
 				B5984D95B9943CE701203436 /* LevelCard.swift in Sources */,
 				11D7A48E496DA329F09EE7BD /* LevelIcon.swift in Sources */,
 				AED099257CC8372A7E664148 /* LevelWordmark.swift in Sources */,
 				26CD17F6D4234252B79E3106 /* MainTabView.swift in Sources */,
+				8E1CFB6503B9F5DEAE576F17 /* ManagedAppsCard.swift in Sources */,
 				9F0434C5AC30B29B60B2FD2A /* MomentumCard.swift in Sources */,
 				71443F9A3F73B8F1A88D14D8 /* MomentumEngine.swift in Sources */,
 				D4A8A262DE450D3D117B87CB /* MomentumIntroView.swift in Sources */,

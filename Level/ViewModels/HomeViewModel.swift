@@ -16,7 +16,7 @@ final class HomeViewModel: ObservableObject {
   @Published var momentumTrendScores: [Double] = []
   @Published var momentumTrendLabels: [String] = []
 
-  var xpPoints: Int { momentumScore * 10 }
+  var xpPoints: Int { SharedStore.defaults.integer(forKey: "totalXP") }
 
   var todayTimeSaved: TimeInterval {
     max(0, yesterdayScreenTime - todayScreenTime)

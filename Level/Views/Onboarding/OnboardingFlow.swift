@@ -8,6 +8,7 @@ enum OnboardingStep: Int, CaseIterable {
   case reasons
   case unlockLimit
   case sessionLength
+  case howItWorks
   case momentum
   case summary
   case confirmation
@@ -47,7 +48,7 @@ struct OnboardingFlow: View {
             .animation(.easeInOut(duration: 0.2), value: step.canGoBack)
 
           switch step {
-          case .reasons, .summary, .momentum, .unlockLimit, .sessionLength:
+          case .reasons, .summary, .momentum, .unlockLimit, .sessionLength, .howItWorks:
             Color.clear.frame(height: max(0, proxy.size.height * 0.06))
           default:
             Color.clear.frame(height: max(0, proxy.size.height * 0.18))
@@ -113,6 +114,8 @@ struct OnboardingFlow: View {
       UnlockLimitView(unlockLimit: $unlockLimit)
     case .sessionLength:
       SessionLengthView(sessionMinutes: $sessionMinutes)
+    case .howItWorks:
+      HowItWorksView()
     case .momentum:
       MomentumIntroView()
     case .summary:
@@ -159,6 +162,7 @@ struct OnboardingFlow: View {
     case .reasons: return "Next"
     case .unlockLimit: return "Next"
     case .sessionLength: return "Next"
+    case .howItWorks: return "Got it"
     case .momentum: return "Next"
     case .summary: return "Looks good"
     case .confirmation: return "Got it"
@@ -167,7 +171,7 @@ struct OnboardingFlow: View {
 
   private var isButtonEnabled: Bool {
     switch step {
-    case .welcome, .confirmation, .summary, .momentum, .unlockLimit, .sessionLength:
+    case .welcome, .confirmation, .summary, .momentum, .howItWorks, .unlockLimit, .sessionLength:
       return true
     case .appPicker:
       return screenTime.selectedItemCount > 0
@@ -219,6 +223,8 @@ struct OnboardingFlow: View {
     case .unlockLimit:
       step = .sessionLength
     case .sessionLength:
+      step = .howItWorks
+    case .howItWorks:
       step = .momentum
     case .momentum:
       step = .summary
