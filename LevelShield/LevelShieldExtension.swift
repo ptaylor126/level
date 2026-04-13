@@ -58,12 +58,13 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
     let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
     let green = UIColor(red: 221/255, green: 244/255, blue: 201/255, alpha: 1)
+    let shieldIcon = UIImage(named: "shield-icon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
 
     if exhausted {
       return ShieldConfiguration(
         backgroundBlurStyle: nil,
         backgroundColor: grape,
-        icon: nil,
+        icon: shieldIcon,
         title: ShieldConfiguration.Label(text: "Level", color: cream),
         subtitle: ShieldConfiguration.Label(
           text: "You've used all your opens today.\nSee you tomorrow.",

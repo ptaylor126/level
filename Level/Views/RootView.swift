@@ -93,7 +93,14 @@ struct RootView: View {
     let limit = unlockLimit > 0 ? unlockLimit : 10
     if unlockCount >= limit { return }
 
-    if screenTime.hasPendingCountdown {
+    let hasPending = screenTime.hasPendingCountdown
+    let hasActionPending: Bool = {
+      guard let ts = SharedStore.defaults.object(forKey: "pendingCountdownTimestamp") as? Date else { return false }
+      return Date().timeIntervalSince(ts) < 60
+    }()
+
+    if hasPending || hasActionPending {
+      SharedStore.defaults.removeObject(forKey: "pendingCountdownTimestamp")
       withAnimation(.easeInOut(duration: 0.3)) {
         showCountdown = true
       }

@@ -71,9 +71,13 @@ targets:
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_UIUserInterfaceStyle: ""
         GENERATE_INFOPLIST_FILE: NO
+        CFBundleURLTypes:
+          - CFBundleURLSchemes:
+              - level
     dependencies:
       - target: LevelMonitor
       - target: LevelShield
+      - target: LevelShieldAction
 
   LevelMonitor:
     type: app-extension
@@ -108,6 +112,10 @@ targets:
     deploymentTarget: "17.0"
     sources:
       - path: LevelShield
+        excludes:
+          - "*.png"
+    resources:
+      - path: LevelShield/shield-icon.png
     info:
       path: SupportingFiles/LevelShield-Info.plist
       properties:
@@ -127,4 +135,31 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.level.shield
         PRODUCT_NAME: LevelShield
+        GENERATE_INFOPLIST_FILE: NO
+
+  LevelShieldAction:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: LevelShieldAction
+    info:
+      path: SupportingFiles/LevelShieldAction-Info.plist
+      properties:
+        CFBundleDisplayName: LevelShieldAction
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettings.shield-action-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).LevelShieldActionExtension
+    entitlements:
+      path: SupportingFiles/LevelShieldAction.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups:
+          - group.com.paultaylor.level
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.paultaylor.level.shieldaction
+        PRODUCT_NAME: LevelShieldAction
         GENERATE_INFOPLIST_FILE: NO

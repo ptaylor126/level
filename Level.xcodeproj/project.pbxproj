@@ -31,6 +31,7 @@
 		5E59FCDC5ADFD2814A49C52A /* AppLimitsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A7E02C2425FF84029B878 /* AppLimitsCard.swift */; };
 		655202EB99B4C21063980331 /* LevelShieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */; };
 		71443F9A3F73B8F1A88D14D8 /* MomentumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967516D3A3B29A4B37C9652A /* MomentumEngine.swift */; };
+		73E09F8094837717B606F0B6 /* LevelShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */; };
 		75D919684CE7C14E4ABEB912 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */; };
 		77EABC8CC9C68F805CA66119 /* LevelMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */; };
 		904513B8331044A52176ACE7 /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A130F6A0E5C2BD514499D87A /* PlusJakartaSans-Medium.ttf */; };
@@ -52,6 +53,7 @@
 		BCD05E96C6618CB42E273EC6 /* TriggerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626231052B76247D9A0F2BE /* TriggerPromptView.swift */; };
 		BF4AE71205F6DE2334813DEE /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */; };
 		C77EBDF0404D26EBC9B87207 /* Fraunces72pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAA3052A87F1CF61AF3B53B3 /* Fraunces72pt-Bold.ttf */; };
+		CC8EFD631B5E7D431F975D6F /* LevelShieldAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5F239F7915643AF411246B41 /* LevelShieldAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CE9E2528033B3EBC8BDE2657 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B683571F8442D6453A11106 /* UserProfile.swift */; };
 		D03430A1BCEAD1E4B2F80949 /* LevelMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 739252BC27C06A0398E4C84E /* LevelMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D4A8A262DE450D3D117B87CB /* MomentumIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF18D33485E14DB096E25364 /* MomentumIntroView.swift */; };
@@ -65,6 +67,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2E10C0A711515968E52E2DB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F916AF275E4E21B79BF0B22A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC6E93F3CF5594610EB7E86E;
+			remoteInfo = LevelShieldAction;
+		};
 		EDE83AA4E9644C344B653278 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F916AF275E4E21B79BF0B22A /* Project object */;
@@ -90,6 +99,7 @@
 			files = (
 				D03430A1BCEAD1E4B2F80949 /* LevelMonitor.appex in Embed Foundation Extensions */,
 				0DF21226BA48F5B71E609C80 /* LevelShield.appex in Embed Foundation Extensions */,
+				CC8EFD631B5E7D431F975D6F /* LevelShieldAction.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,6 +116,7 @@
 		24730D95C239290FE5F01C53 /* TriggerLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerLog.swift; sourceTree = "<group>"; };
 		296A7E02C2425FF84029B878 /* AppLimitsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLimitsCard.swift; sourceTree = "<group>"; };
 		2B683571F8442D6453A11106 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelShieldActionExtension.swift; sourceTree = "<group>"; };
 		35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonsView.swift; sourceTree = "<group>"; };
 		42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelShieldExtension.swift; sourceTree = "<group>"; };
 		4389A6AC46998D7B8A9E9C66 /* StagedEntrance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedEntrance.swift; sourceTree = "<group>"; };
@@ -117,6 +128,7 @@
 		4C7B14785CC45B8A69458A97 /* Font+Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Level.swift"; sourceTree = "<group>"; };
 		4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		5626231052B76247D9A0F2BE /* TriggerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerPromptView.swift; sourceTree = "<group>"; };
+		5F239F7915643AF411246B41 /* LevelShieldAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		66A08675CD66FD8E3D925B75 /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
 		6944DA0CE3BAD8312F92D617 /* LevelShield.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		69BF4DFB4D0A9D449B9341E0 /* LevelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelButton.swift; sourceTree = "<group>"; };
@@ -175,6 +187,7 @@
 				1E4A9AFCE4D97EBAD5E99534 /* Level.app */,
 				739252BC27C06A0398E4C84E /* LevelMonitor.appex */,
 				6944DA0CE3BAD8312F92D617 /* LevelShield.appex */,
+				5F239F7915643AF411246B41 /* LevelShieldAction.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,6 +217,7 @@
 				347D60493717F38A1D4B0BFB /* Level */,
 				C01A1A2CD1715AE9967E492B /* LevelMonitor */,
 				22BCEB0D677DC4226C10EB00 /* LevelShield */,
+				971CA61BE674400820C73EAE /* LevelShieldAction */,
 				1EB66EE5224E89DA5E522E09 /* Products */,
 			);
 			indentWidth = 2;
@@ -282,6 +296,14 @@
 				05BF3E09F84FAADE9BFE0A1A /* TriggerTracker.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		971CA61BE674400820C73EAE /* LevelShieldAction */ = {
+			isa = PBXGroup;
+			children = (
+				34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */,
+			);
+			path = LevelShieldAction;
 			sourceTree = "<group>";
 		};
 		A7A6984055D30E69E00E9DBF /* Onboarding */ = {
@@ -399,6 +421,7 @@
 			dependencies = (
 				32EEE2D2D161B3BF82DCA87C /* PBXTargetDependency */,
 				84BE69CF1EADAA591368E5B3 /* PBXTargetDependency */,
+				4F72F676CA483E5C625FE74A /* PBXTargetDependency */,
 			);
 			name = Level;
 			packageProductDependencies = (
@@ -406,6 +429,23 @@
 			productName = Level;
 			productReference = 1E4A9AFCE4D97EBAD5E99534 /* Level.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CC6E93F3CF5594610EB7E86E /* LevelShieldAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FD14106678418D9A656B8F63 /* Build configuration list for PBXNativeTarget "LevelShieldAction" */;
+			buildPhases = (
+				227E19AFF0979A01C34B35D7 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LevelShieldAction;
+			packageProductDependencies = (
+			);
+			productName = LevelShieldAction;
+			productReference = 5F239F7915643AF411246B41 /* LevelShieldAction.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -428,6 +468,10 @@
 						DevelopmentTeam = 7HHDW86546;
 						ProvisioningStyle = Automatic;
 					};
+					CC6E93F3CF5594610EB7E86E = {
+						DevelopmentTeam = 7HHDW86546;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 37549B5043D16650951A775C /* Build configuration list for PBXProject "Level" */;
@@ -447,6 +491,7 @@
 				AA245ED0285EEFEB173EC114 /* Level */,
 				A0CE10CCDF8ABCC3B9FDD06C /* LevelMonitor */,
 				35C2FE05DA0F0A51B8B41271 /* LevelShield */,
+				CC6E93F3CF5594610EB7E86E /* LevelShieldAction */,
 			);
 		};
 /* End PBXProject section */
@@ -476,6 +521,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				77EABC8CC9C68F805CA66119 /* LevelMonitorExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		227E19AFF0979A01C34B35D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73E09F8094837717B606F0B6 /* LevelShieldActionExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +596,11 @@
 			isa = PBXTargetDependency;
 			target = A0CE10CCDF8ABCC3B9FDD06C /* LevelMonitor */;
 			targetProxy = F8ED92687B5563262D83A25B /* PBXContainerItemProxy */;
+		};
+		4F72F676CA483E5C625FE74A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC6E93F3CF5594610EB7E86E /* LevelShieldAction */;
+			targetProxy = 2E10C0A711515968E52E2DB1 /* PBXContainerItemProxy */;
 		};
 		84BE69CF1EADAA591368E5B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -619,6 +677,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CFBundleURLTypes = "[[\"CFBundleURLSchemes\": [\"level\"]]]";
 				CODE_SIGN_ENTITLEMENTS = SupportingFiles/Level.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
@@ -711,6 +770,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CFBundleURLTypes = "[[\"CFBundleURLSchemes\": [\"level\"]]]";
 				CODE_SIGN_ENTITLEMENTS = SupportingFiles/Level.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
@@ -786,6 +846,25 @@
 			};
 			name = Release;
 		};
+		70E2984D9BB319330AB338A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SupportingFiles/LevelShieldAction.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "SupportingFiles/LevelShieldAction-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.paultaylor.level.shieldaction;
+				PRODUCT_NAME = LevelShieldAction;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		C7D9F393E877392E9DF2352D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -804,6 +883,25 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		DEE8865CBFE1B024BD8BD29D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SupportingFiles/LevelShieldAction.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "SupportingFiles/LevelShieldAction-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.paultaylor.level.shieldaction;
+				PRODUCT_NAME = LevelShieldAction;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -840,6 +938,15 @@
 			buildConfigurations = (
 				C7D9F393E877392E9DF2352D /* Debug */,
 				65BB2E5183FBC32DAD595E6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FD14106678418D9A656B8F63 /* Build configuration list for PBXNativeTarget "LevelShieldAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70E2984D9BB319330AB338A5 /* Debug */,
+				DEE8865CBFE1B024BD8BD29D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

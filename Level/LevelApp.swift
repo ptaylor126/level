@@ -10,6 +10,11 @@ struct LevelApp: App {
       RootView()
         .environmentObject(screenTime)
         .tint(Color.teaGreen)
+        .onOpenURL { url in
+          if url.scheme == "level" && url.host == "timer" {
+            SharedStore.defaults.set(Date(), forKey: "pendingCountdownTimestamp")
+          }
+        }
     }
     .modelContainer(DataStore.shared.container)
   }
