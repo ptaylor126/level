@@ -41,17 +41,9 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
 
     let reason = nextReason()
 
-    let baseDelay = defaults?.integer(forKey: "defaultDelaySeconds").nonZero ?? 10
-    let increment = defaults?.integer(forKey: "delayIncrementSeconds").nonZero ?? 10
     let opensToday = defaults?.integer(forKey: "todayOpenAttempts") ?? 0
-    let delay = baseDelay + (increment * opensToday)
-
-    let lastShown = defaults?.object(forKey: "lastShieldTimestamp") as? Date
-    let elapsed = lastShown.map { Date().timeIntervalSince($0) } ?? 0
-    let delayMet = elapsed >= Double(delay) && lastShown != nil
-
-    defaults?.set(Date(), forKey: "lastShieldTimestamp")
     defaults?.set(opensToday + 1, forKey: "todayOpenAttempts")
+    defaults?.set(Date(), forKey: "lastShieldTimestamp")
 
     let declinedCount = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
     defaults?.set(declinedCount + 1, forKey: "todayDeclinedCount")
@@ -60,14 +52,9 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     let unlockLimit = defaults?.integer(forKey: "defaultUnlockLimit").nonZero ?? 10
     let exhausted = unlockCount >= unlockLimit
 
-    if delayMet && !exhausted {
-      defaults?.set(unlockCount + 1, forKey: "todayUnlockCount")
-    }
-
     let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
     let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
     let green = UIColor(red: 221/255, green: 244/255, blue: 201/255, alpha: 1)
-    let muted = UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
 
     if exhausted {
       return ShieldConfiguration(
@@ -85,36 +72,21 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       )
     }
 
-    if delayMet {
-      return ShieldConfiguration(
-        backgroundBlurStyle: nil,
-        backgroundColor: grape,
-        icon: nil,
-        title: ShieldConfiguration.Label(text: "Level", color: green),
-        subtitle: ShieldConfiguration.Label(text: reason, color: cream),
-        primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
-        primaryButtonBackgroundColor: cream,
-        secondaryButtonLabel: ShieldConfiguration.Label(text: "Open anyway", color: muted)
-      )
-    }
-
-    let waitSeconds = delay - Int(elapsed)
-    let waitText = waitSeconds > 60
-      ? "Wait \(waitSeconds / 60)m \(waitSeconds % 60)s"
-      : "Wait \(max(waitSeconds, 1))s"
-
     return ShieldConfiguration(
       backgroundBlurStyle: nil,
       backgroundColor: grape,
       icon: nil,
       title: ShieldConfiguration.Label(text: "Level", color: green),
       subtitle: ShieldConfiguration.Label(
-        text: "\(reason)\n\n\(waitText) before you can open this.",
+        text: "\(reason)\n\nOpen Level to start your timer.",
         color: cream
       ),
-      primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
+      primaryButtonLabel: ShieldConfiguration.Label(text: "Open Level", color: grape),
       primaryButtonBackgroundColor: cream,
-      secondaryButtonLabel: nil
+      secondaryButtonLabel: ShieldConfiguration.Label(
+        text: "Not now",
+        color: UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
+      )
     )
   }
 

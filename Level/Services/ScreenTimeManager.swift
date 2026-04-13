@@ -104,4 +104,64 @@ final class ScreenTimeManager: ObservableObject {
     store.shield.applicationCategories = nil
     store.shield.webDomains = nil
   }
+
+  // MARK: - Session timer
+
+  private var sessionTimer: Timer?
+
+  func startSession() {
+    let unlockCount = SharedStore.defaults.integer(forKey: "todayUnlockCount")
+    SharedStore.defaults.set(unlockCount + 1, forKey: "todayUnlockCount")
+
+    clearShields()
+
+    let sessionSeconds = SharedStore.defaults.integer(forKey: "sessionLengthSeconds")
+    let duration = sessionSeconds > 0 ? TimeInterval(sessionSeconds) : 300
+
+    sessionTimer?.invalidate()
+    sessionTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { [weak self] _ in
+      Task { @MainActor in
+        self?.applyShields()
+      }
+    }
+  }
+
+  func cancelSession() {
+    sessionTimer?.invalidate()
+    sessionTimer = nil
+    applyShields()
+  }
+
+  // MARK: - Pending countdown
+
+  var hasPendingCountdown: Bool {
+    guard let timestamp = SharedStore.defaults.object(forKey: "lastShieldTimestamp") as? Date else {
+      return false
+    }
+    return Date().timeIntervalSince(timestamp) < 30
+  }
+
+  func pendingCountdownSeconds() -> Int {
+    let baseDelay = SharedStore.defaults.integer(forKey: "defaultDelaySeconds")
+    let increment = SharedStore.defaults.integer(forKey: "delayIncrementSeconds")
+    let opens = SharedStore.defaults.integer(forKey: "todayOpenAttempts")
+    let base = baseDelay > 0 ? baseDelay : 10
+    let inc = increment > 0 ? increment : 10
+    return base + (inc * max(0, opens - 1))
+  }
+
+  func currentReason() -> String {
+    let reasons = SharedStore.defaults.stringArray(forKey: "userReasons") ?? []
+    if reasons.isEmpty {
+      return ["Do you actually need to open this?",
+              "You've got better things to do.",
+              "Is this worth your time right now?",
+              "What were you about to do before this?"].randomElement()!
+    }
+    return reasons.randomElement()!
+  }
+
+  func clearPendingCountdown() {
+    SharedStore.defaults.removeObject(forKey: "lastShieldTimestamp")
+  }
 }

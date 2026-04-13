@@ -3,9 +3,11 @@ import SwiftUI
 
 struct RootView: View {
   @Environment(\.modelContext) private var context
+  @Environment(\.scenePhase) private var scenePhase
   @EnvironmentObject private var screenTime: ScreenTimeManager
   @Query private var profiles: [UserProfile]
   @Query private var settingsRecords: [AppSettings]
+  @State private var showCountdown = false
 
   private var colorScheme: ColorScheme? {
     switch settingsRecords.first?.appearanceMode {
@@ -16,21 +18,48 @@ struct RootView: View {
   }
 
   var body: some View {
-    Group {
-      if let profile = profiles.first {
-        if profile.onboardingComplete {
-          HomeView()
-            .onAppear { resumeMonitoring(profile: profile) }
+    ZStack {
+      Group {
+        if let profile = profiles.first {
+          if profile.onboardingComplete {
+            HomeView()
+              .onAppear { resumeMonitoring(profile: profile) }
+          } else {
+            OnboardingFlow(profile: profile)
+          }
         } else {
-          OnboardingFlow(profile: profile)
+          Color.vintageGrape
+            .ignoresSafeArea()
+            .task { seedProfile() }
         }
-      } else {
-        Color.vintageGrape
-          .ignoresSafeArea()
-          .task { seedProfile() }
+      }
+
+      if showCountdown {
+        CountdownView(
+          reason: screenTime.currentReason(),
+          totalSeconds: screenTime.pendingCountdownSeconds(),
+          onOpenAnyway: {
+            screenTime.startSession()
+            showCountdown = false
+          },
+          onDismiss: {
+            screenTime.clearPendingCountdown()
+            showCountdown = false
+          }
+        )
+        .transition(.opacity)
+        .zIndex(100)
       }
     }
-    .preferredColorScheme(colorScheme)
+    .preferredColorScheme(showCountdown ? .dark : colorScheme)
+    .onChange(of: scenePhase) { _, phase in
+      if phase == .active {
+        checkPendingCountdown()
+      }
+    }
+    .onAppear {
+      checkPendingCountdown()
+    }
   }
 
   private func seedProfile() {
@@ -56,5 +85,18 @@ struct RootView: View {
     guard screenTime.isAuthorized else { return }
     screenTime.syncReasonsToDefaults(profile.reasons)
     screenTime.startMonitoring()
+  }
+
+  private func checkPendingCountdown() {
+    let unlockCount = SharedStore.defaults.integer(forKey: "todayUnlockCount")
+    let unlockLimit = SharedStore.defaults.integer(forKey: "defaultUnlockLimit")
+    let limit = unlockLimit > 0 ? unlockLimit : 10
+    if unlockCount >= limit { return }
+
+    if screenTime.hasPendingCountdown {
+      withAnimation(.easeInOut(duration: 0.3)) {
+        showCountdown = true
+      }
+    }
   }
 }
