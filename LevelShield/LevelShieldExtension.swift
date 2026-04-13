@@ -15,28 +15,28 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
   ]
 
   override func configuration(shielding application: Application) -> ShieldConfiguration {
-    makeConfig()
+    makeConfig(appName: application.localizedDisplayName)
   }
 
   override func configuration(
     shielding application: Application,
     in category: ActivityCategory
   ) -> ShieldConfiguration {
-    makeConfig()
+    makeConfig(appName: application.localizedDisplayName)
   }
 
   override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
-    makeConfig()
+    makeConfig(appName: nil)
   }
 
   override func configuration(
     shielding webDomain: WebDomain,
     in category: ActivityCategory
   ) -> ShieldConfiguration {
-    makeConfig()
+    makeConfig(appName: nil)
   }
 
-  private func makeConfig() -> ShieldConfiguration {
+  private func makeConfig(appName: String?) -> ShieldConfiguration {
     resetIfNewDay()
 
     let reason = nextReason()
@@ -56,22 +56,32 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
     let unlockLimit = defaults?.integer(forKey: "defaultUnlockLimit").nonZero ?? 10
     let exhausted = unlockCount >= unlockLimit
+    let opensText = "\(unlockCount) of \(unlockLimit) opens today"
 
     let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
     let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
     let muted = UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
 
+    let appIcon = UIImage(named: "shield-icon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
+
+    let title: String
+    if let name = appName, !name.isEmpty {
+      title = "Open \(name)?"
+    } else {
+      title = "Need this right now?"
+    }
+
     if exhausted {
       return ShieldConfiguration(
         backgroundBlurStyle: .systemMaterialDark,
         backgroundColor: grape,
-        icon: UIImage(),
-        title: ShieldConfiguration.Label(text: "Level", color: cream),
+        icon: appIcon,
+        title: ShieldConfiguration.Label(text: title, color: cream),
         subtitle: ShieldConfiguration.Label(
-          text: "You've used all your opens today.\nSee you tomorrow.",
+          text: "You've used all your opens today.\n\n\(opensText)",
           color: cream
         ),
-        primaryButtonLabel: ShieldConfiguration.Label(text: "Got it", color: grape),
+        primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
         primaryButtonBackgroundColor: cream,
         secondaryButtonLabel: nil
       )
@@ -81,12 +91,15 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       return ShieldConfiguration(
         backgroundBlurStyle: .systemMaterialDark,
         backgroundColor: grape,
-        icon: UIImage(),
-        title: ShieldConfiguration.Label(text: "Level", color: cream),
-        subtitle: ShieldConfiguration.Label(text: reason, color: cream),
-        primaryButtonLabel: ShieldConfiguration.Label(text: "Open anyway", color: grape),
+        icon: appIcon,
+        title: ShieldConfiguration.Label(text: title, color: cream),
+        subtitle: ShieldConfiguration.Label(
+          text: "\u{25B8} \(reason)\n\n\(opensText)",
+          color: cream
+        ),
+        primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
         primaryButtonBackgroundColor: cream,
-        secondaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: muted)
+        secondaryButtonLabel: ShieldConfiguration.Label(text: "Open anyway", color: muted)
       )
     }
 
@@ -98,10 +111,10 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
       backgroundColor: grape,
-      icon: UIImage(),
-      title: ShieldConfiguration.Label(text: "Level", color: cream),
+      icon: appIcon,
+      title: ShieldConfiguration.Label(text: title, color: cream),
       subtitle: ShieldConfiguration.Label(
-        text: "\(reason)\n\nWait \(waitText), then try again.",
+        text: "\u{25B8} \(reason)\n\nWait \(waitText), then try again.\n\(opensText)",
         color: cream
       ),
       primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),

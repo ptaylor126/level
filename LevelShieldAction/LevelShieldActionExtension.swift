@@ -13,6 +13,11 @@ class LevelShieldActionExtension: ShieldActionDelegate {
   ) {
     switch action {
     case .primaryButtonPressed:
+      let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
+      defaults?.set(declined + 1, forKey: "todayDeclinedCount")
+      completionHandler(.close)
+
+    case .secondaryButtonPressed:
       let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
       defaults?.set(unlockCount + 1, forKey: "todayUnlockCount")
       defaults?.set(Date().timeIntervalSince1970, forKey: "sessionStartTimestamp")
@@ -21,11 +26,6 @@ class LevelShieldActionExtension: ShieldActionDelegate {
         apps.remove(application)
         store.shield.applications = apps.isEmpty ? nil : apps
       }
-      completionHandler(.close)
-
-    case .secondaryButtonPressed:
-      let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
-      defaults?.set(declined + 1, forKey: "todayDeclinedCount")
       completionHandler(.close)
 
     @unknown default:
@@ -40,16 +40,16 @@ class LevelShieldActionExtension: ShieldActionDelegate {
   ) {
     switch action {
     case .primaryButtonPressed:
+      let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
+      defaults?.set(declined + 1, forKey: "todayDeclinedCount")
+      completionHandler(.close)
+
+    case .secondaryButtonPressed:
       let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
       defaults?.set(unlockCount + 1, forKey: "todayUnlockCount")
       defaults?.set(Date().timeIntervalSince1970, forKey: "sessionStartTimestamp")
 
       store.shield.applicationCategories = nil
-      completionHandler(.close)
-
-    case .secondaryButtonPressed:
-      let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
-      defaults?.set(declined + 1, forKey: "todayDeclinedCount")
       completionHandler(.close)
 
     @unknown default:
