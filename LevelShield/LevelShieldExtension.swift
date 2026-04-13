@@ -1,4 +1,3 @@
-import ExtensionFoundation
 import Foundation
 import ManagedSettings
 import ManagedSettingsUI
@@ -9,28 +8,28 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
   private let defaults = UserDefaults(suiteName: "group.com.paultaylor.level")
 
   override func configuration(shielding application: Application) -> ShieldConfiguration {
-    buildConfig()
+    makeConfig()
   }
 
   override func configuration(
     shielding application: Application,
     in category: ActivityCategory
   ) -> ShieldConfiguration {
-    buildConfig()
+    makeConfig()
   }
 
   override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
-    buildConfig()
+    makeConfig()
   }
 
   override func configuration(
     shielding webDomain: WebDomain,
     in category: ActivityCategory
   ) -> ShieldConfiguration {
-    buildConfig()
+    makeConfig()
   }
 
-  private func buildConfig() -> ShieldConfiguration {
+  private func makeConfig() -> ShieldConfiguration {
     let reasons = defaults?.stringArray(forKey: "userReasons") ?? []
     let reason = reasons.randomElement() ?? "Do you actually need to open this?"
 

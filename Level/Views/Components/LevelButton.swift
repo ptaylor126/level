@@ -25,6 +25,7 @@ struct LevelButton: View {
             .strokeBorder(borderColor, lineWidth: borderWidth)
         )
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .opacity(isEnabled ? 1 : 0.4)
     }
     .buttonStyle(.plain)

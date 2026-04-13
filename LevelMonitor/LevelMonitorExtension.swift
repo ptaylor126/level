@@ -1,5 +1,4 @@
 import DeviceActivity
-import ExtensionFoundation
 import FamilyControls
 import Foundation
 import ManagedSettings

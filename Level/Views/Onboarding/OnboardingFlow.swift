@@ -94,7 +94,11 @@ struct OnboardingFlow: View {
     case .reasons:
       ReasonsView(reasons: $draftReasons)
     case .summary:
-      SummaryView(reasons: draftReasons, onGoBack: { goBack() })
+      SummaryView(
+        reasons: draftReasons,
+        onEditApps: { goToStep(.appPicker) },
+        onEditReasons: { goToStep(.reasons) }
+      )
     case .confirmation:
       ConfirmationView()
     }
@@ -135,8 +139,12 @@ struct OnboardingFlow: View {
 
   private func goBack() {
     guard let idx = OnboardingStep.allCases.firstIndex(of: step), idx > 0 else { return }
+    goToStep(OnboardingStep.allCases[idx - 1])
+  }
+
+  private func goToStep(_ target: OnboardingStep) {
     transitionEdge = .leading
-    step = OnboardingStep.allCases[idx - 1]
+    step = target
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
       transitionEdge = .trailing
     }

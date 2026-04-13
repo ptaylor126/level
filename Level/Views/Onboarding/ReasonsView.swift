@@ -112,11 +112,11 @@ struct ReasonsView: View {
   }
 
   private func applySuggestion(_ suggestion: String) {
+    focusedIndex = nil
     if let emptyIndex = reasons.firstIndex(where: { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }) {
       withAnimation(.easeInOut(duration: 0.2)) {
         reasons[emptyIndex] = suggestion
       }
-      focusedIndex = emptyIndex
     } else if reasons.count < 10 {
       withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
         reasons.append(suggestion)

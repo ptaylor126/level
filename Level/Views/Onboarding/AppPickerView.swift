@@ -76,6 +76,7 @@ struct AppPickerView: View {
           }
         }
         .font(.levelBody)
+        .environment(\.colorScheme, .light)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .padding(.trailing, 24)

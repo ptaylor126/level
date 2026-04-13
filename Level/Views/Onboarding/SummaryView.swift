@@ -4,7 +4,8 @@ import SwiftUI
 struct SummaryView: View {
   @EnvironmentObject private var screenTime: ScreenTimeManager
   let reasons: [String]
-  let onGoBack: () -> Void
+  let onEditApps: () -> Void
+  let onEditReasons: () -> Void
 
   private var filteredReasons: [String] {
     reasons
@@ -32,17 +33,6 @@ struct SummaryView: View {
         reasonsCard
           .staged(0.35)
 
-        VStack(spacing: 12) {
-          Button(action: onGoBack) {
-            Text("Go back")
-              .font(LevelFont.medium(14))
-              .foregroundStyle(Color.cream.opacity(0.6))
-          }
-          .buttonStyle(.plain)
-        }
-        .frame(maxWidth: .infinity)
-        .staged(0.45)
-
         Spacer(minLength: 16)
       }
     }
@@ -50,12 +40,21 @@ struct SummaryView: View {
 
   private var appsCard: some View {
     VStack(alignment: .leading, spacing: 14) {
-      HStack(spacing: 8) {
-        LevelIconView(icon: .lock, size: 14, color: .vintageGrape)
-        Text("APPS")
-          .font(.levelLabel)
-          .tracking(0.5)
-          .foregroundStyle(Color.vintageGrape)
+      HStack {
+        HStack(spacing: 8) {
+          LevelIconView(icon: .lock, size: 14, color: .vintageGrape)
+          Text("APPS")
+            .font(.levelLabel)
+            .tracking(0.5)
+            .foregroundStyle(Color.vintageGrape)
+        }
+        Spacer()
+        Button(action: onEditApps) {
+          Text("Edit")
+            .font(LevelFont.medium(13))
+            .foregroundStyle(Color.rose)
+        }
+        .buttonStyle(.plain)
       }
 
       VStack(alignment: .leading, spacing: 10) {
@@ -73,6 +72,7 @@ struct SummaryView: View {
         }
       }
       .font(.levelBody)
+      .environment(\.colorScheme, .light)
     }
     .padding(16)
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -84,21 +84,30 @@ struct SummaryView: View {
 
   private var reasonsCard: some View {
     VStack(alignment: .leading, spacing: 14) {
-      HStack(spacing: 8) {
-        LevelIconView(icon: .heart, size: 14, color: .vintageGrape)
-        Text("REASONS")
-          .font(.levelLabel)
-          .tracking(0.5)
-          .foregroundStyle(Color.vintageGrape)
+      HStack {
+        HStack(spacing: 8) {
+          LevelIconView(icon: .heart, size: 14, color: .vintageGrape)
+          Text("REASONS")
+            .font(.levelLabel)
+            .tracking(0.5)
+            .foregroundStyle(Color.vintageGrape)
+        }
+        Spacer()
+        Button(action: onEditReasons) {
+          Text("Edit")
+            .font(LevelFont.medium(13))
+            .foregroundStyle(Color.rose)
+        }
+        .buttonStyle(.plain)
       }
 
       VStack(alignment: .leading, spacing: 10) {
-        ForEach(filteredReasons, id: \.self) { reason in
+        ForEach(Array(filteredReasons.enumerated()), id: \.offset) { index, reason in
           HStack(alignment: .top, spacing: 10) {
-            Image(systemName: "heart.fill")
-              .font(.system(size: 10))
-              .foregroundStyle(Color.rose)
-              .padding(.top, 4)
+            Text("\(index + 1).")
+              .font(LevelFont.bold(15))
+              .foregroundStyle(Color.mutedGrape)
+              .frame(width: 20, alignment: .trailing)
             Text(reason)
               .font(.levelBody)
               .foregroundStyle(Color.vintageGrape)

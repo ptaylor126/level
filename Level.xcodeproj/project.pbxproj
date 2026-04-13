@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DF21226BA48F5B71E609C80 /* LevelShield.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6944DA0CE3BAD8312F92D617 /* LevelShield.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		11D7A48E496DA329F09EE7BD /* LevelIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70FCB8243A1ACF45E2BDB0 /* LevelIcon.swift */; };
 		1344E4E044826BE5191013B0 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD6FCAA5ACC2C75DF5BBDB3 /* WelcomeView.swift */; };
 		1793846445A76E098F06F0A5 /* LevelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF4DFB4D0A9D449B9341E0 /* LevelButton.swift */; };
@@ -21,7 +22,6 @@
 		3D27F3238CDAD145C0429373 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE468813CD9FA8596F20F966 /* SummaryView.swift */; };
 		3D5EBB7A6C09B7BECD35A49B /* TriggerTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BF3E09F84FAADE9BFE0A1A /* TriggerTracker.swift */; };
 		43929A97BBC491DC8ABAE9BF /* LevelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D345BAB1E98CD779E5AAFA0 /* LevelApp.swift */; };
-		49319AA4BBB3CBCE726B2D51 /* LevelShield.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 6944DA0CE3BAD8312F92D617 /* LevelShield.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		49489D81DA936B68D3C4F2F9 /* PlusJakartaSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A02C60C89685EDA1A8386D60 /* PlusJakartaSans-ExtraBold.ttf */; };
 		4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */; };
 		558FBBA5FE1E8095E263F168 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5015A73C22BE36767BAAFB /* ScreenTimeManager.swift */; };
@@ -49,13 +49,13 @@
 		BF4AE71205F6DE2334813DEE /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */; };
 		C77EBDF0404D26EBC9B87207 /* Fraunces72pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAA3052A87F1CF61AF3B53B3 /* Fraunces72pt-Bold.ttf */; };
 		CE9E2528033B3EBC8BDE2657 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B683571F8442D6453A11106 /* UserProfile.swift */; };
+		D03430A1BCEAD1E4B2F80949 /* LevelMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 739252BC27C06A0398E4C84E /* LevelMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DCA8D0951E206C749D0F1581 /* TriggerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24730D95C239290FE5F01C53 /* TriggerLog.swift */; };
 		E20524C59AF3C20A8805CBFD /* Fraunces-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA9AC983C634C66179349F12 /* Fraunces-Variable.ttf */; };
 		E8609314A1BC658C7B908599 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7775188C9E88A987A29EE /* NotificationManager.swift */; };
 		EBFC0F25007D2161D47AD88D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CCF85F10B4DB8BF6D4D6E /* HomeViewModel.swift */; };
 		EF0B29184E2DC2494E6C677F /* ScreenTimeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A2A8F9536AA077D99A800 /* ScreenTimeCard.swift */; };
 		F4DEBD20FA06734F05DA4BFD /* ReasonCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7198A78BBE42C18326A72C49 /* ReasonCard.swift */; };
-		F88DA0949673574148657A78 /* LevelMonitor.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 739252BC27C06A0398E4C84E /* LevelMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FAF8B8F86BAF1F0ABE4025C7 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78715DBBF274AA328115FD57 /* SharedStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,16 +77,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		899131A9CF2C4255D3A73A5D /* Embed ExtensionKit Extensions */ = {
+		23F393A171278278C4CB26E2 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
-			dstSubfolderSpec = 16;
+			dstPath = "";
+			dstSubfolderSpec = 13;
 			files = (
-				F88DA0949673574148657A78 /* LevelMonitor.appex in Embed ExtensionKit Extensions */,
-				49319AA4BBB3CBCE726B2D51 /* LevelShield.appex in Embed ExtensionKit Extensions */,
+				D03430A1BCEAD1E4B2F80949 /* LevelMonitor.appex in Embed Foundation Extensions */,
+				0DF21226BA48F5B71E609C80 /* LevelShield.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed ExtensionKit Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -112,12 +112,12 @@
 		4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		5626231052B76247D9A0F2BE /* TriggerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerPromptView.swift; sourceTree = "<group>"; };
 		66A08675CD66FD8E3D925B75 /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
-		6944DA0CE3BAD8312F92D617 /* LevelShield.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = LevelShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6944DA0CE3BAD8312F92D617 /* LevelShield.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		69BF4DFB4D0A9D449B9341E0 /* LevelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelButton.swift; sourceTree = "<group>"; };
 		6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		6C70FCB8243A1ACF45E2BDB0 /* LevelIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelIcon.swift; sourceTree = "<group>"; };
 		7198A78BBE42C18326A72C49 /* ReasonCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCard.swift; sourceTree = "<group>"; };
-		739252BC27C06A0398E4C84E /* LevelMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = LevelMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		739252BC27C06A0398E4C84E /* LevelMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		78715DBBF274AA328115FD57 /* SharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStore.swift; sourceTree = "<group>"; };
 		7CD6FCAA5ACC2C75DF5BBDB3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
@@ -344,7 +344,7 @@
 			);
 			productName = LevelShield;
 			productReference = 6944DA0CE3BAD8312F92D617 /* LevelShield.appex */;
-			productType = "com.apple.product-type.extensionkit-extension";
+			productType = "com.apple.product-type.app-extension";
 		};
 		A0CE10CCDF8ABCC3B9FDD06C /* LevelMonitor */ = {
 			isa = PBXNativeTarget;
@@ -361,7 +361,7 @@
 			);
 			productName = LevelMonitor;
 			productReference = 739252BC27C06A0398E4C84E /* LevelMonitor.appex */;
-			productType = "com.apple.product-type.extensionkit-extension";
+			productType = "com.apple.product-type.app-extension";
 		};
 		AA245ED0285EEFEB173EC114 /* Level */ = {
 			isa = PBXNativeTarget;
@@ -369,7 +369,7 @@
 			buildPhases = (
 				9064C25E2695B38AA843864A /* Sources */,
 				3A2FE71751E9953FE2B520A8 /* Resources */,
-				899131A9CF2C4255D3A73A5D /* Embed ExtensionKit Extensions */,
+				23F393A171278278C4CB26E2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -711,6 +711,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.paultaylor.level.shield;
 				PRODUCT_NAME = LevelShield;
@@ -729,6 +730,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.paultaylor.level.shield;
 				PRODUCT_NAME = LevelShield;
@@ -747,6 +749,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.paultaylor.level.monitor;
 				PRODUCT_NAME = LevelMonitor;
@@ -765,6 +768,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.paultaylor.level.monitor;
 				PRODUCT_NAME = LevelMonitor;
