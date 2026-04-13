@@ -46,6 +46,7 @@
 		B54A456C8EC57C23CAC05122 /* SessionLengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C95824A4039C702B5072E3 /* SessionLengthView.swift */; };
 		B5820FB491005DBC6C56F7DF /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A221C786B07E3993EFE7AE /* DataStore.swift */; };
 		B5984D95B9943CE701203436 /* LevelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2435F479F1256F6B1F33CA2 /* LevelCard.swift */; };
+		B6514FDEFF2F9431A5A840BB /* MomentumTrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */; };
 		B8722AE55FDD4407D8885192 /* WeeklyChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7413FE9CC286E994F6F80F /* WeeklyChartCard.swift */; };
 		B92475281519F72BB0770626 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD47CDA66B8653DA6D8A80A /* RootView.swift */; };
 		BCD05E96C6618CB42E273EC6 /* TriggerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626231052B76247D9A0F2BE /* TriggerPromptView.swift */; };
@@ -127,6 +128,7 @@
 		7CD6FCAA5ACC2C75DF5BBDB3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		967516D3A3B29A4B37C9652A /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
+		9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumTrendCard.swift; sourceTree = "<group>"; };
 		A02C60C89685EDA1A8386D60 /* PlusJakartaSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-ExtraBold.ttf"; sourceTree = "<group>"; };
 		A130F6A0E5C2BD514499D87A /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
 		A27E277A2012069889E2FD18 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				296A7E02C2425FF84029B878 /* AppLimitsCard.swift */,
 				CB4A472FD57D2B4E71E38F03 /* HomeView.swift */,
 				1FAA1F4A99B294F370822B25 /* MomentumCard.swift */,
+				9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */,
 				7198A78BBE42C18326A72C49 /* ReasonCard.swift */,
 				494A2A8F9536AA077D99A800 /* ScreenTimeCard.swift */,
 				E68DD4F357FA121804BFD9FE /* UnlocksCard.swift */,
@@ -508,6 +511,7 @@
 				9F0434C5AC30B29B60B2FD2A /* MomentumCard.swift in Sources */,
 				71443F9A3F73B8F1A88D14D8 /* MomentumEngine.swift in Sources */,
 				D4A8A262DE450D3D117B87CB /* MomentumIntroView.swift in Sources */,
+				B6514FDEFF2F9431A5A840BB /* MomentumTrendCard.swift in Sources */,
 				E8609314A1BC658C7B908599 /* NotificationManager.swift in Sources */,
 				B0A7CBB2A59280B64320819A /* OnboardingFlow.swift in Sources */,
 				F4DEBD20FA06734F05DA4BFD /* ReasonCard.swift in Sources */,

@@ -45,6 +45,11 @@ struct HomeView: View {
 
           WeeklyChartCard(days: viewModel.weeklyDays)
 
+          MomentumTrendCard(
+            scores: viewModel.momentumTrendScores,
+            dayLabels: viewModel.momentumTrendLabels
+          )
+
           AppLimitsCard(limits: AppLimitsCard.mockLimits)
 
           ReasonCard(reasons: viewModel.reasons, displayIndex: 0)

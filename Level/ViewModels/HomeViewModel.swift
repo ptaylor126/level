@@ -13,6 +13,8 @@ final class HomeViewModel: ObservableObject {
   @Published var weeklyDays: [WeeklyDayData] = []
   @Published var reasons: [String] = []
   @Published var goalMet: Bool = false
+  @Published var momentumTrendScores: [Double] = []
+  @Published var momentumTrendLabels: [String] = []
 
   private var engine: MomentumEngine?
 
@@ -44,6 +46,7 @@ final class HomeViewModel: ObservableObject {
 
     loadReasons(context: context)
     buildWeeklyData()
+    buildMomentumTrend()
   }
 
   private func loadReasons(context: ModelContext) {
@@ -76,6 +79,34 @@ final class HomeViewModel: ObservableObject {
     }
 
     weeklyDays = days
+  }
+
+  private func buildMomentumTrend() {
+    let records = engine?.weekRecords() ?? []
+    let calendar = Calendar.current
+    let today = calendar.startOfDay(for: Date())
+    let dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+    var scores: [Double] = []
+    var labels: [String] = []
+
+    for offset in (0..<7).reversed() {
+      guard let date = calendar.date(byAdding: .day, value: -offset, to: today) else { continue }
+      let record = records.first { calendar.isDate($0.date, inSameDayAs: date) }
+
+      if let record {
+        scores.append(record.momentumScore)
+      } else if !scores.isEmpty {
+        scores.append(scores.last ?? 50)
+      }
+
+      let weekday = calendar.component(.weekday, from: date)
+      let index = (weekday + 5) % 7
+      labels.append(dayNames[index])
+    }
+
+    momentumTrendScores = scores
+    momentumTrendLabels = labels
   }
 }
 

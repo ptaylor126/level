@@ -35,6 +35,7 @@ struct OnboardingFlow: View {
   @State private var sessionMinutes: Int = 5
   @State private var isAppPickerPresented = false
   @State private var transitionEdge: Edge = .trailing
+  @State private var isAuthLoading = false
 
   var body: some View {
     ZStack {
@@ -135,12 +136,18 @@ struct OnboardingFlow: View {
         .buttonStyle(.plain)
       }
       StepIndicator(current: step.rawValue, total: OnboardingStep.allCases.count)
-      LevelButton(
-        title: buttonTitle,
-        style: .primaryOnDark,
-        isEnabled: isButtonEnabled,
-        action: handleButtonTap
-      )
+      ZStack {
+        LevelButton(
+          title: isAuthLoading ? "" : buttonTitle,
+          style: .primaryOnDark,
+          isEnabled: isButtonEnabled && !isAuthLoading,
+          action: handleButtonTap
+        )
+        if isAuthLoading {
+          ProgressView()
+            .tint(Color.vintageGrape)
+        }
+      }
     }
   }
 
@@ -192,8 +199,10 @@ struct OnboardingFlow: View {
     transitionEdge = .trailing
     switch step {
     case .welcome:
+      isAuthLoading = true
       Task {
         let granted = await screenTime.requestAuthorization()
+        isAuthLoading = false
         if granted {
           step = .appPicker
         }

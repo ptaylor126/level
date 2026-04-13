@@ -7,11 +7,11 @@ struct MomentumIntroView: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
       VStack(alignment: .leading, spacing: 12) {
-        Text("Meet your momentum score.")
+        Text("Meet your\nmomentum score.")
           .font(LevelFont.bold(32))
           .foregroundStyle(Color.cream)
           .staged(0.05)
-        Text("It tracks how you're doing over time. Good days push it up. Bad days bring it down a little \u{2014} not to zero. It's not about being perfect. It's about the trend.")
+        Text("Your score starts at 50 out of 100. Good days push it up. Bad days bring it down a little \u{2014} not to zero. It's not about being perfect. It's about the trend.")
           .font(.levelBody)
           .foregroundStyle(Color.cream.opacity(0.75))
           .lineSpacing(4)
@@ -40,7 +40,7 @@ struct MomentumIntroView: View {
               .opacity(arrowVisible ? 1 : 0)
           }
 
-          Text("STARTING SCORE")
+          Text("OUT OF 100")
             .font(.levelLabel)
             .tracking(0.5)
             .foregroundStyle(Color.cream.opacity(0.5))

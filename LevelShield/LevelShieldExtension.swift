@@ -41,7 +41,10 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
 
     let reason = nextReason()
 
+    let baseDelay = defaults?.integer(forKey: "defaultDelaySeconds").nonZero ?? 10
+    let increment = defaults?.integer(forKey: "delayIncrementSeconds").nonZero ?? 10
     let opensToday = defaults?.integer(forKey: "todayOpenAttempts") ?? 0
+    let delay = baseDelay + (increment * opensToday)
     defaults?.set(opensToday + 1, forKey: "todayOpenAttempts")
     defaults?.set(Date(), forKey: "lastShieldTimestamp")
 
@@ -61,7 +64,7 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
         backgroundBlurStyle: nil,
         backgroundColor: grape,
         icon: nil,
-        title: ShieldConfiguration.Label(text: "Level", color: green),
+        title: ShieldConfiguration.Label(text: "Level", color: cream),
         subtitle: ShieldConfiguration.Label(
           text: "You've used all your opens today.\nSee you tomorrow.",
           color: cream
@@ -72,13 +75,18 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       )
     }
 
+    let attemptText = opensToday == 1
+      ? "Attempt 1 today."
+      : "Attempt \(opensToday + 1) today."
+    let waitText = "Wait \(delay) seconds."
+
     return ShieldConfiguration(
-      backgroundBlurStyle: nil,
+      backgroundBlurStyle: .systemMaterialDark,
       backgroundColor: grape,
       icon: nil,
-      title: ShieldConfiguration.Label(text: "Level", color: green),
+      title: ShieldConfiguration.Label(text: "Level", color: cream),
       subtitle: ShieldConfiguration.Label(
-        text: "\(reason)\n\nOpen Level to start your timer.",
+        text: "\(reason)\n\n\(attemptText) \(waitText)\n\nOpen Level to start your timer.",
         color: cream
       ),
       primaryButtonLabel: ShieldConfiguration.Label(text: "Open Level", color: grape),

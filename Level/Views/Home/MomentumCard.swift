@@ -3,6 +3,7 @@ import SwiftUI
 struct MomentumCard: View {
   var score: Int = 74
   var streak: Int = 9
+  var lastStreakBroken: Int? = nil
   @State private var displayedScore: Int = 0
 
   var body: some View {
@@ -26,9 +27,15 @@ struct MomentumCard: View {
 
         Spacer(minLength: 12)
 
-        HStack(spacing: 4) {
-          LevelIconView(icon: .flame, size: 14, color: .rose)
-          Text(streak == 1 ? "1 day streak" : "\(streak) day streak")
+        if streak > 0 {
+          HStack(spacing: 4) {
+            LevelIconView(icon: .flame, size: 14, color: .rose)
+            Text(streak == 1 ? "1 day streak" : "\(streak) day streak")
+              .font(.levelCaption)
+              .foregroundStyle(Color.rose)
+          }
+        } else if let broken = lastStreakBroken, broken > 2 {
+          Text("\(broken) days. Nice run.")
             .font(.levelCaption)
             .foregroundStyle(Color.rose)
         }
@@ -53,7 +60,7 @@ struct MomentumCard: View {
     Color.vintageGrape.ignoresSafeArea()
     HStack(spacing: 12) {
       MomentumCard(score: 74, streak: 9)
-      Spacer()
+      MomentumCard(score: 45, streak: 0, lastStreakBroken: 12)
     }
     .padding(20)
   }
