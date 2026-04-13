@@ -7,7 +7,7 @@ struct MomentumIntroView: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
       VStack(alignment: .leading, spacing: 12) {
-        Text("Meet your\nmomentum score.")
+        Text("Meet your momentum score.")
           .font(LevelFont.bold(32))
           .foregroundStyle(Color.cream)
           .staged(0.05)

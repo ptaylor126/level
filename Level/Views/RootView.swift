@@ -36,15 +36,10 @@ struct RootView: View {
 
       if showCountdown {
         CountdownView(
-          reason: screenTime.currentReason(),
-          totalSeconds: screenTime.pendingCountdownSeconds(),
-          onOpenAnyway: {
-            screenTime.startSession()
-            showCountdown = false
-          },
           onDismiss: {
-            screenTime.clearPendingCountdown()
-            showCountdown = false
+            withAnimation(.easeInOut(duration: 0.3)) {
+              showCountdown = false
+            }
           }
         )
         .transition(.opacity)

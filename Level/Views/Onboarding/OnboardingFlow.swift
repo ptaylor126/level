@@ -46,9 +46,10 @@ struct OnboardingFlow: View {
             .padding(.top, 4)
             .animation(.easeInOut(duration: 0.2), value: step.canGoBack)
 
-          if step == .reasons || step == .summary {
+          switch step {
+          case .reasons, .summary, .momentum, .unlockLimit, .sessionLength:
             Color.clear.frame(height: max(0, proxy.size.height * 0.06))
-          } else {
+          default:
             Color.clear.frame(height: max(0, proxy.size.height * 0.18))
           }
 
