@@ -8,6 +8,7 @@ struct HomeView: View {
   @StateObject private var viewModel = HomeViewModel()
   @State private var appeared = false
   @State private var showSettings = false
+  @State private var showTriggerPrompt = false
 
   private var backgroundColor: Color {
     colorScheme == .dark ? .vintageGrape : .cream
@@ -59,10 +60,35 @@ struct HomeView: View {
     .onAppear {
       appeared = true
       viewModel.refresh(context: context)
+      checkTriggerPrompt()
     }
     .onChange(of: scenePhase) { _, phase in
       if phase == .active {
         viewModel.refresh(context: context)
+        checkTriggerPrompt()
+      }
+    }
+    .overlay(alignment: .bottom) {
+      if showTriggerPrompt {
+        TriggerPromptView(
+          onSelect: { trigger in
+            let tracker = TriggerTracker(context: context)
+            tracker.logTrigger(trigger)
+            SharedStore.defaults.set(0, forKey: "todayDeclinedCount")
+            SharedStore.defaults.set(true, forKey: "triggerPromptShownThisSession")
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+              showTriggerPrompt = false
+            }
+          },
+          onDismiss: {
+            SharedStore.defaults.set(true, forKey: "triggerPromptShownThisSession")
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+              showTriggerPrompt = false
+            }
+          }
+        )
+        .padding(.bottom, 20)
+        .transition(.move(edge: .bottom).combined(with: .opacity))
       }
     }
     .sheet(isPresented: $showSettings) {
@@ -92,6 +118,16 @@ struct HomeView: View {
       .buttonStyle(.plain)
     }
     .padding(.vertical, 8)
+  }
+
+  private func checkTriggerPrompt() {
+    let declined = SharedStore.defaults.integer(forKey: "todayDeclinedCount")
+    let alreadyShown = SharedStore.defaults.bool(forKey: "triggerPromptShownThisSession")
+    if declined >= 3 && !alreadyShown {
+      withAnimation(.spring(response: 0.4, dampingFraction: 0.85).delay(0.5)) {
+        showTriggerPrompt = true
+      }
+    }
   }
 
   private var halfWidthRow: some View {
