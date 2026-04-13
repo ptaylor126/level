@@ -22,7 +22,7 @@ struct RootView: View {
       Group {
         if let profile = profiles.first {
           if profile.onboardingComplete {
-            HomeView()
+            MainTabView()
               .onAppear { resumeMonitoring(profile: profile) }
           } else {
             OnboardingFlow(profile: profile)

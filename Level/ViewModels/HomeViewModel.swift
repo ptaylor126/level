@@ -16,6 +16,22 @@ final class HomeViewModel: ObservableObject {
   @Published var momentumTrendScores: [Double] = []
   @Published var momentumTrendLabels: [String] = []
 
+  var xpPoints: Int { momentumScore * 10 }
+
+  var todayTimeSaved: TimeInterval {
+    max(0, yesterdayScreenTime - todayScreenTime)
+  }
+
+  var timeSavedFormatted: String {
+    let seconds = Int(todayTimeSaved)
+    let hours = seconds / 3600
+    let minutes = (seconds % 3600) / 60
+    if hours > 0 {
+      return "\(hours)h \(minutes)m"
+    }
+    return "\(minutes)m"
+  }
+
   private var engine: MomentumEngine?
 
   func configure(context: ModelContext) {

@@ -4,60 +4,29 @@ import SwiftUI
 struct HomeView: View {
   @Environment(\.modelContext) private var context
   @Environment(\.scenePhase) private var scenePhase
-  @Environment(\.colorScheme) private var colorScheme
   @StateObject private var viewModel = HomeViewModel()
   @State private var appeared = false
-  @State private var showSettings = false
   @State private var showTriggerPrompt = false
-
-  private var backgroundColor: Color {
-    colorScheme == .dark ? .vintageGrape : .cream
-  }
-
-  private var primaryTextColor: Color {
-    colorScheme == .dark ? .cream : .vintageGrape
-  }
-
-  private var secondaryTextColor: Color {
-    colorScheme == .dark ? .mutedGrape : .mutedGrape
-  }
-
-  private var dateString: String {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "EEEE, MMMM d"
-    return formatter.string(from: Date())
-  }
 
   var body: some View {
     ZStack {
-      backgroundColor.ignoresSafeArea()
+      Color.vintageGrape.ignoresSafeArea()
 
       ScrollView(showsIndicators: false) {
-        VStack(spacing: 12) {
-          headerRow
+        VStack(spacing: 24) {
+          topBar
 
-          ScreenTimeCard(
-            todaySeconds: viewModel.todayScreenTime,
-            yesterdaySeconds: viewModel.yesterdayScreenTime
-          )
+          progressRing
 
-          halfWidthRow
+          weekDots
 
-          WeeklyChartCard(days: viewModel.weeklyDays)
+          timeSavedCard
 
-          MomentumTrendCard(
-            scores: viewModel.momentumTrendScores,
-            dayLabels: viewModel.momentumTrendLabels
-          )
-
-          AppLimitsCard(limits: AppLimitsCard.mockLimits)
-
-          ReasonCard(reasons: viewModel.reasons, displayIndex: 0)
-
-          Spacer(minLength: 32)
+          reasonCard
         }
         .padding(.horizontal, 20)
         .padding(.top, 8)
+        .padding(.bottom, 32)
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.2), value: appeared)
       }
@@ -96,34 +65,137 @@ struct HomeView: View {
         .transition(.move(edge: .bottom).combined(with: .opacity))
       }
     }
-    .sheet(isPresented: $showSettings) {
-      SettingsView()
+  }
+
+  // MARK: - Top Bar
+
+  private var topBar: some View {
+    HStack(alignment: .center) {
+      LevelWordmark(size: 28, color: .cream)
+      Spacer()
+      HStack(spacing: 8) {
+        streakPill
+        xpPill
+      }
     }
-    .onChange(of: showSettings) { _, showing in
-      if !showing {
-        viewModel.refresh(context: context)
+    .padding(.vertical, 8)
+  }
+
+  private var streakPill: some View {
+    HStack(spacing: 4) {
+      LevelIconView(icon: .flame, size: 14, color: .vintageGrape)
+      Text("\(viewModel.streak)")
+        .font(LevelFont.bold(13))
+        .foregroundStyle(Color.vintageGrape)
+    }
+    .padding(.horizontal, 10)
+    .padding(.vertical, 5)
+    .background(Color.cream)
+    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+  }
+
+  private var xpPill: some View {
+    HStack(spacing: 4) {
+      Text("XP")
+        .font(LevelFont.bold(11))
+        .foregroundStyle(Color.vintageGrape)
+      Text("\(viewModel.xpPoints)")
+        .font(LevelFont.bold(13))
+        .foregroundStyle(Color.vintageGrape)
+    }
+    .padding(.horizontal, 10)
+    .padding(.vertical, 5)
+    .background(Color.cream)
+    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+  }
+
+  // MARK: - Progress Ring
+
+  private var progressRing: some View {
+    let progress = min(Double(viewModel.momentumScore) / 100.0, 1.0)
+    return ZStack {
+      Circle()
+        .stroke(Color.warmGrey, lineWidth: 12)
+
+      Circle()
+        .trim(from: 0, to: progress)
+        .stroke(Color.teaGreen, style: StrokeStyle(lineWidth: 12, lineCap: .round))
+        .rotationEffect(.degrees(-90))
+        .animation(.easeInOut(duration: 0.6), value: progress)
+
+      VStack(spacing: 4) {
+        Text("\(viewModel.momentumScore)")
+          .font(LevelFont.extraBold(48))
+          .foregroundStyle(Color.cream)
+        Text("MOMENTUM")
+          .font(.levelLabel)
+          .tracking(1)
+          .foregroundStyle(Color.mutedGrape)
+      }
+    }
+    .frame(width: 200, height: 200)
+  }
+
+  // MARK: - Week Dots
+
+  private var weekDots: some View {
+    HStack(spacing: 0) {
+      ForEach(viewModel.weeklyDays.indices, id: \.self) { index in
+        let day = viewModel.weeklyDays[index]
+        VStack(spacing: 6) {
+          ZStack {
+            Circle()
+              .fill(day.goalMet ? Color.teaGreen : Color.cream.opacity(0.15))
+              .frame(width: 28, height: 28)
+            if day.isToday {
+              Circle()
+                .strokeBorder(Color.cream, lineWidth: 2)
+                .frame(width: 28, height: 28)
+            }
+          }
+          Text(day.label)
+            .font(.levelLabel)
+            .foregroundStyle(Color.mutedGrape)
+        }
+        .frame(maxWidth: .infinity)
       }
     }
   }
 
-  private var headerRow: some View {
-    HStack(alignment: .bottom) {
-      VStack(alignment: .leading, spacing: 2) {
-        LevelWordmark(size: 28, color: primaryTextColor)
-        Text(dateString)
-          .font(.levelCaption)
-          .foregroundStyle(secondaryTextColor)
+  // MARK: - Time Saved Card
+
+  private var timeSavedCard: some View {
+    VStack(spacing: 8) {
+      LevelCard(
+        background: viewModel.todayTimeSaved > 0 ? .teaGreen : .cream,
+        showBorder: false
+      ) {
+        VStack(alignment: .leading, spacing: 4) {
+          Text(viewModel.timeSavedFormatted)
+            .font(LevelFont.extraBold(36))
+            .foregroundStyle(Color.vintageGrape)
+          Text("saved today")
+            .font(.levelCaption)
+            .foregroundStyle(Color.vintageGrape.opacity(0.7))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
       }
-      Spacer()
-      Button { showSettings = true } label: {
-        LevelIconView(icon: .gear, size: 28, color: secondaryTextColor)
-          .frame(width: 44, height: 44)
-          .contentShape(Rectangle())
-      }
-      .buttonStyle(.plain)
+
+      Text("\(viewModel.unlocksRemaining) of \(viewModel.unlocksTotal) opens left today")
+        .font(.levelCaption)
+        .foregroundStyle(Color.mutedGrape)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 4)
     }
-    .padding(.vertical, 8)
   }
+
+  // MARK: - Reason Card
+
+  private var reasonCard: some View {
+    ReasonCard(reasons: viewModel.reasons, displayIndex: 0)
+  }
+
+  // MARK: - Helpers
 
   private func checkTriggerPrompt() {
     let declined = SharedStore.defaults.integer(forKey: "todayDeclinedCount")
@@ -132,15 +204,6 @@ struct HomeView: View {
       withAnimation(.spring(response: 0.4, dampingFraction: 0.85).delay(0.5)) {
         showTriggerPrompt = true
       }
-    }
-  }
-
-  private var halfWidthRow: some View {
-    HStack(spacing: 12) {
-      MomentumCard(score: viewModel.momentumScore, streak: viewModel.streak)
-        .frame(maxWidth: .infinity)
-      UnlocksCard(remaining: viewModel.unlocksRemaining, total: viewModel.unlocksTotal)
-        .frame(maxWidth: .infinity)
     }
   }
 }
