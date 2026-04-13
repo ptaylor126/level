@@ -1,16 +1,36 @@
+import Foundation
 import ManagedSettings
-import UserNotifications
 
 class LevelShieldActionExtension: ShieldActionDelegate {
 
   private let defaults = UserDefaults(suiteName: "group.com.paultaylor.level")
+  private let store = ManagedSettingsStore(named: .init("LevelMain"))
 
   override func handle(
     action: ShieldAction,
     for application: ApplicationToken,
     completionHandler: @escaping (ShieldActionResponse) -> Void
   ) {
-    handleAction(action, completionHandler: completionHandler)
+    switch action {
+    case .primaryButtonPressed:
+      let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
+      defaults?.set(unlockCount + 1, forKey: "todayUnlockCount")
+      defaults?.set(Date().timeIntervalSince1970, forKey: "sessionStartTimestamp")
+
+      if var apps = store.shield.applications {
+        apps.remove(application)
+        store.shield.applications = apps.isEmpty ? nil : apps
+      }
+      completionHandler(.close)
+
+    case .secondaryButtonPressed:
+      let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
+      defaults?.set(declined + 1, forKey: "todayDeclinedCount")
+      completionHandler(.close)
+
+    @unknown default:
+      completionHandler(.close)
+    }
   }
 
   override func handle(
@@ -18,7 +38,23 @@ class LevelShieldActionExtension: ShieldActionDelegate {
     for category: ActivityCategoryToken,
     completionHandler: @escaping (ShieldActionResponse) -> Void
   ) {
-    handleAction(action, completionHandler: completionHandler)
+    switch action {
+    case .primaryButtonPressed:
+      let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
+      defaults?.set(unlockCount + 1, forKey: "todayUnlockCount")
+      defaults?.set(Date().timeIntervalSince1970, forKey: "sessionStartTimestamp")
+
+      store.shield.applicationCategories = nil
+      completionHandler(.close)
+
+    case .secondaryButtonPressed:
+      let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
+      defaults?.set(declined + 1, forKey: "todayDeclinedCount")
+      completionHandler(.close)
+
+    @unknown default:
+      completionHandler(.close)
+    }
   }
 
   override func handle(
@@ -26,17 +62,15 @@ class LevelShieldActionExtension: ShieldActionDelegate {
     for webDomain: WebDomainToken,
     completionHandler: @escaping (ShieldActionResponse) -> Void
   ) {
-    handleAction(action, completionHandler: completionHandler)
-  }
-
-  private func handleAction(
-    _ action: ShieldAction,
-    completionHandler: @escaping (ShieldActionResponse) -> Void
-  ) {
     switch action {
     case .primaryButtonPressed:
-      defaults?.set(Date(), forKey: "pendingCountdownTimestamp")
-      sendOpenNotification()
+      let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
+      defaults?.set(unlockCount + 1, forKey: "todayUnlockCount")
+
+      if var domains = store.shield.webDomains {
+        domains.remove(webDomain)
+        store.shield.webDomains = domains.isEmpty ? nil : domains
+      }
       completionHandler(.close)
 
     case .secondaryButtonPressed:
@@ -45,20 +79,5 @@ class LevelShieldActionExtension: ShieldActionDelegate {
     @unknown default:
       completionHandler(.close)
     }
-  }
-
-  private func sendOpenNotification() {
-    let content = UNMutableNotificationContent()
-    content.title = "Timer ready"
-    content.body = "Tap to start your countdown in Level."
-    content.sound = .default
-
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
-    let request = UNNotificationRequest(
-      identifier: "open-level-timer",
-      content: content,
-      trigger: trigger
-    )
-    UNUserNotificationCenter.current().add(request)
   }
 }

@@ -236,6 +236,7 @@ struct OnboardingFlow: View {
       )
       SharedStore.defaults.set(sessionMinutes * 60, forKey: "sessionLengthSeconds")
       screenTime.startMonitoring()
+      Task { let _ = await NotificationManager.shared.requestPermission() }
     }
   }
 }

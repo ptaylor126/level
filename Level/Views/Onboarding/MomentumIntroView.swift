@@ -8,8 +8,9 @@ struct MomentumIntroView: View {
     VStack(alignment: .leading, spacing: 24) {
       VStack(alignment: .leading, spacing: 12) {
         Text("Meet your momentum score.")
-          .font(LevelFont.bold(32))
+          .font(LevelFont.bold(28))
           .foregroundStyle(Color.cream)
+          .minimumScaleFactor(0.7)
           .staged(0.05)
         Text("Your score starts at 50 out of 100. Good days push it up. Bad days bring it down a little \u{2014} not to zero. It's not about being perfect. It's about the trend.")
           .font(.levelBody)
