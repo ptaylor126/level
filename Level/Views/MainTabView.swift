@@ -48,7 +48,7 @@ struct MainTabView: View {
         }
         .tag(4)
     }
-    .tint(Color.teaGreen)
+    .tint(Color.cream)
     .onAppear {
       UITabBar.appearance().unselectedItemTintColor = UIColor(Color.mutedGrape)
     }

@@ -15,7 +15,7 @@ struct TriggerPromptView: View {
   var body: some View {
     VStack(spacing: 20) {
       HStack {
-        Text("What were you looking for?")
+        Text("Be on the level.")
           .font(.levelH2)
           .foregroundStyle(Color.cream)
         Spacer()

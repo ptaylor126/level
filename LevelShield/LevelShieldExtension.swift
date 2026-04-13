@@ -44,19 +44,21 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     let baseDelay = defaults?.integer(forKey: "defaultDelaySeconds").nonZero ?? 10
     let increment = defaults?.integer(forKey: "delayIncrementSeconds").nonZero ?? 10
     let opensToday = defaults?.integer(forKey: "todayOpenAttempts") ?? 0
-    let delay = baseDelay + (increment * opensToday)
 
-    let lastShown = defaults?.object(forKey: "lastShieldTimestamp") as? Date
-    let elapsed = lastShown.map { Date().timeIntervalSince($0) } ?? 0
-    let delayMet = elapsed >= Double(delay) && lastShown != nil
+    if defaults?.object(forKey: "firstAttemptTimestamp") == nil {
+      defaults?.set(Date(), forKey: "firstAttemptTimestamp")
+    }
+    let firstAttempt = defaults?.object(forKey: "firstAttemptTimestamp") as? Date ?? Date()
+    let elapsed = Date().timeIntervalSince(firstAttempt)
+    let delay = baseDelay + (increment * opensToday)
+    let delayMet = elapsed >= Double(delay)
 
     defaults?.set(opensToday + 1, forKey: "todayOpenAttempts")
-    defaults?.set(Date(), forKey: "lastShieldTimestamp")
 
     let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
     let unlockLimit = defaults?.integer(forKey: "defaultUnlockLimit").nonZero ?? 10
     let exhausted = unlockCount >= unlockLimit
-    let opensText = "\(unlockCount) of \(unlockLimit) opens today"
+    let attemptText = "Attempt \(opensToday + 1) today."
 
     let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
     let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
@@ -64,21 +66,14 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
 
     let appIcon = UIImage(named: "shield-icon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
 
-    let title: String
-    if let name = appName, !name.isEmpty {
-      title = "Open \(name)?"
-    } else {
-      title = "Need this right now?"
-    }
-
     if exhausted {
       return ShieldConfiguration(
         backgroundBlurStyle: .systemMaterialDark,
         backgroundColor: grape,
         icon: appIcon,
-        title: ShieldConfiguration.Label(text: title, color: cream),
+        title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
         subtitle: ShieldConfiguration.Label(
-          text: "You've used all your opens today.\n\n\(opensText)",
+          text: "You've used all your opens today.",
           color: cream
         ),
         primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
@@ -88,33 +83,32 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     }
 
     if delayMet {
+      defaults?.set(Date(), forKey: "pendingUnlockTimestamp")
+
       return ShieldConfiguration(
         backgroundBlurStyle: .systemMaterialDark,
         backgroundColor: grape,
         icon: appIcon,
-        title: ShieldConfiguration.Label(text: title, color: cream),
+        title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
         subtitle: ShieldConfiguration.Label(
-          text: "\u{25B8} \(reason)\n\n\(opensText)",
+          text: "\u{25B8} \(reason)\n\(attemptText)",
           color: cream
         ),
         primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
         primaryButtonBackgroundColor: cream,
-        secondaryButtonLabel: ShieldConfiguration.Label(text: "Open anyway", color: muted)
+        secondaryButtonLabel: ShieldConfiguration.Label(text: "Continue", color: muted)
       )
     }
 
-    let waitSeconds = max(delay - Int(elapsed), 1)
-    let waitText = waitSeconds > 60
-      ? "\(waitSeconds / 60)m \(waitSeconds % 60)s"
-      : "\(waitSeconds)s"
+    let levelledUp = opensToday > 0 ? "\nThe delay just levelled up." : ""
 
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
       backgroundColor: grape,
       icon: appIcon,
-      title: ShieldConfiguration.Label(text: title, color: cream),
+      title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
       subtitle: ShieldConfiguration.Label(
-        text: "\u{25B8} \(reason)\n\nWait \(waitText), then try again.\n\(opensText)",
+        text: "\u{25B8} \(reason)\n\(attemptText)\(levelledUp)",
         color: cream
       ),
       primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
@@ -144,8 +138,10 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     defaults?.set(0, forKey: "todayOpenAttempts")
     defaults?.set(0, forKey: "todayUnlockCount")
     defaults?.set(0, forKey: "todayDeclinedCount")
+    defaults?.removeObject(forKey: "firstAttemptTimestamp")
     defaults?.removeObject(forKey: "lastShieldTimestamp")
     defaults?.removeObject(forKey: "reasonPlaylist")
+    defaults?.removeObject(forKey: "pendingUnlockTimestamp")
     defaults?.set(false, forKey: "triggerPromptShownThisSession")
     defaults?.set(Date(), forKey: "lastDayReset")
   }

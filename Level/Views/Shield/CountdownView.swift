@@ -97,11 +97,16 @@ struct CountdownView: View {
         }
 
         if showOpenButton {
-          LevelButton(
-            title: "Open anyway",
-            style: .primaryOnDark,
-            action: handleOpenAnyway
-          )
+          VStack(spacing: 8) {
+            LevelButton(
+              title: "Open anyway",
+              style: .primaryOnDark,
+              action: handleOpenAnyway
+            )
+            Text("Levelling up the delay next time.")
+              .font(.levelCaption)
+              .foregroundStyle(Color.mutedGrape)
+          }
           .padding(.horizontal, 20)
           .transition(.scale.combined(with: .opacity))
         }
@@ -162,15 +167,15 @@ struct CountdownView: View {
   }
 
   private func handleOpenAnyway() {
+    SharedStore.defaults.removeObject(forKey: "pendingUnlockTimestamp")
     screenTime.startSession()
-    screenTime.clearPendingCountdown()
     onDismiss()
   }
 
   private func handleNotNow() {
     let declined = SharedStore.defaults.integer(forKey: "todayDeclinedCount")
     SharedStore.defaults.set(declined + 1, forKey: "todayDeclinedCount")
-    screenTime.clearPendingCountdown()
+    SharedStore.defaults.removeObject(forKey: "pendingUnlockTimestamp")
     onDismiss()
   }
 
