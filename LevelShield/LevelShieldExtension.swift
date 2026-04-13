@@ -7,6 +7,13 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
 
   private let defaults = UserDefaults(suiteName: "group.com.paultaylor.level")
 
+  private static let fallbackReasons = [
+    "Do you actually need to open this?",
+    "You've got better things to do.",
+    "Is this worth your time right now?",
+    "What were you about to do before this?"
+  ]
+
   override func configuration(shielding application: Application) -> ShieldConfiguration {
     makeConfig()
   }
@@ -32,9 +39,7 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
   private func makeConfig() -> ShieldConfiguration {
     resetIfNewDay()
 
-    let reasons = defaults?.stringArray(forKey: "userReasons") ?? []
-    let lastReasonIndex = defaults?.integer(forKey: "lastReasonIndex") ?? -1
-    let reason = pickReason(from: reasons, avoiding: lastReasonIndex)
+    let reason = nextReason()
 
     let baseDelay = defaults?.integer(forKey: "defaultDelaySeconds").nonZero ?? 10
     let increment = defaults?.integer(forKey: "delayIncrementSeconds").nonZero ?? 10
@@ -113,18 +118,24 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     )
   }
 
-  private func pickReason(from reasons: [String], avoiding lastIndex: Int) -> String {
-    guard !reasons.isEmpty else { return "Do you actually need to open this?" }
-    if reasons.count == 1 {
-      defaults?.set(0, forKey: "lastReasonIndex")
-      return reasons[0]
+  private func nextReason() -> String {
+    let userReasons = defaults?.stringArray(forKey: "userReasons") ?? []
+    let reasons = userReasons.isEmpty ? Self.fallbackReasons : userReasons
+
+    var playlist = defaults?.array(forKey: "reasonPlaylist") as? [Int] ?? []
+
+    if playlist.isEmpty {
+      playlist = Array(0..<reasons.count).shuffled()
+      defaults?.set(playlist, forKey: "reasonPlaylist")
     }
-    var index = Int.random(in: 0..<reasons.count)
-    if index == lastIndex {
-      index = (index + 1) % reasons.count
+
+    let index = playlist.removeFirst()
+    defaults?.set(playlist, forKey: "reasonPlaylist")
+
+    if index < reasons.count {
+      return reasons[index]
     }
-    defaults?.set(index, forKey: "lastReasonIndex")
-    return reasons[index]
+    return reasons.first ?? Self.fallbackReasons[0]
   }
 
   private func resetIfNewDay() {
@@ -135,6 +146,8 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     defaults?.set(0, forKey: "todayUnlockCount")
     defaults?.set(0, forKey: "todayDeclinedCount")
     defaults?.removeObject(forKey: "lastShieldTimestamp")
+    defaults?.removeObject(forKey: "reasonPlaylist")
+    defaults?.set(false, forKey: "triggerPromptShownThisSession")
     defaults?.set(Date(), forKey: "lastDayReset")
   }
 }

@@ -39,7 +39,9 @@ All three targets must belong to the same App Group for shared data access.
 ### UserProfile
 ```swift
 @Model class UserProfile {
-    var reasons: [String]           // Personal reasons for reducing screen time
+    var reasons: [String]           // Personal reasons for reducing screen time (can be empty — shield uses fallback defaults)
+    var reasonShuffleIndex: Int     // Tracks position in the shuffled reason playlist; resets at midnight
+    var reasonShuffleOrder: [Int]   // Current day's shuffled index order into reasons array
     var onboardingComplete: Bool
     var createdAt: Date
 }
@@ -71,6 +73,7 @@ All three targets must belong to the same App Group for shared data access.
     var defaultDelaySeconds: Int       // Default: 10
     var delayIncrementSeconds: Int     // Default: 10
     var defaultUnlockLimit: Int        // Default: 10
+    var sessionLengthMinutes: Int      // Default: 5 — shield returns after this many minutes post-unlock
     var notifyWeeklyRecap: Bool        // Default: true
     var notifyMorningSummary: Bool     // Default: false
     var notifyStreakAtRisk: Bool       // Default: false
@@ -98,13 +101,16 @@ A bad day costs 2-3 points. A good day gains 2-5 points. This means recovery fro
 ## Shield Flow
 1. User tries to open a managed app
 2. iOS shows the shield (LevelShield extension)
-3. Shield displays: random personal reason, countdown timer
+3. Shield displays: next reason from the shuffled playlist, countdown timer
+   - Reasons cycle through a shuffled list; every reason is shown once before any repeats
+   - If the user has no saved personal reasons, built-in fallback defaults are displayed
 4. Timer starts at base delay + (increment × opens today for this app)
 5. User can:
-   - Close and walk away → unlock count NOT incremented, momentum +1
-   - Wait for timer, tap "Open anyway" → unlock count incremented
+   - Close and walk away ("Not now") → unlock count NOT incremented, momentum +1
+   - Wait for timer, tap "Open anyway" → unlock count incremented; session timer starts
    - If unlocks exhausted → "Come back tomorrow" message, no open option
-6. After 3rd declined open in a session → trigger prompt appears
+6. After "Open anyway": a session timer runs for the configured session length (default 5 min). When it elapses, the shield reappears — this does NOT consume another unlock.
+7. After 3rd declined open in a session → trigger prompt appears
 
 ## Notification System
 - Use UNUserNotificationCenter
@@ -151,7 +157,12 @@ Level/
 │   │   ├── OnboardingFlow.swift
 │   │   ├── WelcomeView.swift
 │   │   ├── AppPickerView.swift
-│   │   └── ReasonsView.swift
+│   │   ├── ReasonsView.swift
+│   │   ├── UnlockLimitView.swift
+│   │   ├── SessionLengthView.swift
+│   │   ├── MomentumIntroView.swift
+│   │   ├── SummaryView.swift
+│   │   └── DoneView.swift
 │   ├── Settings/
 │   │   ├── SettingsView.swift
 │   │   ├── ManageAppsView.swift

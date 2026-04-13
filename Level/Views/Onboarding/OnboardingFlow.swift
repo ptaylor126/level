@@ -6,11 +6,21 @@ enum OnboardingStep: Int, CaseIterable {
   case welcome
   case appPicker
   case reasons
+  case unlockLimit
+  case sessionLength
+  case momentum
   case summary
   case confirmation
 
   var canGoBack: Bool {
     self != .welcome
+  }
+
+  var isSkippable: Bool {
+    switch self {
+    case .reasons, .unlockLimit, .sessionLength: return true
+    default: return false
+    }
   }
 }
 
@@ -21,6 +31,8 @@ struct OnboardingFlow: View {
 
   @State private var step: OnboardingStep = .welcome
   @State private var draftReasons: [String] = ["", "", ""]
+  @State private var unlockLimit: Int = 10
+  @State private var sessionMinutes: Int = 5
   @State private var isAppPickerPresented = false
   @State private var transitionEdge: Edge = .trailing
 
@@ -29,30 +41,14 @@ struct OnboardingFlow: View {
       Color.vintageGrape.ignoresSafeArea()
       GeometryReader { proxy in
         VStack(alignment: .leading, spacing: 0) {
-          HStack {
-            LevelWordmark()
-            Spacer()
-            if step.canGoBack {
-              Button(action: goBack) {
-                Image(systemName: "chevron.left")
-                  .font(.system(size: 16, weight: .semibold))
-                  .foregroundStyle(Color.cream.opacity(0.7))
-                  .frame(width: 36, height: 36)
-                  .background(
-                    Circle().fill(Color.cream.opacity(0.1))
-                  )
-              }
-              .buttonStyle(.plain)
-              .transition(.opacity)
-            }
-          }
-          .padding(.top, 4)
-          .animation(.easeInOut(duration: 0.2), value: step.canGoBack)
+          header
+            .padding(.top, 4)
+            .animation(.easeInOut(duration: 0.2), value: step.canGoBack)
 
           if step == .reasons || step == .summary {
             Color.clear.frame(height: max(0, proxy.size.height * 0.06))
           } else {
-            Color.clear.frame(height: max(0, proxy.size.height * 0.24))
+            Color.clear.frame(height: max(0, proxy.size.height * 0.18))
           }
 
           ZStack {
@@ -84,6 +80,24 @@ struct OnboardingFlow: View {
     }
   }
 
+  private var header: some View {
+    HStack {
+      LevelWordmark()
+      Spacer()
+      if step.canGoBack {
+        Button(action: goBack) {
+          Image(systemName: "chevron.left")
+            .font(.system(size: 16, weight: .semibold))
+            .foregroundStyle(Color.cream.opacity(0.7))
+            .frame(width: 36, height: 36)
+            .background(Circle().fill(Color.cream.opacity(0.1)))
+        }
+        .buttonStyle(.plain)
+        .transition(.opacity)
+      }
+    }
+  }
+
   @ViewBuilder
   private var content: some View {
     switch step {
@@ -93,6 +107,12 @@ struct OnboardingFlow: View {
       AppPickerView(onPickTapped: { isAppPickerPresented = true })
     case .reasons:
       ReasonsView(reasons: $draftReasons)
+    case .unlockLimit:
+      UnlockLimitView(unlockLimit: $unlockLimit)
+    case .sessionLength:
+      SessionLengthView(sessionMinutes: $sessionMinutes)
+    case .momentum:
+      MomentumIntroView()
     case .summary:
       SummaryView(
         reasons: draftReasons,
@@ -105,7 +125,15 @@ struct OnboardingFlow: View {
   }
 
   private var footer: some View {
-    VStack(spacing: 16) {
+    VStack(spacing: 12) {
+      if step.isSkippable {
+        Button(action: { advance() }) {
+          Text("Skip")
+            .font(LevelFont.medium(14))
+            .foregroundStyle(Color.cream.opacity(0.5))
+        }
+        .buttonStyle(.plain)
+      }
       StepIndicator(current: step.rawValue, total: OnboardingStep.allCases.count)
       LevelButton(
         title: buttonTitle,
@@ -121,6 +149,9 @@ struct OnboardingFlow: View {
     case .welcome: return "Get started"
     case .appPicker: return "Next"
     case .reasons: return "Next"
+    case .unlockLimit: return "Next"
+    case .sessionLength: return "Next"
+    case .momentum: return "Next"
     case .summary: return "Looks good"
     case .confirmation: return "Got it"
     }
@@ -128,12 +159,12 @@ struct OnboardingFlow: View {
 
   private var isButtonEnabled: Bool {
     switch step {
-    case .welcome, .confirmation, .summary:
+    case .welcome, .confirmation, .summary, .momentum, .unlockLimit, .sessionLength:
       return true
     case .appPicker:
       return screenTime.selectedItemCount > 0
     case .reasons:
-      return draftReasons.contains { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+      return true
     }
   }
 
@@ -148,6 +179,13 @@ struct OnboardingFlow: View {
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
       transitionEdge = .trailing
     }
+  }
+
+  private func advance() {
+    guard let idx = OnboardingStep.allCases.firstIndex(of: step),
+          idx < OnboardingStep.allCases.count - 1 else { return }
+    transitionEdge = .trailing
+    step = OnboardingStep.allCases[idx + 1]
   }
 
   private func handleButtonTap() {
@@ -167,6 +205,12 @@ struct OnboardingFlow: View {
         .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
         .filter { !$0.isEmpty }
       try? context.save()
+      step = .unlockLimit
+    case .unlockLimit:
+      step = .sessionLength
+    case .sessionLength:
+      step = .momentum
+    case .momentum:
       step = .summary
     case .summary:
       step = .confirmation
@@ -175,7 +219,12 @@ struct OnboardingFlow: View {
       try? context.save()
       screenTime.persistSelection()
       screenTime.syncReasonsToDefaults(profile.reasons)
-      screenTime.syncSettingsToDefaults(delay: 10, increment: 10, unlockLimit: 10)
+      screenTime.syncSettingsToDefaults(
+        delay: 10,
+        increment: 10,
+        unlockLimit: unlockLimit
+      )
+      SharedStore.defaults.set(sessionMinutes * 60, forKey: "sessionLengthSeconds")
       screenTime.startMonitoring()
     }
   }

@@ -21,23 +21,31 @@ Adults who know they use their phone too much and want to change, but have tried
 
 ## MVP Features (v1.0)
 
-### 1. Onboarding (3 screens max)
-- Screen 1: Welcome, request FamilyControls authorization
-- Screen 2: Select apps to manage (using FamilyActivityPicker)
-- Screen 3: Write 1-3 personal reasons for reducing screen time
-- No account creation. No tutorials. No feature tours.
+### 1. Onboarding (8 steps)
+- Step 1: Welcome, request FamilyControls authorization
+- Step 2: Select apps to manage (using FamilyActivityPicker)
+- Step 3: Write personal reasons for reducing screen time (no maximum, skippable — zero reasons allowed)
+- Step 4: Set daily unlock limit (default 10, skippable)
+- Step 5: Set session length — how long user can use an app before shield returns (default 5 min, skippable)
+- Step 6: Momentum intro — brief explanation of the momentum system
+- Step 7: Summary of chosen settings
+- Step 8: Done — "Start using Level"
+- No account creation. No feature tours beyond the momentum intro.
 
 ### 2. Level Screen (Shield)
 - Appears when user tries to open a managed app
-- Shows one of their personal reasons (randomly selected)
+- Shows one of their personal reasons using a shuffled playlist (cycles through all before repeating)
+- If user has no personal reasons saved, shows built-in fallback default reasons
 - Countdown timer starting at 10 seconds (configurable)
 - Delay increases by 10 seconds with each subsequent open of the same app that day
 - User can close and walk away, or wait and proceed
+- After tapping "Open anyway", the shield returns automatically after the configured session length (default 5 minutes) — this session return does not consume an additional unlock
 - Dark, calm design — Vintage Grape background with Cream text
 
 ### 3. Daily Unlock Limits
-- Users set a daily unlock limit per app (default: 10)
+- Users set a daily unlock limit per app (default: 10, configured during onboarding or in settings)
 - Each time they wait through the level and open the app, it counts as an unlock
+- Session returns (shield reappearing after session length) do NOT count as additional unlocks
 - When unlocks are exhausted, the app is fully blocked for the rest of the day
 - Reset at midnight
 
@@ -86,8 +94,8 @@ Adults who know they use their phone too much and want to change, but have tried
 
 ### 10. Settings
 - Manage tracked apps
-- Edit personal reasons
-- Adjust delay times and unlock limits
+- Edit personal reasons (no minimum — zero reasons is valid; fallback defaults used when empty)
+- Adjust delay times, unlock limits, and session length
 - Toggle notifications
 - View trigger patterns
 - Light/dark mode toggle

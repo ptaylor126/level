@@ -22,6 +22,7 @@
 		3D27F3238CDAD145C0429373 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE468813CD9FA8596F20F966 /* SummaryView.swift */; };
 		3D5EBB7A6C09B7BECD35A49B /* TriggerTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BF3E09F84FAADE9BFE0A1A /* TriggerTracker.swift */; };
 		43929A97BBC491DC8ABAE9BF /* LevelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D345BAB1E98CD779E5AAFA0 /* LevelApp.swift */; };
+		461967F9ACE93F763D1590E7 /* UnlockLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468499B85ADAF757F2EA5829 /* UnlockLimitView.swift */; };
 		49489D81DA936B68D3C4F2F9 /* PlusJakartaSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A02C60C89685EDA1A8386D60 /* PlusJakartaSans-ExtraBold.ttf */; };
 		4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */; };
 		558FBBA5FE1E8095E263F168 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5015A73C22BE36767BAAFB /* ScreenTimeManager.swift */; };
@@ -41,6 +42,7 @@
 		AF671A4CEDE21F64CC17D5A2 /* Fraunces-VariableItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */; };
 		B0A7CBB2A59280B64320819A /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE7B97481E5015C47426D /* OnboardingFlow.swift */; };
 		B32000239E81C1F26D1C08E5 /* StagedEntrance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389A6AC46998D7B8A9E9C66 /* StagedEntrance.swift */; };
+		B54A456C8EC57C23CAC05122 /* SessionLengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C95824A4039C702B5072E3 /* SessionLengthView.swift */; };
 		B5820FB491005DBC6C56F7DF /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A221C786B07E3993EFE7AE /* DataStore.swift */; };
 		B5984D95B9943CE701203436 /* LevelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2435F479F1256F6B1F33CA2 /* LevelCard.swift */; };
 		B8722AE55FDD4407D8885192 /* WeeklyChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7413FE9CC286E994F6F80F /* WeeklyChartCard.swift */; };
@@ -50,6 +52,7 @@
 		C77EBDF0404D26EBC9B87207 /* Fraunces72pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAA3052A87F1CF61AF3B53B3 /* Fraunces72pt-Bold.ttf */; };
 		CE9E2528033B3EBC8BDE2657 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B683571F8442D6453A11106 /* UserProfile.swift */; };
 		D03430A1BCEAD1E4B2F80949 /* LevelMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 739252BC27C06A0398E4C84E /* LevelMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D4A8A262DE450D3D117B87CB /* MomentumIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF18D33485E14DB096E25364 /* MomentumIntroView.swift */; };
 		DCA8D0951E206C749D0F1581 /* TriggerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24730D95C239290FE5F01C53 /* TriggerLog.swift */; };
 		E20524C59AF3C20A8805CBFD /* Fraunces-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA9AC983C634C66179349F12 /* Fraunces-Variable.ttf */; };
 		E8609314A1BC658C7B908599 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7775188C9E88A987A29EE /* NotificationManager.swift */; };
@@ -104,6 +107,7 @@
 		35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonsView.swift; sourceTree = "<group>"; };
 		42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelShieldExtension.swift; sourceTree = "<group>"; };
 		4389A6AC46998D7B8A9E9C66 /* StagedEntrance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedEntrance.swift; sourceTree = "<group>"; };
+		468499B85ADAF757F2EA5829 /* UnlockLimitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockLimitView.swift; sourceTree = "<group>"; };
 		47D92F99E5C291456F3BA9A3 /* LevelWordmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelWordmark.swift; sourceTree = "<group>"; };
 		47E7775188C9E88A987A29EE /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		494A2A8F9536AA077D99A800 /* ScreenTimeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeCard.swift; sourceTree = "<group>"; };
@@ -125,9 +129,11 @@
 		A02C60C89685EDA1A8386D60 /* PlusJakartaSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-ExtraBold.ttf"; sourceTree = "<group>"; };
 		A130F6A0E5C2BD514499D87A /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
 		A27E277A2012069889E2FD18 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		A2C95824A4039C702B5072E3 /* SessionLengthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLengthView.swift; sourceTree = "<group>"; };
 		ADD47CDA66B8653DA6D8A80A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BC60AE929DAC4875AFB4EC5E /* PlusJakartaSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Regular.ttf"; sourceTree = "<group>"; };
 		BE468813CD9FA8596F20F966 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		BF18D33485E14DB096E25364 /* MomentumIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumIntroView.swift; sourceTree = "<group>"; };
 		C2435F479F1256F6B1F33CA2 /* LevelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCard.swift; sourceTree = "<group>"; };
 		C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMonitorExtension.swift; sourceTree = "<group>"; };
 		CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
@@ -270,9 +276,12 @@
 			children = (
 				E65F5C8BB881AA62CC31AF12 /* AppPickerView.swift */,
 				4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */,
+				BF18D33485E14DB096E25364 /* MomentumIntroView.swift */,
 				EC6AE7B97481E5015C47426D /* OnboardingFlow.swift */,
 				35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */,
+				A2C95824A4039C702B5072E3 /* SessionLengthView.swift */,
 				BE468813CD9FA8596F20F966 /* SummaryView.swift */,
+				468499B85ADAF757F2EA5829 /* UnlockLimitView.swift */,
 				7CD6FCAA5ACC2C75DF5BBDB3 /* WelcomeView.swift */,
 			);
 			path = Onboarding;
@@ -486,6 +495,7 @@
 				AED099257CC8372A7E664148 /* LevelWordmark.swift in Sources */,
 				9F0434C5AC30B29B60B2FD2A /* MomentumCard.swift in Sources */,
 				71443F9A3F73B8F1A88D14D8 /* MomentumEngine.swift in Sources */,
+				D4A8A262DE450D3D117B87CB /* MomentumIntroView.swift in Sources */,
 				E8609314A1BC658C7B908599 /* NotificationManager.swift in Sources */,
 				B0A7CBB2A59280B64320819A /* OnboardingFlow.swift in Sources */,
 				F4DEBD20FA06734F05DA4BFD /* ReasonCard.swift in Sources */,
@@ -493,6 +503,7 @@
 				B92475281519F72BB0770626 /* RootView.swift in Sources */,
 				EF0B29184E2DC2494E6C677F /* ScreenTimeCard.swift in Sources */,
 				558FBBA5FE1E8095E263F168 /* ScreenTimeManager.swift in Sources */,
+				B54A456C8EC57C23CAC05122 /* SessionLengthView.swift in Sources */,
 				39059FBCEE52F24DE34B8DC1 /* SettingsView.swift in Sources */,
 				1CC05752C8E1B1DC9DC6AFA4 /* SettingsViewModel.swift in Sources */,
 				FAF8B8F86BAF1F0ABE4025C7 /* SharedStore.swift in Sources */,
@@ -501,6 +512,7 @@
 				DCA8D0951E206C749D0F1581 /* TriggerLog.swift in Sources */,
 				BCD05E96C6618CB42E273EC6 /* TriggerPromptView.swift in Sources */,
 				3D5EBB7A6C09B7BECD35A49B /* TriggerTracker.swift in Sources */,
+				461967F9ACE93F763D1590E7 /* UnlockLimitView.swift in Sources */,
 				9E555BC623FB56F9753A0060 /* UnlocksCard.swift in Sources */,
 				CE9E2528033B3EBC8BDE2657 /* UserProfile.swift in Sources */,
 				B8722AE55FDD4407D8885192 /* WeeklyChartCard.swift in Sources */,

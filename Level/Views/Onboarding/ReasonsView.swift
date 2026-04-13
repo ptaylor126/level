@@ -24,6 +24,14 @@ struct ReasonsView: View {
     return Self.suggestions.filter { !trimmedReasons.contains($0.lowercased()) }
   }
 
+  private let placeholders = [
+    "Be more present with my family",
+    "Read more books",
+    "Sleep better",
+    "Get more work done",
+    "Stop doomscrolling before bed"
+  ]
+
   var body: some View {
     ScrollView(showsIndicators: false) {
       VStack(alignment: .leading, spacing: 20) {
@@ -33,7 +41,7 @@ struct ReasonsView: View {
             .foregroundStyle(Color.cream)
             .multilineTextAlignment(.leading)
             .staged(0.05)
-          Text("Write as many as you want. You'll see one every time you try to open an app.")
+          Text("Add as many as you want, or skip this. We'll show you one every time you try to open an app.")
             .font(.levelBody)
             .foregroundStyle(Color.cream.opacity(0.75))
             .multilineTextAlignment(.leading)
@@ -50,49 +58,37 @@ struct ReasonsView: View {
           ForEach(reasons.indices, id: \.self) { index in
             ReasonField(
               text: $reasons[index],
-              placeholder: placeholder(for: index),
+              placeholder: placeholders[index % placeholders.count],
               canRemove: reasons.count > 1,
               onRemove: { removeReason(at: index) }
             )
             .focused($focusedIndex, equals: index)
           }
 
-          if reasons.count < 10 {
-            Button(action: addReason) {
-              HStack(spacing: 8) {
-                Image(systemName: "plus")
-                  .font(LevelFont.bold(14))
-                Text("Add another")
-                  .font(LevelFont.bold(14))
-              }
-              .foregroundStyle(Color.cream.opacity(0.7))
-              .frame(maxWidth: .infinity, minHeight: 44)
-              .background(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                  .strokeBorder(
-                    Color.cream.opacity(0.25),
-                    style: StrokeStyle(lineWidth: 1, dash: [4, 4])
-                  )
-              )
+          Button(action: addReason) {
+            HStack(spacing: 8) {
+              Image(systemName: "plus")
+                .font(LevelFont.bold(14))
+              Text("Add another")
+                .font(LevelFont.bold(14))
             }
-            .buttonStyle(.plain)
+            .foregroundStyle(Color.cream.opacity(0.7))
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .background(
+              RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .strokeBorder(
+                  Color.cream.opacity(0.25),
+                  style: StrokeStyle(lineWidth: 1, dash: [4, 4])
+                )
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
           }
+          .buttonStyle(.plain)
         }
 
         Spacer(minLength: 20)
       }
     }
-  }
-
-  private func placeholder(for index: Int) -> String {
-    let defaults = [
-      "Read more books",
-      "Stop scrolling in bed",
-      "Actually get work done",
-      "Sleep better",
-      "Focus at work"
-    ]
-    return defaults[index % defaults.count]
   }
 
   private func addReason() {
@@ -117,7 +113,7 @@ struct ReasonsView: View {
       withAnimation(.easeInOut(duration: 0.2)) {
         reasons[emptyIndex] = suggestion
       }
-    } else if reasons.count < 10 {
+    } else {
       withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
         reasons.append(suggestion)
       }
