@@ -75,7 +75,8 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       )
     }
 
-    let subtitle = "\nRemember:\n\u{25B8} \(reason)\n\n\(attemptText)\n\nOpen Level to unlock this app."
+    let subtitle = "\nRemember:\n\u{25B8} \(reason)\n\n\(attemptText)"
+    let muted = UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
 
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
@@ -83,9 +84,9 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       icon: appIcon,
       title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
       subtitle: ShieldConfiguration.Label(text: subtitle, color: cream),
-      primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
+      primaryButtonLabel: ShieldConfiguration.Label(text: "OK, I'll do that", color: grape),
       primaryButtonBackgroundColor: cream,
-      secondaryButtonLabel: nil
+      secondaryButtonLabel: ShieldConfiguration.Label(text: "Actually, I'm good", color: muted)
     )
   }
 

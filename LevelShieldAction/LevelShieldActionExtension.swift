@@ -35,14 +35,15 @@ class LevelShieldActionExtension: ShieldActionDelegate {
   ) {
     switch action {
     case .primaryButtonPressed:
+      defaults?.set(Date(), forKey: "pendingUnlockTimestamp")
+      defaults?.set(Date(), forKey: "lastShieldShownTimestamp")
+      completionHandler(.close)
+
+    case .secondaryButtonPressed:
       let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
       defaults?.set(declined + 1, forKey: "todayDeclinedCount")
       let xp = defaults?.integer(forKey: "totalXP") ?? 0
       defaults?.set(xp + 10, forKey: "totalXP")
-      defaults?.set(10, forKey: "pendingXPGain")
-      completionHandler(.close)
-
-    case .secondaryButtonPressed:
       completionHandler(.close)
 
     @unknown default:
