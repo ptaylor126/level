@@ -1,127 +1,112 @@
 import SwiftUI
 
+enum BubbleLean: String {
+  case left, right
+
+  static func from(trigger: String?) -> BubbleLean? {
+    guard let trigger = trigger?.lowercased() else { return nil }
+    if trigger.contains("anxious") || trigger.contains("habit") {
+      return .left
+    }
+    if trigger.contains("bored") || trigger.contains("avoiding") {
+      return .right
+    }
+    return nil
+  }
+}
+
 struct SpiritLevelView: View {
   let score: Int
+  let recentTrigger: String?
 
-  @State private var bubbleOffset: CGFloat = 0
-  @State private var timer: Timer?
-  @State private var glowIntensity: Double = 0
+  @State private var previousScore: Int?
+  @State private var knockOffset: CGFloat = 0
+  @State private var glowPulse: Double = 0
+  @State private var persistedLean: BubbleLean = .left
 
   private var tubeHeight: CGFloat { 60 }
   private var bubbleDiameter: CGFloat { 44 }
 
-  private enum Tier {
-    case chaos, unsteady, improving, steady, flow
-
-    static func from(_ score: Int) -> Tier {
-      switch score {
-      case ..<26: return .chaos
-      case ..<51: return .unsteady
-      case ..<76: return .improving
-      case ..<91: return .steady
-      default: return .flow
-      }
+  private var lean: BubbleLean {
+    if let fromTrigger = BubbleLean.from(trigger: recentTrigger) {
+      return fromTrigger
     }
-
-    var maxDrift: CGFloat {
-      switch self {
-      case .chaos: return 0.8
-      case .unsteady: return 0.5
-      case .improving: return 0.18
-      case .steady: return 0.06
-      case .flow: return 0
-      }
-    }
-
-    var tickInterval: TimeInterval {
-      switch self {
-      case .chaos: return 0.18
-      case .unsteady: return 0.45
-      case .improving: return 1.1
-      case .steady: return 2.2
-      case .flow: return 0
-      }
-    }
-
-    var springResponse: Double {
-      switch self {
-      case .chaos: return 0.28
-      case .unsteady: return 0.55
-      case .improving: return 1.0
-      case .steady: return 1.6
-      case .flow: return 2.0
-      }
-    }
-
-    var springDamping: Double {
-      switch self {
-      case .chaos: return 0.55
-      case .unsteady: return 0.75
-      case .improving: return 0.9
-      case .steady: return 0.95
-      case .flow: return 1.0
-      }
-    }
-
-    var liquidClarity: Double {
-      switch self {
-      case .chaos: return 0.55
-      case .unsteady: return 0.75
-      case .improving: return 0.9
-      case .steady: return 0.97
-      case .flow: return 1.0
-      }
-    }
-
-    var isFlow: Bool { self == .flow }
+    return persistedLean
   }
 
-  private var tier: Tier { Tier.from(score) }
+  private var clampedScore: Int {
+    max(0, min(100, score))
+  }
+
+  private var distanceFraction: Double {
+    Double(100 - clampedScore) / 100.0
+  }
+
+  private var tiltDegrees: Double {
+    let magnitude = distanceFraction * 8.0
+    return lean == .left ? magnitude : -magnitude
+  }
+
+  private var directionSign: CGFloat {
+    lean == .left ? -1 : 1
+  }
+
+  private var isFlow: Bool {
+    clampedScore >= 100
+  }
 
   var body: some View {
     GeometryReader { geo in
       let width = geo.size.width
-      let maxOffset = (width / 2) - (bubbleDiameter / 2) - 10
+      let maxOffset = (width / 2) - (bubbleDiameter / 2) - 14
+      let bubbleOffset = directionSign * CGFloat(distanceFraction) * maxOffset + knockOffset
 
       ZStack {
-        if tier.isFlow {
+        if isFlow {
           Capsule()
-            .fill(Color.pastelPink)
-            .blur(radius: 28)
-            .opacity(0.4 + glowIntensity * 0.4)
-            .frame(width: width + 80, height: tubeHeight + 80)
+            .fill(Color.cream)
+            .blur(radius: 26)
+            .opacity(0.35 + glowPulse * 0.35)
+            .frame(width: width + 60, height: tubeHeight + 60)
         }
 
-        tubeBase
-          .frame(width: width, height: tubeHeight)
+        ZStack {
+          tubeBase
+            .frame(width: width, height: tubeHeight)
 
-        liquidFill
-          .frame(width: width - 4, height: tubeHeight - 4)
+          liquidFill
+            .frame(width: width - 4, height: tubeHeight - 4)
 
-        tubeGloss
-          .frame(width: width - 4, height: tubeHeight - 4)
+          tubeGloss
+            .frame(width: width - 4, height: tubeHeight - 4)
 
-        centerMarkers
-          .frame(width: width - 40, height: tubeHeight - 20)
+          calibrationLines
+            .frame(height: tubeHeight * 0.6)
 
-        bubble
-          .offset(x: bubbleOffset * maxOffset)
+          bubble
+            .offset(x: bubbleOffset)
 
-        tubeRim
-          .frame(width: width, height: tubeHeight)
+          tubeRim
+            .frame(width: width, height: tubeHeight)
+        }
+        .rotationEffect(.degrees(tiltDegrees))
+        .animation(.spring(response: 0.9, dampingFraction: 0.8), value: tiltDegrees)
+        .animation(.spring(response: 0.9, dampingFraction: 0.8), value: clampedScore)
       }
-      .frame(width: width, height: tubeHeight)
+      .frame(width: width, height: tubeHeight + 16)
     }
-    .frame(height: tubeHeight)
-    .onAppear(perform: startAnimation)
-    .onDisappear {
-      timer?.invalidate()
-      timer = nil
+    .frame(height: tubeHeight + 16)
+    .onAppear {
+      previousScore = clampedScore
+      seedLeanIfNeeded()
+      if isFlow { startGlow() }
     }
-    .onChange(of: score) { _, _ in
-      restartAnimation()
+    .onChange(of: clampedScore) { old, new in
+      handleScoreChange(from: old, to: new)
     }
   }
+
+  // MARK: - Tube components
 
   private var tubeBase: some View {
     Capsule()
@@ -138,14 +123,14 @@ struct SpiritLevelView: View {
   }
 
   private var liquidFill: some View {
-    let clarity = tier.liquidClarity
+    let clarity = 0.5 + 0.5 * (Double(clampedScore) / 100.0)
     return Capsule()
       .fill(
         LinearGradient(
           stops: [
-            .init(color: Color.teaGreen.opacity(0.6 + 0.35 * clarity), location: 0.0),
-            .init(color: Color.teaGreen.opacity(0.85 + 0.1 * clarity), location: 0.35),
-            .init(color: Color.darkGreen.opacity(0.25 + 0.15 * clarity), location: 1.0)
+            .init(color: Color.teaGreen.opacity(0.55 + 0.4 * clarity), location: 0.0),
+            .init(color: Color.teaGreen.opacity(0.9), location: 0.4),
+            .init(color: Color.darkGreen.opacity(0.25 + 0.2 * clarity), location: 1.0)
           ],
           startPoint: .top,
           endPoint: .bottom
@@ -153,16 +138,7 @@ struct SpiritLevelView: View {
       )
       .overlay(
         Capsule()
-          .fill(
-            LinearGradient(
-              colors: [
-                Color.mutedGrape.opacity((1 - clarity) * 0.25),
-                Color.clear
-              ],
-              startPoint: .top,
-              endPoint: .bottom
-            )
-          )
+          .fill(Color.mutedGrape.opacity((1 - clarity) * 0.2))
       )
   }
 
@@ -171,19 +147,25 @@ struct SpiritLevelView: View {
       .fill(
         LinearGradient(
           stops: [
-            .init(color: Color.white.opacity(0.45), location: 0.0),
-            .init(color: Color.white.opacity(0.15), location: 0.2),
-            .init(color: Color.white.opacity(0.0), location: 0.5),
-            .init(color: Color.white.opacity(0.0), location: 1.0)
+            .init(color: Color.white.opacity(0.5), location: 0.0),
+            .init(color: Color.white.opacity(0.15), location: 0.22),
+            .init(color: Color.white.opacity(0.0), location: 0.55)
           ],
           startPoint: .top,
           endPoint: .bottom
         )
       )
-      .mask(
-        Capsule()
-          .fill(Color.white)
-      )
+  }
+
+  private var calibrationLines: some View {
+    HStack(spacing: 24) {
+      Rectangle()
+        .fill(Color.cream.opacity(0.8))
+        .frame(width: 0.5)
+      Rectangle()
+        .fill(Color.cream.opacity(0.8))
+        .frame(width: 0.5)
+    }
   }
 
   private var tubeRim: some View {
@@ -191,34 +173,20 @@ struct SpiritLevelView: View {
       .strokeBorder(
         LinearGradient(
           colors: [
-            Color.cream.opacity(0.3),
-            Color.darkGreen.opacity(0.35)
+            Color.white.opacity(0.35),
+            Color.darkGreen.opacity(0.3)
           ],
           startPoint: .top,
           endPoint: .bottom
         ),
-        lineWidth: 1.5
+        lineWidth: 1.2
       )
-  }
-
-  private var centerMarkers: some View {
-    HStack {
-      Spacer()
-      Rectangle()
-        .fill(Color.darkGreen.opacity(0.18))
-        .frame(width: 1)
-      Spacer().frame(width: 24)
-      Rectangle()
-        .fill(Color.darkGreen.opacity(0.18))
-        .frame(width: 1)
-      Spacer()
-    }
   }
 
   private var bubble: some View {
     ZStack {
       Circle()
-        .fill(Color.deepGrape.opacity(0.25))
+        .fill(Color.deepGrape.opacity(0.3))
         .frame(width: bubbleDiameter, height: bubbleDiameter)
         .offset(y: 3)
         .blur(radius: 4)
@@ -253,51 +221,47 @@ struct SpiritLevelView: View {
         .strokeBorder(Color.warmGrey.opacity(0.4), lineWidth: 0.5)
         .frame(width: bubbleDiameter, height: bubbleDiameter)
     }
-    .shadow(color: tier.isFlow ? Color.pastelPink.opacity(0.6) : .clear, radius: 18)
   }
 
-  // MARK: - Animation
+  // MARK: - Animations
 
-  private func startAnimation() {
-    if tier.isFlow {
-      withAnimation(.easeInOut(duration: 0.8)) {
-        bubbleOffset = 0
-      }
-      withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
-        glowIntensity = 1
-      }
-      return
-    }
-
-    scheduleTick()
-  }
-
-  private func restartAnimation() {
-    timer?.invalidate()
-    timer = nil
-    glowIntensity = 0
-    if tier.isFlow {
-      withAnimation(.spring(response: 1.5, dampingFraction: 0.9)) {
-        bubbleOffset = 0
-      }
-      withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
-        glowIntensity = 1
-      }
+  private func seedLeanIfNeeded() {
+    if BubbleLean.from(trigger: recentTrigger) != nil { return }
+    if let saved = SharedStore.defaults.string(forKey: "bubbleLean"),
+       let restored = BubbleLean(rawValue: saved) {
+      persistedLean = restored
     } else {
-      scheduleTick()
+      let choice: BubbleLean = Bool.random() ? .left : .right
+      persistedLean = choice
+      SharedStore.defaults.set(choice.rawValue, forKey: "bubbleLean")
     }
   }
 
-  private func scheduleTick() {
-    let currentTier = tier
-    timer = Timer.scheduledTimer(withTimeInterval: currentTier.tickInterval, repeats: true) { _ in
-      let newOffset = CGFloat.random(in: -currentTier.maxDrift...currentTier.maxDrift)
-      withAnimation(.spring(
-        response: currentTier.springResponse,
-        dampingFraction: currentTier.springDamping
-      )) {
-        bubbleOffset = newOffset
+  private func handleScoreChange(from old: Int, to new: Int) {
+    if new < old {
+      let knockAmount: CGFloat = directionSign * 18
+      withAnimation(.spring(response: 0.2, dampingFraction: 0.5)) {
+        knockOffset = knockAmount
       }
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+        withAnimation(.spring(response: 0.6, dampingFraction: 0.75)) {
+          knockOffset = 0
+        }
+      }
+    }
+    previousScore = new
+
+    if new >= 100 {
+      startGlow()
+    } else {
+      glowPulse = 0
+    }
+  }
+
+  private func startGlow() {
+    glowPulse = 0
+    withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
+      glowPulse = 1
     }
   }
 }
@@ -305,12 +269,12 @@ struct SpiritLevelView: View {
 #Preview {
   ZStack {
     Color.vintageGrape.ignoresSafeArea()
-    VStack(spacing: 40) {
-      SpiritLevelView(score: 15)
-      SpiritLevelView(score: 45)
-      SpiritLevelView(score: 65)
-      SpiritLevelView(score: 85)
-      SpiritLevelView(score: 100)
+    VStack(spacing: 32) {
+      SpiritLevelView(score: 100, recentTrigger: nil)
+      SpiritLevelView(score: 75, recentTrigger: "anxious")
+      SpiritLevelView(score: 50, recentTrigger: "bored")
+      SpiritLevelView(score: 25, recentTrigger: "habit")
+      SpiritLevelView(score: 0, recentTrigger: "avoiding")
     }
     .padding(.horizontal, 20)
   }

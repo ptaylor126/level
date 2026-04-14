@@ -107,9 +107,9 @@ struct HomeView: View {
 
   private var xpPill: some View {
     HStack(spacing: 4) {
-      Text("XP")
-        .font(LevelFont.bold(11))
-        .foregroundStyle(Color.vintageGrape)
+      Image(systemName: "diamond.fill")
+        .font(.system(size: 11, weight: .bold))
+        .foregroundStyle(Color.pastelPink)
       Text("\(viewModel.xpPoints)")
         .font(LevelFont.bold(13))
         .foregroundStyle(Color.vintageGrape)
@@ -130,7 +130,7 @@ struct HomeView: View {
         .contentTransition(.numericText(value: Double(viewModel.momentumScore)))
         .animation(.easeInOut(duration: 0.4), value: viewModel.momentumScore)
 
-      SpiritLevelView(score: viewModel.momentumScore)
+      SpiritLevelView(score: viewModel.momentumScore, recentTrigger: viewModel.recentTrigger)
 
       Text("MOMENTUM")
         .font(.levelLabel)
@@ -174,10 +174,17 @@ struct HomeView: View {
         background: viewModel.todayTimeSaved > 0 ? .teaGreen : .cream,
         showBorder: false
       ) {
-        VStack(alignment: .leading, spacing: 4) {
-          Text(viewModel.timeSavedFormatted)
-            .font(LevelFont.extraBold(36))
-            .foregroundStyle(Color.vintageGrape)
+        VStack(alignment: .leading, spacing: 6) {
+          HStack(alignment: .firstTextBaseline, spacing: 6) {
+            Text(viewModel.timeSavedFormatted)
+              .font(LevelFont.extraBold(40))
+              .foregroundStyle(Color.vintageGrape)
+            if viewModel.todayTimeSaved > 0 {
+              Image(systemName: "arrow.up")
+                .font(.system(size: 22, weight: .bold))
+                .foregroundStyle(Color.darkGreen)
+            }
+          }
           Text("saved today")
             .font(.levelCaption)
             .foregroundStyle(Color.vintageGrape.opacity(0.7))

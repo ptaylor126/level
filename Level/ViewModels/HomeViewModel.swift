@@ -15,6 +15,7 @@ final class HomeViewModel: ObservableObject {
   @Published var goalMet: Bool = false
   @Published var momentumTrendScores: [Double] = []
   @Published var momentumTrendLabels: [String] = []
+  @Published var recentTrigger: String?
 
   var xpPoints: Int { SharedStore.defaults.integer(forKey: "totalXP") }
 
@@ -65,6 +66,19 @@ final class HomeViewModel: ObservableObject {
     loadReasons(context: context)
     buildWeeklyData()
     buildMomentumTrend()
+    loadRecentTrigger(context: context)
+  }
+
+  private func loadRecentTrigger(context: ModelContext) {
+    var descriptor = FetchDescriptor<TriggerLog>(
+      sortBy: [SortDescriptor(\.timestamp, order: .reverse)]
+    )
+    descriptor.fetchLimit = 1
+    if let log = try? context.fetch(descriptor).first {
+      recentTrigger = log.trigger
+    } else {
+      recentTrigger = nil
+    }
   }
 
   private func loadReasons(context: ModelContext) {

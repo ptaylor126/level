@@ -6,7 +6,7 @@ struct ManagedAppsCard: View {
   let onTapApp: () -> Void
 
   var body: some View {
-    LevelCard(background: .cream, showBorder: true) {
+    LevelCard(background: .cream, showBorder: false) {
       VStack(alignment: .leading, spacing: 14) {
         Text("YOUR APPS")
           .font(.levelLabel)
@@ -20,32 +20,16 @@ struct ManagedAppsCard: View {
             .frame(height: 60)
         } else {
           ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
               ForEach(Array(screenTime.selection.categoryTokens), id: \.self) { token in
-                Button(action: onTapApp) {
-                  VStack(spacing: 6) {
-                    Label(token)
-                      .labelStyle(.iconOnly)
-                      .font(.system(size: 48))
-                      .frame(width: 72, height: 72)
-                      .background(Color.cream.opacity(0.5))
-                      .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                  }
+                appTile {
+                  Label(token).labelStyle(.iconOnly)
                 }
-                .buttonStyle(.plain)
               }
               ForEach(Array(screenTime.selection.applicationTokens), id: \.self) { token in
-                Button(action: onTapApp) {
-                  VStack(spacing: 6) {
-                    Label(token)
-                      .labelStyle(.iconOnly)
-                      .font(.system(size: 48))
-                      .frame(width: 72, height: 72)
-                      .background(Color.cream.opacity(0.5))
-                      .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                  }
+                appTile {
+                  Label(token).labelStyle(.iconOnly)
                 }
-                .buttonStyle(.plain)
               }
             }
             .environment(\.colorScheme, .light)
@@ -53,5 +37,22 @@ struct ManagedAppsCard: View {
         }
       }
     }
+  }
+
+  private func appTile<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    Button(action: onTapApp) {
+      content()
+        .font(.system(size: 56))
+        .frame(width: 72, height: 72)
+        .background(
+          RoundedRectangle(cornerRadius: 18, style: .continuous)
+            .fill(Color.white.opacity(0.5))
+        )
+        .overlay(
+          RoundedRectangle(cornerRadius: 18, style: .continuous)
+            .strokeBorder(Color.white.opacity(0.3), lineWidth: 1)
+        )
+    }
+    .buttonStyle(.plain)
   }
 }

@@ -15,24 +15,20 @@ struct ReasonCard: View {
   }
 
   var body: some View {
-    LevelCard(background: .cream, showBorder: true) {
+    LevelCard(background: .pastelPink, showBorder: false) {
       VStack(alignment: .leading, spacing: 12) {
-        // Header row
         HStack(spacing: 8) {
-          LevelIconView(icon: .heart, size: 16, color: .vintageGrape)
-
+          LevelIconView(icon: .heart, size: 16, color: .rose)
           Text("WHY I'M DOING THIS")
             .font(.levelLabel)
             .tracking(0.5)
-            .foregroundStyle(Color.vintageGrape)
-
+            .foregroundStyle(Color.rose)
           Spacer()
         }
 
-        // Reason text
         Text(currentReason)
           .font(.levelH2)
-          .foregroundStyle(Color.vintageGrape)
+          .foregroundStyle(Color.rose)
           .fixedSize(horizontal: false, vertical: true)
           .lineSpacing(4)
       }
