@@ -19,7 +19,9 @@ final class HomeViewModel: ObservableObject {
   var xpPoints: Int { SharedStore.defaults.integer(forKey: "totalXP") }
 
   var todayTimeSaved: TimeInterval {
-    max(0, yesterdayScreenTime - todayScreenTime)
+    let baseline = SharedStore.defaults.double(forKey: "baselineSeconds")
+    let b = baseline > 0 ? baseline : 3.5 * 3600
+    return max(0, b - todayScreenTime)
   }
 
   var timeSavedFormatted: String {

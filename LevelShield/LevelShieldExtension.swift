@@ -75,7 +75,7 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       )
     }
 
-    let subtitle = "Remember:\n\u{25B8} \(reason)\n\n\(attemptText)\n\nOpen Level to unlock this app."
+    let subtitle = "\nRemember:\n\u{25B8} \(reason)\n\n\(attemptText)\n\nOpen Level to unlock this app."
 
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,

@@ -26,10 +26,10 @@ struct ManagedAppsCard: View {
                   VStack(spacing: 6) {
                     Label(token)
                       .labelStyle(.iconOnly)
-                      .font(.system(size: 32))
-                      .frame(width: 56, height: 56)
+                      .font(.system(size: 48))
+                      .frame(width: 72, height: 72)
                       .background(Color.cream.opacity(0.5))
-                      .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                      .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                   }
                 }
                 .buttonStyle(.plain)
@@ -39,10 +39,10 @@ struct ManagedAppsCard: View {
                   VStack(spacing: 6) {
                     Label(token)
                       .labelStyle(.iconOnly)
-                      .font(.system(size: 32))
-                      .frame(width: 56, height: 56)
+                      .font(.system(size: 48))
+                      .frame(width: 72, height: 72)
                       .background(Color.cream.opacity(0.5))
-                      .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                      .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                   }
                 }
                 .buttonStyle(.plain)

@@ -5,6 +5,7 @@ import SwiftUI
 enum OnboardingStep: Int, CaseIterable {
   case welcome
   case appPicker
+  case baseline
   case reasons
   case unlockLimit
   case sessionLength
@@ -34,6 +35,7 @@ struct OnboardingFlow: View {
   @State private var draftReasons: [String] = ["", "", ""]
   @State private var unlockLimit: Int = 10
   @State private var sessionMinutes: Int = 5
+  @State private var baselineHours: Double = 3.5
   @State private var isAppPickerPresented = false
   @State private var transitionEdge: Edge = .trailing
   @State private var isAuthLoading = false
@@ -48,7 +50,7 @@ struct OnboardingFlow: View {
             .animation(.easeInOut(duration: 0.2), value: step.canGoBack)
 
           switch step {
-          case .reasons, .summary, .momentum, .unlockLimit, .sessionLength, .howItWorks:
+          case .reasons, .summary, .momentum, .unlockLimit, .sessionLength, .howItWorks, .baseline:
             Color.clear.frame(height: max(0, proxy.size.height * 0.06))
           default:
             Color.clear.frame(height: max(0, proxy.size.height * 0.18))
@@ -108,6 +110,8 @@ struct OnboardingFlow: View {
       WelcomeView()
     case .appPicker:
       AppPickerView(onPickTapped: { isAppPickerPresented = true })
+    case .baseline:
+      BaselineView(baselineHours: $baselineHours)
     case .reasons:
       ReasonsView(reasons: $draftReasons)
     case .unlockLimit:
@@ -159,6 +163,7 @@ struct OnboardingFlow: View {
     switch step {
     case .welcome: return "Get started"
     case .appPicker: return "Next"
+    case .baseline: return "Next"
     case .reasons: return "Next"
     case .unlockLimit: return "Next"
     case .sessionLength: return "Next"
@@ -171,7 +176,7 @@ struct OnboardingFlow: View {
 
   private var isButtonEnabled: Bool {
     switch step {
-    case .welcome, .confirmation, .summary, .momentum, .howItWorks, .unlockLimit, .sessionLength:
+    case .welcome, .confirmation, .summary, .momentum, .howItWorks, .unlockLimit, .sessionLength, .baseline:
       return true
     case .appPicker:
       return screenTime.selectedItemCount > 0
@@ -213,6 +218,8 @@ struct OnboardingFlow: View {
         }
       }
     case .appPicker:
+      step = .baseline
+    case .baseline:
       step = .reasons
     case .reasons:
       profile.reasons = draftReasons
@@ -241,6 +248,7 @@ struct OnboardingFlow: View {
         unlockLimit: unlockLimit
       )
       SharedStore.defaults.set(sessionMinutes * 60, forKey: "sessionLengthSeconds")
+      SharedStore.defaults.set(baselineHours * 3600, forKey: "baselineSeconds")
       screenTime.startMonitoring()
       Task { let _ = await NotificationManager.shared.requestPermission() }
     }

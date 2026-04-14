@@ -37,6 +37,7 @@
 		73E09F8094837717B606F0B6 /* LevelShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */; };
 		75D919684CE7C14E4ABEB912 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */; };
 		77EABC8CC9C68F805CA66119 /* LevelMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */; };
+		7B70476D392A3F1E2C079403 /* BaselineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2334E866431DEF702ABBAE /* BaselineView.swift */; };
 		85514328D4C62C23A4718765 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BB9622DB050DB0C2C5EEC1 /* ScheduleView.swift */; };
 		8E1CFB6503B9F5DEAE576F17 /* ManagedAppsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B562F02DF85397725E1B3 /* ManagedAppsCard.swift */; };
 		904513B8331044A52176ACE7 /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A130F6A0E5C2BD514499D87A /* PlusJakartaSans-Medium.ttf */; };
@@ -115,6 +116,7 @@
 /* Begin PBXFileReference section */
 		05BF3E09F84FAADE9BFE0A1A /* TriggerTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerTracker.swift; sourceTree = "<group>"; };
 		0F5015A73C22BE36767BAAFB /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
+		1A2334E866431DEF702ABBAE /* BaselineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaselineView.swift; sourceTree = "<group>"; };
 		1B8CCF85F10B4DB8BF6D4D6E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1D345BAB1E98CD779E5AAFA0 /* LevelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelApp.swift; sourceTree = "<group>"; };
 		1E4A9AFCE4D97EBAD5E99534 /* Level.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Level.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -324,6 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				E65F5C8BB881AA62CC31AF12 /* AppPickerView.swift */,
+				1A2334E866431DEF702ABBAE /* BaselineView.swift */,
 				4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */,
 				C20D193BFA9CB1F75E564A9E /* HowItWorksView.swift */,
 				BF18D33485E14DB096E25364 /* MomentumIntroView.swift */,
@@ -573,6 +576,7 @@
 				5E59FCDC5ADFD2814A49C52A /* AppLimitsCard.swift in Sources */,
 				9AB0DD942E6B7CD965FB1E87 /* AppPickerView.swift in Sources */,
 				1C3258D749D88C2A26B7075A /* AppSettings.swift in Sources */,
+				7B70476D392A3F1E2C079403 /* BaselineView.swift in Sources */,
 				4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */,
 				BF4AE71205F6DE2334813DEE /* ConfirmationView.swift in Sources */,
 				3B8C0320DE186E71CBE7660E /* CountdownView.swift in Sources */,

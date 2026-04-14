@@ -16,19 +16,23 @@ struct CountdownView: View {
   @State private var timerActive = true
   @State private var appeared = false
   @State private var xpGain: Int? = nil
+  @State private var staticReason: String = ""
 
   private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
-  private var reason: String {
-    screenTime.currentReason()
-  }
 
   private var totalSeconds: Int {
     screenTime.pendingCountdownSeconds()
   }
 
   private var attemptNumber: Int {
-    SharedStore.defaults.integer(forKey: "todayOpenAttempts")
+    max(1, SharedStore.defaults.integer(forKey: "todayOpenAttempts"))
+  }
+
+  private var unlocksLeft: Int {
+    let used = SharedStore.defaults.integer(forKey: "todayUnlockCount")
+    let limit = SharedStore.defaults.integer(forKey: "defaultUnlockLimit")
+    let l = limit > 0 ? limit : 10
+    return max(0, l - used)
   }
 
   private var isExhausted: Bool {
@@ -56,6 +60,7 @@ struct CountdownView: View {
     .preferredColorScheme(.dark)
     .onAppear {
       remaining = totalSeconds
+      staticReason = screenTime.currentReason()
       withAnimation(.easeOut(duration: 0.3)) {
         appeared = true
       }
@@ -84,7 +89,7 @@ struct CountdownView: View {
       Spacer()
 
       VStack(spacing: 24) {
-        Text(reason)
+        Text(staticReason)
           .font(LevelFont.regular(20))
           .foregroundStyle(Color.cream)
           .multilineTextAlignment(.center)
@@ -110,11 +115,16 @@ struct CountdownView: View {
         }
 
         if showOpenButton {
-          LevelButton(
-            title: "Open anyway",
-            style: .primaryOnDark,
-            action: handleOpenAnyway
-          )
+          VStack(spacing: 8) {
+            LevelButton(
+              title: "Open anyway",
+              style: .primaryOnDark,
+              action: handleOpenAnyway
+            )
+            Text("This will use 1 of your \(unlocksLeft) opens today")
+              .font(.levelCaption)
+              .foregroundStyle(Color.mutedGrape)
+          }
           .padding(.horizontal, 20)
           .transition(.scale.combined(with: .opacity))
         }
@@ -123,7 +133,7 @@ struct CountdownView: View {
       Spacer()
 
       LevelButton(
-        title: "Not now",
+        title: "Walk away",
         style: .ghostOnDark,
         action: handleNotNow
       )
@@ -145,7 +155,7 @@ struct CountdownView: View {
       Spacer()
 
       VStack(spacing: 24) {
-        Text(reason)
+        Text(staticReason)
           .font(LevelFont.regular(20))
           .foregroundStyle(Color.cream)
           .multilineTextAlignment(.center)
