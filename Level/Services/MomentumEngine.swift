@@ -123,4 +123,15 @@ final class MomentumEngine {
     )
     return (try? context.fetch(descriptor)) ?? []
   }
+
+  func monthRecords() -> [DailyRecord] {
+    let calendar = Calendar.current
+    let today = calendar.startOfDay(for: Date())
+    guard let monthAgo = calendar.date(byAdding: .day, value: -29, to: today) else { return [] }
+    let descriptor = FetchDescriptor<DailyRecord>(
+      predicate: #Predicate { $0.date >= monthAgo },
+      sortBy: [SortDescriptor(\.date, order: .forward)]
+    )
+    return (try? context.fetch(descriptor)) ?? []
+  }
 }
