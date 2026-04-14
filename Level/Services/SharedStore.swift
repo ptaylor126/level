@@ -11,5 +11,10 @@ enum SharedStore {
     static let familyActivitySelection = "familyActivitySelection"
     static let unlockCounts = "unlockCounts"
     static let declinedOpens = "declinedOpens"
+
+    // Schedule / mode keys
+    static let currentLevelMode = "currentLevelMode"
+    static let quickModeRaw = "quickModeRaw"
+    static let quickModeStartTimestamp = "quickModeStartTimestamp"
   }
 }

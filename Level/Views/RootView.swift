@@ -5,6 +5,7 @@ struct RootView: View {
   @Environment(\.modelContext) private var context
   @Environment(\.scenePhase) private var scenePhase
   @EnvironmentObject private var screenTime: ScreenTimeManager
+  @EnvironmentObject private var schedule: ScheduleManager
   @Query private var profiles: [UserProfile]
   @Query private var settingsRecords: [AppSettings]
   @State private var showCountdown = false

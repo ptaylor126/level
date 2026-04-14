@@ -11,7 +11,8 @@ final class DataStore {
       UserProfile.self,
       DailyRecord.self,
       TriggerLog.self,
-      AppSettings.self
+      AppSettings.self,
+      ScheduleBlock.self
     ])
     let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
     do {

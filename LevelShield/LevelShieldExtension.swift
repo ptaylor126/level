@@ -39,6 +39,25 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
   private func makeConfig() -> ShieldConfiguration {
     resetIfNewDay()
 
+    let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
+    let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
+    let appIcon = UIImage(named: "ShieldIcon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
+
+    // Rest Level: fully blocked, no unlock option
+    let currentMode = defaults?.string(forKey: "currentLevelMode") ?? ""
+    if currentMode == "rest" {
+      return ShieldConfiguration(
+        backgroundBlurStyle: .systemMaterialDark,
+        backgroundColor: grape,
+        icon: appIcon,
+        title: ShieldConfiguration.Label(text: "Rest Level is on.", color: cream),
+        subtitle: ShieldConfiguration.Label(text: "See you in the morning.", color: cream),
+        primaryButtonLabel: ShieldConfiguration.Label(text: "I'm good", color: grape),
+        primaryButtonBackgroundColor: cream,
+        secondaryButtonLabel: nil
+      )
+    }
+
     let reason = nextReason()
 
     if defaults?.object(forKey: "firstAttemptTimestamp") == nil {
@@ -53,11 +72,6 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     let unlockLimit = defaults?.integer(forKey: "defaultUnlockLimit").nonZero ?? 10
     let exhausted = unlockCount >= unlockLimit
     let attemptText = "Attempt \(opensToday + 1) today."
-
-    let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
-    let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
-
-    let appIcon = UIImage(named: "ShieldIcon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
 
     if exhausted {
       return ShieldConfiguration(

@@ -10,6 +10,7 @@
 		05F5046892FEF55D072439F8 /* MomentumTrend30Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58977BC14740BEA4E57ABBB7 /* MomentumTrend30Card.swift */; };
 		0DF21226BA48F5B71E609C80 /* LevelShield.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6944DA0CE3BAD8312F92D617 /* LevelShield.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		11D7A48E496DA329F09EE7BD /* LevelIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C70FCB8243A1ACF45E2BDB0 /* LevelIcon.swift */; };
+		12B37CA1E4D8CD4052CBD0AB /* BlockEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8199EABE1F14AB1511DA9FA /* BlockEditorSheet.swift */; };
 		1344E4E044826BE5191013B0 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD6FCAA5ACC2C75DF5BBDB3 /* WelcomeView.swift */; };
 		1793846445A76E098F06F0A5 /* LevelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BF4DFB4D0A9D449B9341E0 /* LevelButton.swift */; };
 		194AE2D21B08F0516B1D496F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD0D1BF3B6051EF8CA9F0BD /* Date+Extensions.swift */; };
@@ -38,11 +39,14 @@
 		655202EB99B4C21063980331 /* LevelShieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */; };
 		696A310D632CC16B530849A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D40FDDC9922F52E9791D108C /* Assets.xcassets */; };
 		71443F9A3F73B8F1A88D14D8 /* MomentumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967516D3A3B29A4B37C9652A /* MomentumEngine.swift */; };
+		72AABCF44D29131363C53D4A /* CurrentModeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6451164A7034AF986F3FEF /* CurrentModeCard.swift */; };
 		73E09F8094837717B606F0B6 /* LevelShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */; };
 		75D919684CE7C14E4ABEB912 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */; };
 		77EABC8CC9C68F805CA66119 /* LevelMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */; };
 		7B70476D392A3F1E2C079403 /* BaselineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2334E866431DEF702ABBAE /* BaselineView.swift */; };
+		803D3281A5BF9A5C5F7EEF50 /* EmptyScheduleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306FC9A25B1B2C7A0318DFB7 /* EmptyScheduleCard.swift */; };
 		85514328D4C62C23A4718765 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BB9622DB050DB0C2C5EEC1 /* ScheduleView.swift */; };
+		8B137207ACF6C651634B841B /* ScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AA6591C067C5AD3C392792 /* ScheduleManager.swift */; };
 		8BD73DC311BEE0858760AAD0 /* XPHistoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E196D8354B66B63313AEECB /* XPHistoryCard.swift */; };
 		8E1CFB6503B9F5DEAE576F17 /* ManagedAppsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10B562F02DF85397725E1B3 /* ManagedAppsCard.swift */; };
 		904513B8331044A52176ACE7 /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A130F6A0E5C2BD514499D87A /* PlusJakartaSans-Medium.ttf */; };
@@ -52,6 +56,7 @@
 		9E555BC623FB56F9753A0060 /* UnlocksCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68DD4F357FA121804BFD9FE /* UnlocksCard.swift */; };
 		9F0434C5AC30B29B60B2FD2A /* MomentumCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA1F4A99B294F370822B25 /* MomentumCard.swift */; };
 		A97DDE9AB06B57EEBA232C96 /* ManagedAppsBreakdownCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D0A18D963BC306E6C7D6BA /* ManagedAppsBreakdownCard.swift */; };
+		AD99D937AC3564924F6CFAA7 /* ScheduleTimelineCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480DFA4FCE34E66FFE6C0FCB /* ScheduleTimelineCard.swift */; };
 		AED099257CC8372A7E664148 /* LevelWordmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D92F99E5C291456F3BA9A3 /* LevelWordmark.swift */; };
 		AF671A4CEDE21F64CC17D5A2 /* Fraunces-VariableItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */; };
 		B0A7CBB2A59280B64320819A /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE7B97481E5015C47426D /* OnboardingFlow.swift */; };
@@ -62,6 +67,7 @@
 		B6514FDEFF2F9431A5A840BB /* MomentumTrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */; };
 		B8722AE55FDD4407D8885192 /* WeeklyChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7413FE9CC286E994F6F80F /* WeeklyChartCard.swift */; };
 		B92475281519F72BB0770626 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD47CDA66B8653DA6D8A80A /* RootView.swift */; };
+		BC73E4175F639411CCCF23CF /* BlockListCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BCAE5922486336B84092D /* BlockListCard.swift */; };
 		BCD05E96C6618CB42E273EC6 /* TriggerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626231052B76247D9A0F2BE /* TriggerPromptView.swift */; };
 		BF4AE71205F6DE2334813DEE /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */; };
 		C77EBDF0404D26EBC9B87207 /* Fraunces72pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAA3052A87F1CF61AF3B53B3 /* Fraunces72pt-Bold.ttf */; };
@@ -70,7 +76,9 @@
 		D03430A1BCEAD1E4B2F80949 /* LevelMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 739252BC27C06A0398E4C84E /* LevelMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D4A8A262DE450D3D117B87CB /* MomentumIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF18D33485E14DB096E25364 /* MomentumIntroView.swift */; };
 		DCA8D0951E206C749D0F1581 /* TriggerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24730D95C239290FE5F01C53 /* TriggerLog.swift */; };
+		DCC0368F107B14B8F1EF3ABA /* ScheduleBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357FA0420AF9BCF9F1D2BF6F /* ScheduleBlock.swift */; };
 		E20524C59AF3C20A8805CBFD /* Fraunces-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA9AC983C634C66179349F12 /* Fraunces-Variable.ttf */; };
+		E4B5B51FA735DC666AD50D7F /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9AEABE6659E6D094DAF8CD /* ScheduleViewModel.swift */; };
 		E5F5DD67CEDBE3CE6B6F7016 /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E96F913D57FF5965D20450 /* SocialView.swift */; };
 		E8609314A1BC658C7B908599 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7775188C9E88A987A29EE /* NotificationManager.swift */; };
 		EBFC0F25007D2161D47AD88D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CCF85F10B4DB8BF6D4D6E /* HomeViewModel.swift */; };
@@ -133,7 +141,9 @@
 		24730D95C239290FE5F01C53 /* TriggerLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerLog.swift; sourceTree = "<group>"; };
 		296A7E02C2425FF84029B878 /* AppLimitsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLimitsCard.swift; sourceTree = "<group>"; };
 		2B683571F8442D6453A11106 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		306FC9A25B1B2C7A0318DFB7 /* EmptyScheduleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyScheduleCard.swift; sourceTree = "<group>"; };
 		34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelShieldActionExtension.swift; sourceTree = "<group>"; };
+		357FA0420AF9BCF9F1D2BF6F /* ScheduleBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleBlock.swift; sourceTree = "<group>"; };
 		35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonsView.swift; sourceTree = "<group>"; };
 		37E96F913D57FF5965D20450 /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
 		42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelShieldExtension.swift; sourceTree = "<group>"; };
@@ -142,6 +152,7 @@
 		468499B85ADAF757F2EA5829 /* UnlockLimitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockLimitView.swift; sourceTree = "<group>"; };
 		47D92F99E5C291456F3BA9A3 /* LevelWordmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelWordmark.swift; sourceTree = "<group>"; };
 		47E7775188C9E88A987A29EE /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		480DFA4FCE34E66FFE6C0FCB /* ScheduleTimelineCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTimelineCard.swift; sourceTree = "<group>"; };
 		494A2A8F9536AA077D99A800 /* ScreenTimeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeCard.swift; sourceTree = "<group>"; };
 		4A7413FE9CC286E994F6F80F /* WeeklyChartCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChartCard.swift; sourceTree = "<group>"; };
 		4C7B14785CC45B8A69458A97 /* Font+Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Level.swift"; sourceTree = "<group>"; };
@@ -149,17 +160,20 @@
 		4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		5626231052B76247D9A0F2BE /* TriggerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerPromptView.swift; sourceTree = "<group>"; };
 		58977BC14740BEA4E57ABBB7 /* MomentumTrend30Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumTrend30Card.swift; sourceTree = "<group>"; };
+		5C9AEABE6659E6D094DAF8CD /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		5F239F7915643AF411246B41 /* LevelShieldAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		66A08675CD66FD8E3D925B75 /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
 		6944DA0CE3BAD8312F92D617 /* LevelShield.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		69BF4DFB4D0A9D449B9341E0 /* LevelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelButton.swift; sourceTree = "<group>"; };
 		6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		6C70FCB8243A1ACF45E2BDB0 /* LevelIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelIcon.swift; sourceTree = "<group>"; };
+		6D6451164A7034AF986F3FEF /* CurrentModeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentModeCard.swift; sourceTree = "<group>"; };
 		7198A78BBE42C18326A72C49 /* ReasonCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCard.swift; sourceTree = "<group>"; };
 		739252BC27C06A0398E4C84E /* LevelMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		78715DBBF274AA328115FD57 /* SharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStore.swift; sourceTree = "<group>"; };
 		7CD6FCAA5ACC2C75DF5BBDB3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		833143054762A07EC4570D4F /* TimeSavedSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSavedSummaryCard.swift; sourceTree = "<group>"; };
+		871BCAE5922486336B84092D /* BlockListCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCard.swift; sourceTree = "<group>"; };
 		8CE38F5DA0998615778169D8 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		967516D3A3B29A4B37C9652A /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
@@ -170,6 +184,8 @@
 		A2C95824A4039C702B5072E3 /* SessionLengthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLengthView.swift; sourceTree = "<group>"; };
 		AB4F9B5BE7EB9E9DA618FA4C /* TriggerPatternsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerPatternsCard.swift; sourceTree = "<group>"; };
 		ADD47CDA66B8653DA6D8A80A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		B4AA6591C067C5AD3C392792 /* ScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleManager.swift; sourceTree = "<group>"; };
+		B8199EABE1F14AB1511DA9FA /* BlockEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockEditorSheet.swift; sourceTree = "<group>"; };
 		BC60AE929DAC4875AFB4EC5E /* PlusJakartaSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Regular.ttf"; sourceTree = "<group>"; };
 		BE468813CD9FA8596F20F966 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		BF18D33485E14DB096E25364 /* MomentumIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumIntroView.swift; sourceTree = "<group>"; };
@@ -202,6 +218,7 @@
 				43C878BC2443EF125C06F938 /* Components */,
 				E4E3E5EFF303D27D754F5768 /* Home */,
 				A7A6984055D30E69E00E9DBF /* Onboarding */,
+				6149D26DABB2318EAF15AEED /* Schedule */,
 				EF138AF339E9A18F15BFB14B /* Settings */,
 				3B386AE79A9FEB714723BD3E /* Shield */,
 				D538D7C5F5BB16CEA02B8A6B /* Stats */,
@@ -228,6 +245,7 @@
 			children = (
 				E3EB9A48C29380210046ED75 /* AppSettings.swift */,
 				E97FF2C90CFBF45459C357F2 /* DailyRecord.swift */,
+				357FA0420AF9BCF9F1D2BF6F /* ScheduleBlock.swift */,
 				24730D95C239290FE5F01C53 /* TriggerLog.swift */,
 				2B683571F8442D6453A11106 /* UserProfile.swift */,
 			);
@@ -306,6 +324,18 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		6149D26DABB2318EAF15AEED /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				B8199EABE1F14AB1511DA9FA /* BlockEditorSheet.swift */,
+				871BCAE5922486336B84092D /* BlockListCard.swift */,
+				6D6451164A7034AF986F3FEF /* CurrentModeCard.swift */,
+				306FC9A25B1B2C7A0318DFB7 /* EmptyScheduleCard.swift */,
+				480DFA4FCE34E66FFE6C0FCB /* ScheduleTimelineCard.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
 		6E7A033625593378DF542FA5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +353,7 @@
 				D2A221C786B07E3993EFE7AE /* DataStore.swift */,
 				967516D3A3B29A4B37C9652A /* MomentumEngine.swift */,
 				47E7775188C9E88A987A29EE /* NotificationManager.swift */,
+				B4AA6591C067C5AD3C392792 /* ScheduleManager.swift */,
 				0F5015A73C22BE36767BAAFB /* ScreenTimeManager.swift */,
 				78715DBBF274AA328115FD57 /* SharedStore.swift */,
 				05BF3E09F84FAADE9BFE0A1A /* TriggerTracker.swift */,
@@ -360,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				1B8CCF85F10B4DB8BF6D4D6E /* HomeViewModel.swift */,
+				5C9AEABE6659E6D094DAF8CD /* ScheduleViewModel.swift */,
 				A27E277A2012069889E2FD18 /* SettingsViewModel.swift */,
 				8CE38F5DA0998615778169D8 /* StatsViewModel.swift */,
 			);
@@ -615,12 +647,16 @@
 				9AB0DD942E6B7CD965FB1E87 /* AppPickerView.swift in Sources */,
 				1C3258D749D88C2A26B7075A /* AppSettings.swift in Sources */,
 				7B70476D392A3F1E2C079403 /* BaselineView.swift in Sources */,
+				12B37CA1E4D8CD4052CBD0AB /* BlockEditorSheet.swift in Sources */,
+				BC73E4175F639411CCCF23CF /* BlockListCard.swift in Sources */,
 				4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */,
 				BF4AE71205F6DE2334813DEE /* ConfirmationView.swift in Sources */,
 				3B8C0320DE186E71CBE7660E /* CountdownView.swift in Sources */,
+				72AABCF44D29131363C53D4A /* CurrentModeCard.swift in Sources */,
 				203B9FBA3D9238E61760CB0B /* DailyRecord.swift in Sources */,
 				B5820FB491005DBC6C56F7DF /* DataStore.swift in Sources */,
 				194AE2D21B08F0516B1D496F /* Date+Extensions.swift in Sources */,
+				803D3281A5BF9A5C5F7EEF50 /* EmptyScheduleCard.swift in Sources */,
 				2582930BAE5CADAC094B6967 /* Font+Level.swift in Sources */,
 				3423084D6FDBD96404C9838B /* HomeView.swift in Sources */,
 				EBFC0F25007D2161D47AD88D /* HomeViewModel.swift in Sources */,
@@ -643,7 +679,11 @@
 				F4DEBD20FA06734F05DA4BFD /* ReasonCard.swift in Sources */,
 				98982BEB2AFE908C2F375198 /* ReasonsView.swift in Sources */,
 				B92475281519F72BB0770626 /* RootView.swift in Sources */,
+				DCC0368F107B14B8F1EF3ABA /* ScheduleBlock.swift in Sources */,
+				8B137207ACF6C651634B841B /* ScheduleManager.swift in Sources */,
+				AD99D937AC3564924F6CFAA7 /* ScheduleTimelineCard.swift in Sources */,
 				85514328D4C62C23A4718765 /* ScheduleView.swift in Sources */,
+				E4B5B51FA735DC666AD50D7F /* ScheduleViewModel.swift in Sources */,
 				EF0B29184E2DC2494E6C677F /* ScreenTimeCard.swift in Sources */,
 				558FBBA5FE1E8095E263F168 /* ScreenTimeManager.swift in Sources */,
 				B54A456C8EC57C23CAC05122 /* SessionLengthView.swift in Sources */,
