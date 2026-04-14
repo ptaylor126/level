@@ -33,6 +33,7 @@
 		5DAAB210FFF49F739693EEB4 /* PlusJakartaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A08675CD66FD8E3D925B75 /* PlusJakartaSans-Bold.ttf */; };
 		5E59FCDC5ADFD2814A49C52A /* AppLimitsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A7E02C2425FF84029B878 /* AppLimitsCard.swift */; };
 		655202EB99B4C21063980331 /* LevelShieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */; };
+		696A310D632CC16B530849A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D40FDDC9922F52E9791D108C /* Assets.xcassets */; };
 		71443F9A3F73B8F1A88D14D8 /* MomentumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967516D3A3B29A4B37C9652A /* MomentumEngine.swift */; };
 		73E09F8094837717B606F0B6 /* LevelShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */; };
 		75D919684CE7C14E4ABEB912 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */; };
@@ -166,6 +167,7 @@
 		CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
 		CB4A472FD57D2B4E71E38F03 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D2A221C786B07E3993EFE7AE /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		D40FDDC9922F52E9791D108C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB0688E7CCBC9C234D3A67EB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DCEFFED36EBEB7C79CCD08C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFD0D1BF3B6051EF8CA9F0BD /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 		22BCEB0D677DC4226C10EB00 /* LevelShield */ = {
 			isa = PBXGroup;
 			children = (
+				D40FDDC9922F52E9791D108C /* Assets.xcassets */,
 				42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */,
 			);
 			path = LevelShield;
@@ -408,6 +411,7 @@
 			buildConfigurationList = 11AF3F202E26B87054497762 /* Build configuration list for PBXNativeTarget "LevelShield" */;
 			buildPhases = (
 				6E1EEB5C37F46C6F4DFAC1D5 /* Sources */,
+				6B2E8A69D9E28E673801F45D /* Resources */,
 			);
 			buildRules = (
 			);
@@ -539,6 +543,14 @@
 				75D919684CE7C14E4ABEB912 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */,
 				904513B8331044A52176ACE7 /* PlusJakartaSans-Medium.ttf in Resources */,
 				22E2532E6F0223F5FE13A3AA /* PlusJakartaSans-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B2E8A69D9E28E673801F45D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				696A310D632CC16B530849A0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
