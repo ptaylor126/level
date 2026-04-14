@@ -123,28 +123,21 @@ struct HomeView: View {
   // MARK: - Progress Ring
 
   private var progressRing: some View {
-    let progress = min(Double(viewModel.momentumScore) / 100.0, 1.0)
-    return ZStack {
-      Circle()
-        .stroke(Color.warmGrey, lineWidth: 12)
+    VStack(spacing: 16) {
+      Text("\(viewModel.momentumScore)")
+        .font(LevelFont.extraBold(56))
+        .foregroundStyle(Color.cream)
+        .contentTransition(.numericText(value: Double(viewModel.momentumScore)))
+        .animation(.easeInOut(duration: 0.4), value: viewModel.momentumScore)
 
-      Circle()
-        .trim(from: 0, to: progress)
-        .stroke(Color.teaGreen, style: StrokeStyle(lineWidth: 12, lineCap: .round))
-        .rotationEffect(.degrees(-90))
-        .animation(.easeInOut(duration: 0.6), value: progress)
+      SpiritLevelView(score: viewModel.momentumScore)
 
-      VStack(spacing: 4) {
-        Text("\(viewModel.momentumScore)")
-          .font(LevelFont.extraBold(48))
-          .foregroundStyle(Color.cream)
-        Text("MOMENTUM")
-          .font(.levelLabel)
-          .tracking(1)
-          .foregroundStyle(Color.mutedGrape)
-      }
+      Text("MOMENTUM")
+        .font(.levelLabel)
+        .tracking(1)
+        .foregroundStyle(Color.mutedGrape)
     }
-    .frame(width: 200, height: 200)
+    .padding(.vertical, 8)
   }
 
   // MARK: - Week Dots

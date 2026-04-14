@@ -33,6 +33,7 @@
 		461967F9ACE93F763D1590E7 /* UnlockLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468499B85ADAF757F2EA5829 /* UnlockLimitView.swift */; };
 		49489D81DA936B68D3C4F2F9 /* PlusJakartaSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A02C60C89685EDA1A8386D60 /* PlusJakartaSans-ExtraBold.ttf */; };
 		4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */; };
+		554601EE2B248DFF0FD657B6 /* SpiritLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962211D7ED1749EF0FE51269 /* SpiritLevelView.swift */; };
 		558FBBA5FE1E8095E263F168 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5015A73C22BE36767BAAFB /* ScreenTimeManager.swift */; };
 		5DAAB210FFF49F739693EEB4 /* PlusJakartaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A08675CD66FD8E3D925B75 /* PlusJakartaSans-Bold.ttf */; };
 		5E09E5C3BEB738E7638E19BB /* ShareProgressHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484EC084E07426963F8971A0 /* ShareProgressHelper.swift */; };
@@ -187,6 +188,7 @@
 		871BCAE5922486336B84092D /* BlockListCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCard.swift; sourceTree = "<group>"; };
 		8CE38F5DA0998615778169D8 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		962211D7ED1749EF0FE51269 /* SpiritLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiritLevelView.swift; sourceTree = "<group>"; };
 		967516D3A3B29A4B37C9652A /* MomentumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumEngine.swift; sourceTree = "<group>"; };
 		9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumTrendCard.swift; sourceTree = "<group>"; };
 		A02C60C89685EDA1A8386D60 /* PlusJakartaSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 				9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */,
 				7198A78BBE42C18326A72C49 /* ReasonCard.swift */,
 				494A2A8F9536AA077D99A800 /* ScreenTimeCard.swift */,
+				962211D7ED1749EF0FE51269 /* SpiritLevelView.swift */,
 				E68DD4F357FA121804BFD9FE /* UnlocksCard.swift */,
 				4A7413FE9CC286E994F6F80F /* WeeklyChartCard.swift */,
 			);
@@ -723,6 +726,7 @@
 				CF2737E899A1D7979D4DBD1F /* SocialProfileCard.swift in Sources */,
 				E5F5DD67CEDBE3CE6B6F7016 /* SocialView.swift in Sources */,
 				23D4A07F3AA49B85ED5FE4F8 /* SocialViewModel.swift in Sources */,
+				554601EE2B248DFF0FD657B6 /* SpiritLevelView.swift in Sources */,
 				B32000239E81C1F26D1C08E5 /* StagedEntrance.swift in Sources */,
 				2ACED3071EB53D20BEEBEB72 /* StatsView.swift in Sources */,
 				3FA9666C4C5B36993BF74F6D /* StatsViewModel.swift in Sources */,
