@@ -18,6 +18,7 @@
 		1CC05752C8E1B1DC9DC6AFA4 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27E277A2012069889E2FD18 /* SettingsViewModel.swift */; };
 		203B9FBA3D9238E61760CB0B /* DailyRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97FF2C90CFBF45459C357F2 /* DailyRecord.swift */; };
 		22E2532E6F0223F5FE13A3AA /* PlusJakartaSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC60AE929DAC4875AFB4EC5E /* PlusJakartaSans-Regular.ttf */; };
+		23D4A07F3AA49B85ED5FE4F8 /* SocialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24389E676FB3B81A94618340 /* SocialViewModel.swift */; };
 		2582930BAE5CADAC094B6967 /* Font+Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B14785CC45B8A69458A97 /* Font+Level.swift */; };
 		26CD17F6D4234252B79E3106 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8A3349EE90CE02C78E22EE /* MainTabView.swift */; };
 		2ACED3071EB53D20BEEBEB72 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616AEA5D76D4EA1622578ED /* StatsView.swift */; };
@@ -34,6 +35,7 @@
 		4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF22A2DC3DEE8F68E9B97A8 /* Color+Hex.swift */; };
 		558FBBA5FE1E8095E263F168 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5015A73C22BE36767BAAFB /* ScreenTimeManager.swift */; };
 		5DAAB210FFF49F739693EEB4 /* PlusJakartaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66A08675CD66FD8E3D925B75 /* PlusJakartaSans-Bold.ttf */; };
+		5E09E5C3BEB738E7638E19BB /* ShareProgressHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484EC084E07426963F8971A0 /* ShareProgressHelper.swift */; };
 		5E59FCDC5ADFD2814A49C52A /* AppLimitsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296A7E02C2425FF84029B878 /* AppLimitsCard.swift */; };
 		65488F97BB9DED748DC19A03 /* TimeSavedSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833143054762A07EC4570D4F /* TimeSavedSummaryCard.swift */; };
 		655202EB99B4C21063980331 /* LevelShieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42821E803F71AFCD049C0AB4 /* LevelShieldExtension.swift */; };
@@ -53,6 +55,7 @@
 		98982BEB2AFE908C2F375198 /* ReasonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F4971E4A3B6ABD6266A646 /* ReasonsView.swift */; };
 		9AB0DD942E6B7CD965FB1E87 /* AppPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F5C8BB881AA62CC31AF12 /* AppPickerView.swift */; };
 		9D78035C68E76C74A7C6EA3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCEFFED36EBEB7C79CCD08C5 /* Assets.xcassets */; };
+		9D9E68DCAE79DA4E0F49234B /* ComingSoonCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E109152E2DE9CD15B31EB6 /* ComingSoonCard.swift */; };
 		9E555BC623FB56F9753A0060 /* UnlocksCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68DD4F357FA121804BFD9FE /* UnlocksCard.swift */; };
 		9F0434C5AC30B29B60B2FD2A /* MomentumCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA1F4A99B294F370822B25 /* MomentumCard.swift */; };
 		A97DDE9AB06B57EEBA232C96 /* ManagedAppsBreakdownCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D0A18D963BC306E6C7D6BA /* ManagedAppsBreakdownCard.swift */; };
@@ -61,6 +64,7 @@
 		AF671A4CEDE21F64CC17D5A2 /* Fraunces-VariableItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */; };
 		B0A7CBB2A59280B64320819A /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6AE7B97481E5015C47426D /* OnboardingFlow.swift */; };
 		B32000239E81C1F26D1C08E5 /* StagedEntrance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4389A6AC46998D7B8A9E9C66 /* StagedEntrance.swift */; };
+		B39E5DCCDC6BAEAFACE50482 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D45FC0CBBA225B119ECF4B3 /* ShareSheet.swift */; };
 		B54A456C8EC57C23CAC05122 /* SessionLengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C95824A4039C702B5072E3 /* SessionLengthView.swift */; };
 		B5820FB491005DBC6C56F7DF /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A221C786B07E3993EFE7AE /* DataStore.swift */; };
 		B5984D95B9943CE701203436 /* LevelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2435F479F1256F6B1F33CA2 /* LevelCard.swift */; };
@@ -73,8 +77,10 @@
 		C77EBDF0404D26EBC9B87207 /* Fraunces72pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EAA3052A87F1CF61AF3B53B3 /* Fraunces72pt-Bold.ttf */; };
 		CC8EFD631B5E7D431F975D6F /* LevelShieldAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5F239F7915643AF411246B41 /* LevelShieldAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CE9E2528033B3EBC8BDE2657 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B683571F8442D6453A11106 /* UserProfile.swift */; };
+		CF2737E899A1D7979D4DBD1F /* SocialProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AF3D3DEC2E27BCE70B3126 /* SocialProfileCard.swift */; };
 		D03430A1BCEAD1E4B2F80949 /* LevelMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 739252BC27C06A0398E4C84E /* LevelMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D4A8A262DE450D3D117B87CB /* MomentumIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF18D33485E14DB096E25364 /* MomentumIntroView.swift */; };
+		D9D463EC6FAF1FD2D9710572 /* ShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8C474F786DD281E844E3B /* ShareCardView.swift */; };
 		DCA8D0951E206C749D0F1581 /* TriggerLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24730D95C239290FE5F01C53 /* TriggerLog.swift */; };
 		DCC0368F107B14B8F1EF3ABA /* ScheduleBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357FA0420AF9BCF9F1D2BF6F /* ScheduleBlock.swift */; };
 		E20524C59AF3C20A8805CBFD /* Fraunces-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA9AC983C634C66179349F12 /* Fraunces-Variable.ttf */; };
@@ -129,6 +135,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01B8C474F786DD281E844E3B /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		05BF3E09F84FAADE9BFE0A1A /* TriggerTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerTracker.swift; sourceTree = "<group>"; };
 		08D0A18D963BC306E6C7D6BA /* ManagedAppsBreakdownCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedAppsBreakdownCard.swift; sourceTree = "<group>"; };
 		0E196D8354B66B63313AEECB /* XPHistoryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPHistoryCard.swift; sourceTree = "<group>"; };
@@ -138,7 +145,9 @@
 		1D345BAB1E98CD779E5AAFA0 /* LevelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelApp.swift; sourceTree = "<group>"; };
 		1E4A9AFCE4D97EBAD5E99534 /* Level.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Level.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FAA1F4A99B294F370822B25 /* MomentumCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumCard.swift; sourceTree = "<group>"; };
+		24389E676FB3B81A94618340 /* SocialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewModel.swift; sourceTree = "<group>"; };
 		24730D95C239290FE5F01C53 /* TriggerLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerLog.swift; sourceTree = "<group>"; };
+		27AF3D3DEC2E27BCE70B3126 /* SocialProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProfileCard.swift; sourceTree = "<group>"; };
 		296A7E02C2425FF84029B878 /* AppLimitsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLimitsCard.swift; sourceTree = "<group>"; };
 		2B683571F8442D6453A11106 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		306FC9A25B1B2C7A0318DFB7 /* EmptyScheduleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyScheduleCard.swift; sourceTree = "<group>"; };
@@ -153,6 +162,7 @@
 		47D92F99E5C291456F3BA9A3 /* LevelWordmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelWordmark.swift; sourceTree = "<group>"; };
 		47E7775188C9E88A987A29EE /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		480DFA4FCE34E66FFE6C0FCB /* ScheduleTimelineCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTimelineCard.swift; sourceTree = "<group>"; };
+		484EC084E07426963F8971A0 /* ShareProgressHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareProgressHelper.swift; sourceTree = "<group>"; };
 		494A2A8F9536AA077D99A800 /* ScreenTimeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeCard.swift; sourceTree = "<group>"; };
 		4A7413FE9CC286E994F6F80F /* WeeklyChartCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChartCard.swift; sourceTree = "<group>"; };
 		4C7B14785CC45B8A69458A97 /* Font+Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Level.swift"; sourceTree = "<group>"; };
@@ -161,6 +171,7 @@
 		5626231052B76247D9A0F2BE /* TriggerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerPromptView.swift; sourceTree = "<group>"; };
 		58977BC14740BEA4E57ABBB7 /* MomentumTrend30Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumTrend30Card.swift; sourceTree = "<group>"; };
 		5C9AEABE6659E6D094DAF8CD /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		5D45FC0CBBA225B119ECF4B3 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		5F239F7915643AF411246B41 /* LevelShieldAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		66A08675CD66FD8E3D925B75 /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
 		6944DA0CE3BAD8312F92D617 /* LevelShield.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LevelShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +193,7 @@
 		A130F6A0E5C2BD514499D87A /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
 		A27E277A2012069889E2FD18 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		A2C95824A4039C702B5072E3 /* SessionLengthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionLengthView.swift; sourceTree = "<group>"; };
+		A7E109152E2DE9CD15B31EB6 /* ComingSoonCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonCard.swift; sourceTree = "<group>"; };
 		AB4F9B5BE7EB9E9DA618FA4C /* TriggerPatternsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerPatternsCard.swift; sourceTree = "<group>"; };
 		ADD47CDA66B8653DA6D8A80A /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B4AA6591C067C5AD3C392792 /* ScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleManager.swift; sourceTree = "<group>"; };
@@ -221,6 +233,7 @@
 				6149D26DABB2318EAF15AEED /* Schedule */,
 				EF138AF339E9A18F15BFB14B /* Settings */,
 				3B386AE79A9FEB714723BD3E /* Shield */,
+				8AF909890269DA7817BDBEFC /* Social */,
 				D538D7C5F5BB16CEA02B8A6B /* Stats */,
 				F5EBA13C6E7FF6F06DA6BBB7 /* Tabs */,
 				4C8A3349EE90CE02C78E22EE /* MainTabView.swift */,
@@ -361,6 +374,18 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		8AF909890269DA7817BDBEFC /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				A7E109152E2DE9CD15B31EB6 /* ComingSoonCard.swift */,
+				01B8C474F786DD281E844E3B /* ShareCardView.swift */,
+				484EC084E07426963F8971A0 /* ShareProgressHelper.swift */,
+				5D45FC0CBBA225B119ECF4B3 /* ShareSheet.swift */,
+				27AF3D3DEC2E27BCE70B3126 /* SocialProfileCard.swift */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
 		971CA61BE674400820C73EAE /* LevelShieldAction */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,6 +418,7 @@
 				1B8CCF85F10B4DB8BF6D4D6E /* HomeViewModel.swift */,
 				5C9AEABE6659E6D094DAF8CD /* ScheduleViewModel.swift */,
 				A27E277A2012069889E2FD18 /* SettingsViewModel.swift */,
+				24389E676FB3B81A94618340 /* SocialViewModel.swift */,
 				8CE38F5DA0998615778169D8 /* StatsViewModel.swift */,
 			);
 			path = ViewModels;
@@ -650,6 +676,7 @@
 				12B37CA1E4D8CD4052CBD0AB /* BlockEditorSheet.swift in Sources */,
 				BC73E4175F639411CCCF23CF /* BlockListCard.swift in Sources */,
 				4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */,
+				9D9E68DCAE79DA4E0F49234B /* ComingSoonCard.swift in Sources */,
 				BF4AE71205F6DE2334813DEE /* ConfirmationView.swift in Sources */,
 				3B8C0320DE186E71CBE7660E /* CountdownView.swift in Sources */,
 				72AABCF44D29131363C53D4A /* CurrentModeCard.swift in Sources */,
@@ -689,8 +716,13 @@
 				B54A456C8EC57C23CAC05122 /* SessionLengthView.swift in Sources */,
 				39059FBCEE52F24DE34B8DC1 /* SettingsView.swift in Sources */,
 				1CC05752C8E1B1DC9DC6AFA4 /* SettingsViewModel.swift in Sources */,
+				D9D463EC6FAF1FD2D9710572 /* ShareCardView.swift in Sources */,
+				5E09E5C3BEB738E7638E19BB /* ShareProgressHelper.swift in Sources */,
+				B39E5DCCDC6BAEAFACE50482 /* ShareSheet.swift in Sources */,
 				FAF8B8F86BAF1F0ABE4025C7 /* SharedStore.swift in Sources */,
+				CF2737E899A1D7979D4DBD1F /* SocialProfileCard.swift in Sources */,
 				E5F5DD67CEDBE3CE6B6F7016 /* SocialView.swift in Sources */,
+				23D4A07F3AA49B85ED5FE4F8 /* SocialViewModel.swift in Sources */,
 				B32000239E81C1F26D1C08E5 /* StagedEntrance.swift in Sources */,
 				2ACED3071EB53D20BEEBEB72 /* StatsView.swift in Sources */,
 				3FA9666C4C5B36993BF74F6D /* StatsViewModel.swift in Sources */,
