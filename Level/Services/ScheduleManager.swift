@@ -79,7 +79,10 @@ final class ScheduleManager: ObservableObject {
 
   /// Writes the current mode's settings to SharedStore so shield and other extensions can read them.
   func applyCurrentMode(blocks: [ScheduleBlock]) {
-    let mode = resolveMode(for: .now, blocks: blocks)
+    var mode = resolveMode(for: .now, blocks: blocks)
+    if mode == .off, blocks.isEmpty, let st = screenTime, !st.selection.isEmptyTokens {
+      mode = .base
+    }
     currentMode = mode
     nextChange = nextModeChange(from: .now, blocks: blocks)
 
