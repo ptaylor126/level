@@ -148,15 +148,8 @@ struct HomeView: View {
   // MARK: - Progress Ring
 
   private var progressRing: some View {
-    VStack(spacing: 12) {
-      MomentumTankView(score: viewModel.momentumScore, height: 360)
-
-      Text("MOMENTUM")
-        .font(.levelLabel)
-        .tracking(1)
-        .foregroundStyle(Color.mutedGrape)
-    }
-    .padding(.vertical, 4)
+    MomentumTankView(score: viewModel.momentumScore, height: 360)
+      .padding(.vertical, 4)
   }
 
   // MARK: - Week Dots

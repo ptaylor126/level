@@ -99,7 +99,10 @@ struct MomentumTankView: View {
   @Environment(\.scenePhase) private var scenePhase
 
   private var clampedScore: Int { max(0, min(100, Int(displayedScore.rounded()))) }
-  private var fillFraction: CGFloat { CGFloat(max(0, min(100, displayedScore)) / 100.0) }
+  private var fillFraction: CGFloat {
+    let raw = max(0, min(100, displayedScore)) / 100.0
+    return CGFloat(raw) * 0.95
+  }
   private var tiltDegrees: Double {
     let clamped = max(-1.0, min(1.0, tilt.roll / 0.6))
     return clamped * 8.0
@@ -122,6 +125,8 @@ struct MomentumTankView: View {
         }
 
         glassRim
+
+        momentumLabel
 
         ForEach(badges) { badge in
           TankBadgeFloat(badge: badge)
@@ -173,13 +178,27 @@ struct MomentumTankView: View {
 
   private var glassRim: some View {
     ZStack {
-      RoundedRectangle(cornerRadius: 16, style: .continuous)
-        .strokeBorder(Color.white.opacity(0.18), lineWidth: 1)
+      // Dark inner shadow at top edge (depth)
       RoundedRectangle(cornerRadius: 16, style: .continuous)
         .fill(
           LinearGradient(
             stops: [
-              .init(color: Color.white.opacity(0.12), location: 0.0),
+              .init(color: Color.black.opacity(0.35), location: 0.0),
+              .init(color: Color.black.opacity(0.0), location: 0.18)
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+          )
+        )
+        .blendMode(.multiply)
+        .allowsHitTesting(false)
+
+      // Subtle top-down highlight
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
+        .fill(
+          LinearGradient(
+            stops: [
+              .init(color: Color.white.opacity(0.08), location: 0.0),
               .init(color: Color.white.opacity(0.0), location: 0.35)
             ],
             startPoint: .top,
@@ -187,7 +206,29 @@ struct MomentumTankView: View {
           )
         )
         .allowsHitTesting(false)
+
+      // Sharp 1px physical rim
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
+        .strokeBorder(Color.white.opacity(0.20), lineWidth: 1)
+        .blendMode(.overlay)
+        .allowsHitTesting(false)
     }
+  }
+
+  private var momentumLabel: some View {
+    VStack {
+      HStack {
+        Text("MOMENTUM")
+          .font(.levelLabel)
+          .tracking(1.2)
+          .foregroundStyle(Color.cream.opacity(0.55))
+        Spacer()
+      }
+      Spacer()
+    }
+    .padding(.horizontal, 16)
+    .padding(.top, 14)
+    .allowsHitTesting(false)
   }
 
   // MARK: Liquid
@@ -239,14 +280,23 @@ struct MomentumTankView: View {
 
   private func scoreText(width w: CGFloat, height h: CGFloat, fillHeight fillH: CGFloat) -> some View {
     let label = "\(clampedScore)"
+    // Scale: 1-digit biggest, 2-digit slightly smaller, 3-digit still fills nicely
+    let size: CGFloat = {
+      switch label.count {
+      case 1: return 140
+      case 2: return 120
+      default: return 104
+      }
+    }()
+
     return ZStack {
       Text(label)
-        .font(LevelFont.extraBold(96))
+        .font(LevelFont.extraBold(size))
         .foregroundStyle(Color.mutedGrape.opacity(0.55))
         .contentTransition(.numericText(value: displayedScore))
 
       Text(label)
-        .font(LevelFont.extraBold(96))
+        .font(LevelFont.extraBold(size))
         .foregroundStyle(Color.cream)
         .contentTransition(.numericText(value: displayedScore))
         .mask(alignment: .bottom) {
@@ -255,7 +305,7 @@ struct MomentumTankView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
     }
-    .frame(width: w, height: h)
+    .frame(width: w, height: h, alignment: .center)
   }
 
   // MARK: Animation handling
