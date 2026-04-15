@@ -79,7 +79,13 @@ struct RootView: View {
   #endif
 
   private func resumeMonitoring(profile: UserProfile) {
-    guard screenTime.isAuthorized else { return }
+    screenTime.refreshAuthorizationStatus()
+    guard screenTime.isAuthorized else {
+      #if DEBUG
+      print("[Level] resumeMonitoring skipped: not authorized")
+      #endif
+      return
+    }
     screenTime.syncReasonsToDefaults(profile.reasons)
     screenTime.startMonitoring()
   }

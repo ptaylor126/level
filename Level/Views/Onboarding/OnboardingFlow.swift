@@ -5,7 +5,6 @@ import SwiftUI
 enum OnboardingStep: Int, CaseIterable {
   case welcome
   case appPicker
-  case baseline
   case reasons
   case unlockLimit
   case sessionLength
@@ -33,12 +32,12 @@ struct OnboardingFlow: View {
 
   @State private var step: OnboardingStep = .welcome
   @State private var draftReasons: [String] = ["", "", ""]
-  @State private var unlockLimit: Int = 10
+  @State private var allowanceMinutes: Int = 30
   @State private var sessionMinutes: Int = 5
-  @State private var baselineHours: Double = 3.5
   @State private var isAppPickerPresented = false
   @State private var transitionEdge: Edge = .trailing
   @State private var isAuthLoading = false
+  @State private var momentumHasInteracted = false
 
   var body: some View {
     ZStack {
@@ -50,7 +49,7 @@ struct OnboardingFlow: View {
             .animation(.easeInOut(duration: 0.2), value: step.canGoBack)
 
           switch step {
-          case .reasons, .summary, .momentum, .unlockLimit, .sessionLength, .howItWorks, .baseline:
+          case .reasons, .summary, .momentum, .unlockLimit, .sessionLength, .howItWorks:
             Color.clear.frame(height: max(0, proxy.size.height * 0.06))
           default:
             Color.clear.frame(height: max(0, proxy.size.height * 0.18))
@@ -110,18 +109,16 @@ struct OnboardingFlow: View {
       WelcomeView()
     case .appPicker:
       AppPickerView(onPickTapped: { isAppPickerPresented = true })
-    case .baseline:
-      BaselineView(baselineHours: $baselineHours)
     case .reasons:
       ReasonsView(reasons: $draftReasons)
     case .unlockLimit:
-      UnlockLimitView(unlockLimit: $unlockLimit)
+      UnlockLimitView(allowanceMinutes: $allowanceMinutes)
     case .sessionLength:
       SessionLengthView(sessionMinutes: $sessionMinutes)
     case .howItWorks:
       HowItWorksView()
     case .momentum:
-      MomentumIntroView()
+      MomentumIntroView(hasInteracted: $momentumHasInteracted)
     case .summary:
       SummaryView(
         reasons: draftReasons,
@@ -163,7 +160,6 @@ struct OnboardingFlow: View {
     switch step {
     case .welcome: return "Get started"
     case .appPicker: return "Next"
-    case .baseline: return "Next"
     case .reasons: return "Next"
     case .unlockLimit: return "Next"
     case .sessionLength: return "Next"
@@ -176,8 +172,10 @@ struct OnboardingFlow: View {
 
   private var isButtonEnabled: Bool {
     switch step {
-    case .welcome, .confirmation, .summary, .momentum, .howItWorks, .unlockLimit, .sessionLength, .baseline:
+    case .welcome, .confirmation, .summary, .howItWorks, .unlockLimit, .sessionLength:
       return true
+    case .momentum:
+      return momentumHasInteracted
     case .appPicker:
       return screenTime.selectedItemCount > 0
     case .reasons:
@@ -218,8 +216,7 @@ struct OnboardingFlow: View {
         }
       }
     case .appPicker:
-      step = .baseline
-    case .baseline:
+      screenTime.persistSelection()
       step = .reasons
     case .reasons:
       profile.reasons = draftReasons
@@ -238,18 +235,29 @@ struct OnboardingFlow: View {
     case .summary:
       step = .confirmation
     case .confirmation:
-      profile.onboardingComplete = true
-      try? context.save()
       screenTime.persistSelection()
       screenTime.syncReasonsToDefaults(profile.reasons)
       screenTime.syncSettingsToDefaults(
         delay: 10,
         increment: 10,
-        unlockLimit: unlockLimit
+        unlockLimit: 10,
+        dailyAllowanceMinutes: allowanceMinutes
       )
       SharedStore.defaults.set(sessionMinutes * 60, forKey: "sessionLengthSeconds")
-      SharedStore.defaults.set(baselineHours * 3600, forKey: "baselineSeconds")
-      screenTime.startMonitoring()
+
+      Task { @MainActor in
+        screenTime.refreshAuthorizationStatus()
+        screenTime.logShieldState(label: "onboarding.confirm.pre")
+        if !screenTime.isAuthorized {
+          print("[Level] onboarding: auth not approved — re-requesting")
+          _ = await screenTime.requestAuthorization()
+        }
+        print("[Level] onboarding.complete applying. authorized=\(screenTime.isAuthorized) selectedItems=\(screenTime.selectedItemCount)")
+        screenTime.startMonitoring()
+        screenTime.logShieldState(label: "onboarding.confirm.post")
+        profile.onboardingComplete = true
+        try? context.save()
+      }
       Task { let _ = await NotificationManager.shared.requestPermission() }
     }
   }

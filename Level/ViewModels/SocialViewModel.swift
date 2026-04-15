@@ -39,11 +39,14 @@ final class SocialViewModel: ObservableObject {
     totalXP = SharedStore.defaults.integer(forKey: "totalXP")
 
     // Sum screen time saved across the week
-    let baseline = SharedStore.defaults.double(forKey: "baselineSeconds")
-    let b = baseline > 0 ? baseline : 3.5 * 3600
-    let weeklyRecords = engine?.weekRecords() ?? []
-    weekTimeSaved = weeklyRecords.reduce(0.0) { acc, record in
-      acc + max(0, b - record.totalScreenTime)
+    switch BaselineCalculator.resolve(context: context) {
+    case .tracking:
+      weekTimeSaved = 0
+    case .ready(let b):
+      let weeklyRecords = engine?.weekRecords() ?? []
+      weekTimeSaved = weeklyRecords.reduce(0.0) { acc, record in
+        acc + max(0, b - record.totalScreenTime)
+      }
     }
 
     // Re-read display name in case settings changed

@@ -6,6 +6,7 @@ final class AppSettings {
   var defaultDelaySeconds: Int
   var delayIncrementSeconds: Int
   var defaultUnlockLimit: Int
+  var dailyAllowanceMinutes: Int
   var notifyWeeklyRecap: Bool
   var notifyMorningSummary: Bool
   var notifyStreakAtRisk: Bool
@@ -15,6 +16,7 @@ final class AppSettings {
     defaultDelaySeconds: Int = 10,
     delayIncrementSeconds: Int = 10,
     defaultUnlockLimit: Int = 10,
+    dailyAllowanceMinutes: Int = 30,
     notifyWeeklyRecap: Bool = true,
     notifyMorningSummary: Bool = false,
     notifyStreakAtRisk: Bool = false,
@@ -23,6 +25,7 @@ final class AppSettings {
     self.defaultDelaySeconds = defaultDelaySeconds
     self.delayIncrementSeconds = delayIncrementSeconds
     self.defaultUnlockLimit = defaultUnlockLimit
+    self.dailyAllowanceMinutes = dailyAllowanceMinutes
     self.notifyWeeklyRecap = notifyWeeklyRecap
     self.notifyMorningSummary = notifyMorningSummary
     self.notifyStreakAtRisk = notifyStreakAtRisk

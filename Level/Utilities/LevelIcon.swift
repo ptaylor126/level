@@ -4,6 +4,7 @@ enum LevelIcon: String {
   case arrowCurve = "icon-arrow-curve"
   case bell = "icon-bell"
   case chart = "icon-chart"
+  case diamond = "icon-diamond"
   case flame = "icon-flame"
   case gear = "icon-gear"
   case heart = "icon-heart"

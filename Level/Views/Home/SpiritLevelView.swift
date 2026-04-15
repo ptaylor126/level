@@ -1,281 +1,347 @@
 import SwiftUI
+#if canImport(CoreMotion)
+import CoreMotion
+#endif
 
-enum BubbleLean: String {
-  case left, right
+// MARK: - Tilt (CoreMotion)
 
-  static func from(trigger: String?) -> BubbleLean? {
-    guard let trigger = trigger?.lowercased() else { return nil }
-    if trigger.contains("anxious") || trigger.contains("habit") {
-      return .left
+@MainActor
+final class TiltMotionManager: ObservableObject {
+  @Published var roll: Double = 0
+  #if canImport(CoreMotion) && !os(macOS)
+  private let manager = CMMotionManager()
+  #endif
+  private var isActive = false
+
+  func start() {
+    #if canImport(CoreMotion) && !os(macOS)
+    guard !isActive, manager.isDeviceMotionAvailable else { return }
+    isActive = true
+    manager.deviceMotionUpdateInterval = 1.0 / 30.0
+    manager.startDeviceMotionUpdates(to: .main) { [weak self] motion, _ in
+      guard let self, let motion else { return }
+      withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) {
+        self.roll = motion.attitude.roll
+      }
     }
-    if trigger.contains("bored") || trigger.contains("avoiding") {
-      return .right
+    #endif
+  }
+
+  func stop() {
+    guard isActive else { return }
+    #if canImport(CoreMotion) && !os(macOS)
+    manager.stopDeviceMotionUpdates()
+    #endif
+    isActive = false
+    withAnimation(.spring(response: 0.5, dampingFraction: 0.9)) {
+      roll = 0
     }
-    return nil
+  }
+
+  deinit {
+    #if canImport(CoreMotion) && !os(macOS)
+    manager.stopDeviceMotionUpdates()
+    #endif
   }
 }
 
-struct SpiritLevelView: View {
-  let score: Int
-  let recentTrigger: String?
+// MARK: - Wave
 
-  @State private var previousScore: Int?
-  @State private var knockOffset: CGFloat = 0
-  @State private var glowPulse: Double = 0
-  @State private var persistedLean: BubbleLean = .left
+struct WaveShape: Shape {
+  var phase: Double
+  var amplitude: CGFloat
+  var frequency: CGFloat
 
-  private var tubeHeight: CGFloat { 60 }
-  private var bubbleDiameter: CGFloat { 44 }
+  var animatableData: Double {
+    get { phase }
+    set { phase = newValue }
+  }
 
-  private var lean: BubbleLean {
-    if let fromTrigger = BubbleLean.from(trigger: recentTrigger) {
-      return fromTrigger
+  func path(in rect: CGRect) -> Path {
+    var p = Path()
+    let baseY: CGFloat = amplitude
+    let step: CGFloat = 3
+    p.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+    p.addLine(to: CGPoint(x: rect.minX, y: baseY))
+    var x: CGFloat = rect.minX
+    while x <= rect.maxX {
+      let rel = rect.width > 0 ? x / rect.width : 0
+      let angle = Double(rel) * .pi * 2 * Double(frequency) + phase
+      let y = baseY + CGFloat(sin(angle)) * amplitude
+      p.addLine(to: CGPoint(x: x, y: y))
+      x += step
     }
-    return persistedLean
+    p.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+    p.closeSubpath()
+    return p
   }
+}
 
-  private var clampedScore: Int {
-    max(0, min(100, score))
-  }
+// MARK: - Badge event
 
-  private var distanceFraction: Double {
-    Double(100 - clampedScore) / 100.0
-  }
+struct TankBadgeEvent: Identifiable, Equatable {
+  let id = UUID()
+  let delta: Int
+}
 
+// MARK: - Momentum Tank
+
+struct MomentumTankView: View {
+  let score: Int
+  var height: CGFloat = 340
+  var showsScore: Bool = true
+
+  @StateObject private var tilt = TiltMotionManager()
+  @State private var displayedScore: Double = 0
+  @State private var turbulence: Double = 0
+  @State private var previousScore: Int? = nil
+  @State private var badges: [TankBadgeEvent] = []
+  @Environment(\.scenePhase) private var scenePhase
+
+  private var clampedScore: Int { max(0, min(100, Int(displayedScore.rounded()))) }
+  private var fillFraction: CGFloat { CGFloat(max(0, min(100, displayedScore)) / 100.0) }
   private var tiltDegrees: Double {
-    let magnitude = distanceFraction * 8.0
-    return lean == .left ? magnitude : -magnitude
-  }
-
-  private var directionSign: CGFloat {
-    lean == .left ? -1 : 1
-  }
-
-  private var isFlow: Bool {
-    clampedScore >= 100
+    let clamped = max(-1.0, min(1.0, tilt.roll / 0.6))
+    return clamped * 8.0
   }
 
   var body: some View {
     GeometryReader { geo in
-      let width = geo.size.width
-      let maxOffset = (width / 2) - (bubbleDiameter / 2) - 14
-      let bubbleOffset = directionSign * CGFloat(distanceFraction) * maxOffset + knockOffset
+      let w = geo.size.width
+      let h = geo.size.height
+      let fillH = h * fillFraction
 
       ZStack {
-        if isFlow {
-          Capsule()
-            .fill(Color.cream)
-            .blur(radius: 26)
-            .opacity(0.35 + glowPulse * 0.35)
-            .frame(width: width + 60, height: tubeHeight + 60)
+        tankBackground
+
+        liquidLayer(width: w, height: h, fillHeight: fillH)
+          .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+        if showsScore {
+          scoreText(width: w, height: h, fillHeight: fillH)
         }
 
-        ZStack {
-          tubeBase
-            .frame(width: width, height: tubeHeight)
+        glassRim
 
-          liquidFill
-            .frame(width: width - 4, height: tubeHeight - 4)
-
-          tubeGloss
-            .frame(width: width - 4, height: tubeHeight - 4)
-
-          calibrationLines
-            .frame(height: tubeHeight * 0.6)
-
-          bubble
-            .offset(x: bubbleOffset)
-
-          tubeRim
-            .frame(width: width, height: tubeHeight)
+        ForEach(badges) { badge in
+          TankBadgeFloat(badge: badge)
+            .position(x: w / 2, y: max(24, h - fillH))
         }
-        .rotationEffect(.degrees(tiltDegrees))
-        .animation(.spring(response: 0.9, dampingFraction: 0.8), value: tiltDegrees)
-        .animation(.spring(response: 0.9, dampingFraction: 0.8), value: clampedScore)
       }
-      .frame(width: width, height: tubeHeight + 16)
+      .frame(width: w, height: h)
     }
-    .frame(height: tubeHeight + 16)
+    .frame(height: height)
     .onAppear {
-      previousScore = clampedScore
-      seedLeanIfNeeded()
-      if isFlow { startGlow() }
+      displayedScore = Double(score)
+      previousScore = score
+      tilt.start()
     }
-    .onChange(of: clampedScore) { old, new in
-      handleScoreChange(from: old, to: new)
+    .onDisappear { tilt.stop() }
+    .onChange(of: scenePhase) { _, phase in
+      if phase == .active { tilt.start() } else { tilt.stop() }
+    }
+    .onChange(of: score) { _, new in
+      handleScoreChange(to: new)
     }
   }
 
-  // MARK: - Tube components
+  // MARK: Background / glass
 
-  private var tubeBase: some View {
-    Capsule()
+  private var tankBackground: some View {
+    RoundedRectangle(cornerRadius: 16, style: .continuous)
       .fill(
         LinearGradient(
           colors: [
-            Color.teaGreen.opacity(0.35),
-            Color.teaGreen.opacity(0.55)
-          ],
-          startPoint: .top,
-          endPoint: .bottom
-        )
-      )
-  }
-
-  private var liquidFill: some View {
-    let clarity = 0.5 + 0.5 * (Double(clampedScore) / 100.0)
-    return Capsule()
-      .fill(
-        LinearGradient(
-          stops: [
-            .init(color: Color.teaGreen.opacity(0.55 + 0.4 * clarity), location: 0.0),
-            .init(color: Color.teaGreen.opacity(0.9), location: 0.4),
-            .init(color: Color.darkGreen.opacity(0.25 + 0.2 * clarity), location: 1.0)
+            Color.deepGrape,
+            Color.vintageGrape
           ],
           startPoint: .top,
           endPoint: .bottom
         )
       )
       .overlay(
-        Capsule()
-          .fill(Color.mutedGrape.opacity((1 - clarity) * 0.2))
+        RoundedRectangle(cornerRadius: 16, style: .continuous)
+          .fill(
+            LinearGradient(
+              colors: [Color.white.opacity(0.06), Color.clear],
+              startPoint: .topLeading,
+              endPoint: .bottomTrailing
+            )
+          )
       )
   }
 
-  private var tubeGloss: some View {
-    Capsule()
-      .fill(
-        LinearGradient(
-          stops: [
-            .init(color: Color.white.opacity(0.5), location: 0.0),
-            .init(color: Color.white.opacity(0.15), location: 0.22),
-            .init(color: Color.white.opacity(0.0), location: 0.55)
-          ],
-          startPoint: .top,
-          endPoint: .bottom
-        )
-      )
-  }
-
-  private var calibrationLines: some View {
-    HStack(spacing: 24) {
-      Rectangle()
-        .fill(Color.cream.opacity(0.8))
-        .frame(width: 0.5)
-      Rectangle()
-        .fill(Color.cream.opacity(0.8))
-        .frame(width: 0.5)
-    }
-  }
-
-  private var tubeRim: some View {
-    Capsule()
-      .strokeBorder(
-        LinearGradient(
-          colors: [
-            Color.white.opacity(0.35),
-            Color.darkGreen.opacity(0.3)
-          ],
-          startPoint: .top,
-          endPoint: .bottom
-        ),
-        lineWidth: 1.2
-      )
-  }
-
-  private var bubble: some View {
+  private var glassRim: some View {
     ZStack {
-      Circle()
-        .fill(Color.deepGrape.opacity(0.3))
-        .frame(width: bubbleDiameter, height: bubbleDiameter)
-        .offset(y: 3)
-        .blur(radius: 4)
-
-      Circle()
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
+        .strokeBorder(Color.white.opacity(0.18), lineWidth: 1)
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
         .fill(
-          RadialGradient(
-            colors: [
-              Color.cream,
-              Color.cream.opacity(0.95),
-              Color.warmGrey
+          LinearGradient(
+            stops: [
+              .init(color: Color.white.opacity(0.12), location: 0.0),
+              .init(color: Color.white.opacity(0.0), location: 0.35)
             ],
-            center: .init(x: 0.35, y: 0.3),
-            startRadius: 2,
-            endRadius: bubbleDiameter
+            startPoint: .top,
+            endPoint: .bottom
           )
         )
-        .frame(width: bubbleDiameter, height: bubbleDiameter)
-
-      Circle()
-        .fill(
-          RadialGradient(
-            colors: [Color.white.opacity(0.9), Color.white.opacity(0.0)],
-            center: .init(x: 0.35, y: 0.3),
-            startRadius: 0,
-            endRadius: bubbleDiameter * 0.35
-          )
-        )
-        .frame(width: bubbleDiameter, height: bubbleDiameter)
-
-      Circle()
-        .strokeBorder(Color.warmGrey.opacity(0.4), lineWidth: 0.5)
-        .frame(width: bubbleDiameter, height: bubbleDiameter)
+        .allowsHitTesting(false)
     }
   }
 
-  // MARK: - Animations
+  // MARK: Liquid
 
-  private func seedLeanIfNeeded() {
-    if BubbleLean.from(trigger: recentTrigger) != nil { return }
-    if let saved = SharedStore.defaults.string(forKey: "bubbleLean"),
-       let restored = BubbleLean(rawValue: saved) {
-      persistedLean = restored
-    } else {
-      let choice: BubbleLean = Bool.random() ? .left : .right
-      persistedLean = choice
-      SharedStore.defaults.set(choice.rawValue, forKey: "bubbleLean")
-    }
-  }
+  private func liquidLayer(width w: CGFloat, height h: CGFloat, fillHeight fillH: CGFloat) -> some View {
+    let amp: CGFloat = 6 + CGFloat(turbulence) * 14
+    let waveBand: CGFloat = amp * 2 + 2
+    let liquidHeight = fillH + waveBand
+    // Position: the band should straddle the waterline (top of the liquid)
+    // Liquid container is wider than tank to hide tilt edges
+    let overshoot: CGFloat = 60
+    let containerWidth = w + overshoot * 2
 
-  private func handleScoreChange(from old: Int, to new: Int) {
-    if new < old {
-      let knockAmount: CGFloat = directionSign * 18
-      withAnimation(.spring(response: 0.2, dampingFraction: 0.5)) {
-        knockOffset = knockAmount
+    return TimelineView(.animation) { timeline in
+      let t = timeline.date.timeIntervalSinceReferenceDate
+      let phaseBack = t * 1.3
+      let phaseFront = t * 1.9
+
+      ZStack(alignment: .top) {
+        // Back translucent wave
+        WaveShape(phase: phaseBack, amplitude: amp * 0.7, frequency: 1.8)
+          .fill(Color.teaGreen.opacity(0.45))
+          .frame(width: containerWidth, height: liquidHeight)
+
+        // Front solid wave
+        WaveShape(phase: phaseFront, amplitude: amp, frequency: 1.4)
+          .fill(
+            LinearGradient(
+              colors: [Color.teaGreen, Color.teaGreen.opacity(0.85)],
+              startPoint: .top,
+              endPoint: .bottom
+            )
+          )
+          .frame(width: containerWidth, height: liquidHeight)
+
+        // Surface highlight line
+        WaveShape(phase: phaseFront, amplitude: amp, frequency: 1.4)
+          .stroke(Color.white.opacity(0.25), lineWidth: 1)
+          .frame(width: containerWidth, height: liquidHeight)
       }
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
-        withAnimation(.spring(response: 0.6, dampingFraction: 0.75)) {
-          knockOffset = 0
+      .frame(width: containerWidth, height: liquidHeight, alignment: .top)
+      .rotationEffect(.degrees(tiltDegrees), anchor: .center)
+      .frame(width: w, height: h, alignment: .bottom)
+      .offset(y: (h - fillH - amp).clamped(max: h))
+    }
+  }
+
+  // MARK: Score text (split at waterline)
+
+  private func scoreText(width w: CGFloat, height h: CGFloat, fillHeight fillH: CGFloat) -> some View {
+    let label = "\(clampedScore)"
+    return ZStack {
+      Text(label)
+        .font(LevelFont.extraBold(96))
+        .foregroundStyle(Color.mutedGrape.opacity(0.55))
+        .contentTransition(.numericText(value: displayedScore))
+
+      Text(label)
+        .font(LevelFont.extraBold(96))
+        .foregroundStyle(Color.cream)
+        .contentTransition(.numericText(value: displayedScore))
+        .mask(alignment: .bottom) {
+          Rectangle()
+            .frame(height: fillH)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
-      }
     }
+    .frame(width: w, height: h)
+  }
+
+  // MARK: Animation handling
+
+  private func handleScoreChange(to new: Int) {
+    let old = previousScore ?? Int(displayedScore.rounded())
+    let delta = new - old
     previousScore = new
 
-    if new >= 100 {
-      startGlow()
+    if delta == 0 { return }
+
+    if delta < 0 {
+      // turbulent drop
+      withAnimation(.easeIn(duration: 0.15)) {
+        turbulence = 1.0
+      }
+      withAnimation(.spring(response: 0.9, dampingFraction: 0.55)) {
+        displayedScore = Double(new)
+      }
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+        withAnimation(.easeOut(duration: 0.8)) {
+          turbulence = 0
+        }
+      }
     } else {
-      glowPulse = 0
+      withAnimation(.spring(response: 1.1, dampingFraction: 0.85)) {
+        displayedScore = Double(new)
+      }
+      #if os(iOS)
+      if #available(iOS 17.0, *) {
+        // haptic via sensoryFeedback attached elsewhere; UIImpactFeedbackGenerator fallback
+      }
+      let generator = UINotificationFeedbackGenerator()
+      generator.notificationOccurred(.success)
+      #endif
+    }
+
+    let event = TankBadgeEvent(delta: delta)
+    badges.append(event)
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+      badges.removeAll { $0.id == event.id }
     }
   }
+}
 
-  private func startGlow() {
-    glowPulse = 0
-    withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
-      glowPulse = 1
-    }
+// MARK: - Badge float
+
+private struct TankBadgeFloat: View {
+  let badge: TankBadgeEvent
+  @State private var appeared = false
+  @State private var lifted = false
+  @State private var faded = false
+
+  var body: some View {
+    FloatingBadge(delta: badge.delta)
+      .scaleEffect(appeared ? 1.0 : 0.8)
+      .opacity(faded ? 0 : 1)
+      .offset(y: lifted ? -80 : 0)
+      .onAppear {
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+          appeared = true
+        }
+        withAnimation(.easeOut(duration: 1.3)) {
+          lifted = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+          withAnimation(.easeIn(duration: 0.6)) {
+            faded = true
+          }
+        }
+      }
+  }
+}
+
+private extension CGFloat {
+  func clamped(max upper: CGFloat) -> CGFloat {
+    Swift.min(self, upper)
   }
 }
 
 #Preview {
   ZStack {
     Color.vintageGrape.ignoresSafeArea()
-    VStack(spacing: 32) {
-      SpiritLevelView(score: 100, recentTrigger: nil)
-      SpiritLevelView(score: 75, recentTrigger: "anxious")
-      SpiritLevelView(score: 50, recentTrigger: "bored")
-      SpiritLevelView(score: 25, recentTrigger: "habit")
-      SpiritLevelView(score: 0, recentTrigger: "avoiding")
+    VStack {
+      MomentumTankView(score: 68)
+        .padding(20)
     }
-    .padding(.horizontal, 20)
   }
 }

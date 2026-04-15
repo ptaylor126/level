@@ -10,33 +10,20 @@ final class MomentumEngine {
     self.context = context
   }
 
+  /// Drain model: each day starts at 100. Time spent on blocked apps drains
+  /// the tank proportional to the daily allowance. Focus sessions recharge at
+  /// a 4:1 ratio (4 min focus earns back 1 min of drained score).
   func calculateDailyScore(for record: DailyRecord, previous: DailyRecord?) -> Double {
-    let previousScore = previous?.momentumScore ?? 50
+    let allowance = max(60, record.dailyAllowanceSeconds)
+    let usedSeconds = max(0, record.totalScreenTime)
+    let drainFraction = min(1.0, usedSeconds / allowance)
+    let drainedPoints = drainFraction * 100.0
 
-    var delta: Double = 0
+    let rechargeSeconds = record.focusSessionSeconds / 4.0
+    let rechargePoints = (rechargeSeconds / allowance) * 100.0
 
-    let screenTimeGoalSeconds: TimeInterval = 2 * 3600
-    if record.totalScreenTime < screenTimeGoalSeconds {
-      delta += 3
-    } else {
-      delta -= 2
-    }
-
-    let halfLimit = Double(record.unlockLimit) * 0.5
-    if Double(record.unlockCount) < halfLimit {
-      delta += 2
-    }
-
-    if record.unlockCount >= record.unlockLimit {
-      delta -= 1
-    }
-
-    let declinedOpens = SharedStore.defaults.integer(forKey: SharedStore.Key.declinedOpens)
-    delta += Double(min(declinedOpens, 5))
-
-    let raw = previousScore + delta
-    let smoothed = (0.7 * raw) + (0.3 * previousScore)
-    return min(100, max(0, smoothed))
+    let raw = 100.0 - drainedPoints + rechargePoints
+    return min(100, max(0, raw))
   }
 
   func updateToday() {
@@ -58,6 +45,13 @@ final class MomentumEngine {
 
     todayRecord.unlockCount = SharedStore.defaults.integer(forKey: "todayUnlockCount")
 
+    let allowanceMinutes = SharedStore.defaults.integer(forKey: "dailyAllowanceMinutes")
+    if allowanceMinutes > 0 {
+      todayRecord.dailyAllowanceSeconds = TimeInterval(allowanceMinutes * 60)
+    }
+    let focusSeconds = SharedStore.defaults.double(forKey: "todayFocusSessionSeconds")
+    todayRecord.focusSessionSeconds = focusSeconds
+
     let yesterday = calendar.date(byAdding: .day, value: -1, to: startOfToday)!
     let yesterdayDescriptor = FetchDescriptor<DailyRecord>(
       predicate: #Predicate { record in
@@ -68,9 +62,9 @@ final class MomentumEngine {
     let previousRecord = try? context.fetch(yesterdayDescriptor).first
 
     todayRecord.momentumScore = calculateDailyScore(for: todayRecord, previous: previousRecord)
+    SharedStore.defaults.set(todayRecord.momentumScore, forKey: "currentMomentumScore")
 
-    let screenTimeGoalSeconds: TimeInterval = 2 * 3600
-    todayRecord.goalMet = todayRecord.totalScreenTime < screenTimeGoalSeconds
+    todayRecord.goalMet = todayRecord.totalScreenTime < todayRecord.dailyAllowanceSeconds
 
     try? context.save()
   }

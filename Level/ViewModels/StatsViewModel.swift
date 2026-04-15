@@ -35,8 +35,16 @@ final class StatsViewModel: ObservableObject {
 
     let calendar = Calendar.current
     let today = calendar.startOfDay(for: Date())
-    let baseline = SharedStore.defaults.double(forKey: "baselineSeconds")
-    let dailyBaseline = baseline > 0 ? baseline : 3.5 * 3600
+
+    let dailyBaseline: TimeInterval
+    switch BaselineCalculator.resolve(context: context) {
+    case .tracking:
+      weekTimeSaved = 0
+      weekTimeSavedVsPrior = 0
+      return
+    case .ready(let seconds):
+      dailyBaseline = seconds
+    }
 
     let currentWeekRecords = eng.weekRecords()
 

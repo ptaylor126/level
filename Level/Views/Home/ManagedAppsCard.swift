@@ -3,15 +3,23 @@ import SwiftUI
 
 struct ManagedAppsCard: View {
   @EnvironmentObject private var screenTime: ScreenTimeManager
+  var unlocksSubtitle: String? = nil
   let onTapApp: () -> Void
 
   var body: some View {
     LevelCard(background: .cream, showBorder: false) {
       VStack(alignment: .leading, spacing: 14) {
-        Text("YOUR APPS")
-          .font(.levelLabel)
-          .tracking(0.5)
-          .foregroundStyle(Color.vintageGrape)
+        VStack(alignment: .leading, spacing: 2) {
+          Text("YOUR APPS")
+            .font(.levelLabel)
+            .tracking(0.5)
+            .foregroundStyle(Color.vintageGrape)
+          if let unlocksSubtitle {
+            Text(unlocksSubtitle)
+              .font(.levelCaption)
+              .foregroundStyle(Color.mutedGrape)
+          }
+        }
 
         if screenTime.selectedItemCount == 0 {
           Text("No apps picked yet. Add some in Settings.")
@@ -41,17 +49,20 @@ struct ManagedAppsCard: View {
 
   private func appTile<Content: View>(@ViewBuilder content: () -> Content) -> some View {
     Button(action: onTapApp) {
-      content()
-        .font(.system(size: 56))
-        .frame(width: 72, height: 72)
-        .background(
-          RoundedRectangle(cornerRadius: 18, style: .continuous)
-            .fill(Color.white.opacity(0.5))
-        )
-        .overlay(
-          RoundedRectangle(cornerRadius: 18, style: .continuous)
-            .strokeBorder(Color.white.opacity(0.3), lineWidth: 1)
-        )
+      ZStack {
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+          .fill(Color.white)
+
+        content()
+          .font(.system(size: 60))
+          .scaleEffect(1.6)
+
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+          .strokeBorder(Color.black.opacity(0.06), lineWidth: 1)
+      }
+      .frame(width: 88, height: 88)
+      .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+      .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
     .buttonStyle(.plain)
   }

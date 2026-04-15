@@ -46,7 +46,9 @@
 		73E09F8094837717B606F0B6 /* LevelShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34BE17B8E9A90E72A1AAAB8A /* LevelShieldActionExtension.swift */; };
 		75D919684CE7C14E4ABEB912 /* PlusJakartaSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AB28719299581B485928407 /* PlusJakartaSans-ExtraBoldItalic.ttf */; };
 		77EABC8CC9C68F805CA66119 /* LevelMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */; };
-		7B70476D392A3F1E2C079403 /* BaselineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2334E866431DEF702ABBAE /* BaselineView.swift */; };
+		AABC0101AABC0101AABC0101 /* BaselineCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC0102AABC0102AABC0102 /* BaselineCalculator.swift */; };
+		AABC0301AABC0301AABC0301 /* FloatingBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC0302AABC0302AABC0302 /* FloatingBadge.swift */; };
+		AABC0401AABC0401AABC0401 /* AnimationGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC0402AABC0402AABC0402 /* AnimationGate.swift */; };
 		803D3281A5BF9A5C5F7EEF50 /* EmptyScheduleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306FC9A25B1B2C7A0318DFB7 /* EmptyScheduleCard.swift */; };
 		85514328D4C62C23A4718765 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BB9622DB050DB0C2C5EEC1 /* ScheduleView.swift */; };
 		8B137207ACF6C651634B841B /* ScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AA6591C067C5AD3C392792 /* ScheduleManager.swift */; };
@@ -69,6 +71,7 @@
 		B54A456C8EC57C23CAC05122 /* SessionLengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C95824A4039C702B5072E3 /* SessionLengthView.swift */; };
 		B5820FB491005DBC6C56F7DF /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A221C786B07E3993EFE7AE /* DataStore.swift */; };
 		B5984D95B9943CE701203436 /* LevelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2435F479F1256F6B1F33CA2 /* LevelCard.swift */; };
+		AABC0201AABC0201AABC0201 /* DayToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC0202AABC0202AABC0202 /* DayToken.swift */; };
 		B6514FDEFF2F9431A5A840BB /* MomentumTrendCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3933C4F37D706609951A42 /* MomentumTrendCard.swift */; };
 		B8722AE55FDD4407D8885192 /* WeeklyChartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7413FE9CC286E994F6F80F /* WeeklyChartCard.swift */; };
 		B92475281519F72BB0770626 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD47CDA66B8653DA6D8A80A /* RootView.swift */; };
@@ -141,7 +144,9 @@
 		08D0A18D963BC306E6C7D6BA /* ManagedAppsBreakdownCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedAppsBreakdownCard.swift; sourceTree = "<group>"; };
 		0E196D8354B66B63313AEECB /* XPHistoryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPHistoryCard.swift; sourceTree = "<group>"; };
 		0F5015A73C22BE36767BAAFB /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
-		1A2334E866431DEF702ABBAE /* BaselineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaselineView.swift; sourceTree = "<group>"; };
+		AABC0102AABC0102AABC0102 /* BaselineCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaselineCalculator.swift; sourceTree = "<group>"; };
+		AABC0302AABC0302AABC0302 /* FloatingBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBadge.swift; sourceTree = "<group>"; };
+		AABC0402AABC0402AABC0402 /* AnimationGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationGate.swift; sourceTree = "<group>"; };
 		1B8CCF85F10B4DB8BF6D4D6E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1D345BAB1E98CD779E5AAFA0 /* LevelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelApp.swift; sourceTree = "<group>"; };
 		1E4A9AFCE4D97EBAD5E99534 /* Level.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Level.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +210,7 @@
 		BF18D33485E14DB096E25364 /* MomentumIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentumIntroView.swift; sourceTree = "<group>"; };
 		C20D193BFA9CB1F75E564A9E /* HowItWorksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowItWorksView.swift; sourceTree = "<group>"; };
 		C2435F479F1256F6B1F33CA2 /* LevelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCard.swift; sourceTree = "<group>"; };
+		AABC0202AABC0202AABC0202 /* DayToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayToken.swift; sourceTree = "<group>"; };
 		C2830AAFACB2FBD2903E0BA6 /* LevelMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMonitorExtension.swift; sourceTree = "<group>"; };
 		CA3B5FBFEA8E7AE9E13B2C0E /* Fraunces-VariableItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-VariableItalic.ttf"; sourceTree = "<group>"; };
 		CB4A472FD57D2B4E71E38F03 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -315,6 +321,8 @@
 		43C878BC2443EF125C06F938 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				AABC0202AABC0202AABC0202 /* DayToken.swift */,
+				AABC0302AABC0302AABC0302 /* FloatingBadge.swift */,
 				69BF4DFB4D0A9D449B9341E0 /* LevelButton.swift */,
 				C2435F479F1256F6B1F33CA2 /* LevelCard.swift */,
 				47D92F99E5C291456F3BA9A3 /* LevelWordmark.swift */,
@@ -365,6 +373,8 @@
 		8A34F7C51465B15F299AE5FD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AABC0102AABC0102AABC0102 /* BaselineCalculator.swift */,
+				AABC0402AABC0402AABC0402 /* AnimationGate.swift */,
 				D2A221C786B07E3993EFE7AE /* DataStore.swift */,
 				967516D3A3B29A4B37C9652A /* MomentumEngine.swift */,
 				47E7775188C9E88A987A29EE /* NotificationManager.swift */,
@@ -400,7 +410,6 @@
 			isa = PBXGroup;
 			children = (
 				E65F5C8BB881AA62CC31AF12 /* AppPickerView.swift */,
-				1A2334E866431DEF702ABBAE /* BaselineView.swift */,
 				4FD620BF03DE4505A041DA18 /* ConfirmationView.swift */,
 				C20D193BFA9CB1F75E564A9E /* HowItWorksView.swift */,
 				BF18D33485E14DB096E25364 /* MomentumIntroView.swift */,
@@ -675,7 +684,9 @@
 				5E59FCDC5ADFD2814A49C52A /* AppLimitsCard.swift in Sources */,
 				9AB0DD942E6B7CD965FB1E87 /* AppPickerView.swift in Sources */,
 				1C3258D749D88C2A26B7075A /* AppSettings.swift in Sources */,
-				7B70476D392A3F1E2C079403 /* BaselineView.swift in Sources */,
+				AABC0101AABC0101AABC0101 /* BaselineCalculator.swift in Sources */,
+				AABC0301AABC0301AABC0301 /* FloatingBadge.swift in Sources */,
+				AABC0401AABC0401AABC0401 /* AnimationGate.swift in Sources */,
 				12B37CA1E4D8CD4052CBD0AB /* BlockEditorSheet.swift in Sources */,
 				BC73E4175F639411CCCF23CF /* BlockListCard.swift in Sources */,
 				4A97B5ED76F3A2A2D5BEEAC1 /* Color+Hex.swift in Sources */,
@@ -694,6 +705,7 @@
 				43929A97BBC491DC8ABAE9BF /* LevelApp.swift in Sources */,
 				1793846445A76E098F06F0A5 /* LevelButton.swift in Sources */,
 				B5984D95B9943CE701203436 /* LevelCard.swift in Sources */,
+				AABC0201AABC0201AABC0201 /* DayToken.swift in Sources */,
 				11D7A48E496DA329F09EE7BD /* LevelIcon.swift in Sources */,
 				AED099257CC8372A7E664148 /* LevelWordmark.swift in Sources */,
 				26CD17F6D4234252B79E3106 /* MainTabView.swift in Sources */,

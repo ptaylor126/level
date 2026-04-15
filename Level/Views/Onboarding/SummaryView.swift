@@ -57,21 +57,21 @@ struct SummaryView: View {
         .buttonStyle(.plain)
       }
 
-      VStack(alignment: .leading, spacing: 10) {
+      LazyVGrid(
+        columns: [GridItem(.adaptive(minimum: 64, maximum: 76), spacing: 10, alignment: .top)],
+        alignment: .leading,
+        spacing: 10
+      ) {
         ForEach(Array(screenTime.selection.categoryTokens), id: \.self) { token in
-          Label(token)
-            .labelStyle(.titleAndIcon)
+          appTile { Label(token).labelStyle(.iconOnly) }
         }
         ForEach(Array(screenTime.selection.applicationTokens), id: \.self) { token in
-          Label(token)
-            .labelStyle(.titleAndIcon)
+          appTile { Label(token).labelStyle(.iconOnly) }
         }
         ForEach(Array(screenTime.selection.webDomainTokens), id: \.self) { token in
-          Label(token)
-            .labelStyle(.titleAndIcon)
+          appTile { Label(token).labelStyle(.iconOnly) }
         }
       }
-      .font(.levelBody)
       .environment(\.colorScheme, .light)
     }
     .padding(16)
@@ -80,6 +80,20 @@ struct SummaryView: View {
       RoundedRectangle(cornerRadius: 16, style: .continuous)
         .fill(Color.cream)
     )
+  }
+
+  private func appTile<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    ZStack {
+      RoundedRectangle(cornerRadius: 14, style: .continuous)
+        .fill(Color.white)
+      content()
+        .font(.system(size: 42))
+        .scaleEffect(1.5)
+      RoundedRectangle(cornerRadius: 14, style: .continuous)
+        .strokeBorder(Color.black.opacity(0.06), lineWidth: 1)
+    }
+    .frame(width: 64, height: 64)
+    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
   }
 
   private var reasonsCard: some View {

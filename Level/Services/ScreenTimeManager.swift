@@ -4,6 +4,12 @@ import Foundation
 import ManagedSettings
 import SwiftUI
 
+extension FamilyActivitySelection {
+  var isEmptyTokens: Bool {
+    applicationTokens.isEmpty && categoryTokens.isEmpty && webDomainTokens.isEmpty
+  }
+}
+
 @MainActor
 final class ScreenTimeManager: ObservableObject {
   @Published var selection: FamilyActivitySelection
@@ -20,6 +26,13 @@ final class ScreenTimeManager: ObservableObject {
 
   var isAuthorized: Bool {
     authorizationStatus == .approved
+  }
+
+  func refreshAuthorizationStatus() {
+    authorizationStatus = center.authorizationStatus
+    #if DEBUG
+    print("[Level] refreshAuth status=\(authorizationStatus.rawValue)")
+    #endif
   }
 
   var selectedItemCount: Int {
@@ -50,7 +63,7 @@ final class ScreenTimeManager: ObservableObject {
     SharedStore.defaults.removeObject(forKey: SharedStore.Key.familyActivitySelection)
   }
 
-  private static func loadStoredSelection() -> FamilyActivitySelection? {
+  static func loadStoredSelection() -> FamilyActivitySelection? {
     guard let data = SharedStore.defaults.data(forKey: SharedStore.Key.familyActivitySelection)
     else { return nil }
     return try? JSONDecoder().decode(FamilyActivitySelection.self, from: data)
@@ -62,10 +75,11 @@ final class ScreenTimeManager: ObservableObject {
     SharedStore.defaults.set(reasons, forKey: "userReasons")
   }
 
-  func syncSettingsToDefaults(delay: Int, increment: Int, unlockLimit: Int) {
+  func syncSettingsToDefaults(delay: Int, increment: Int, unlockLimit: Int, dailyAllowanceMinutes: Int) {
     SharedStore.defaults.set(delay, forKey: "defaultDelaySeconds")
     SharedStore.defaults.set(increment, forKey: "delayIncrementSeconds")
     SharedStore.defaults.set(unlockLimit, forKey: "defaultUnlockLimit")
+    SharedStore.defaults.set(dailyAllowanceMinutes, forKey: "dailyAllowanceMinutes")
   }
 
   // MARK: - Monitoring
@@ -91,12 +105,47 @@ final class ScreenTimeManager: ObservableObject {
   // MARK: - Shield management
 
   func applyShields() {
-    store.shield.applications = selection.applicationTokens.isEmpty
-      ? nil : selection.applicationTokens
-    store.shield.applicationCategories = selection.categoryTokens.isEmpty
-      ? nil : .specific(selection.categoryTokens)
-    store.shield.webDomains = selection.webDomainTokens.isEmpty
-      ? nil : selection.webDomainTokens
+    persistSelection()
+
+    let effective: FamilyActivitySelection = {
+      if let stored = Self.loadStoredSelection(), !stored.isEmptyTokens {
+        return stored
+      }
+      return selection
+    }()
+
+    store.shield.applications = effective.applicationTokens.isEmpty
+      ? nil : effective.applicationTokens
+    store.shield.applicationCategories = effective.categoryTokens.isEmpty
+      ? nil : .specific(effective.categoryTokens)
+    store.shield.webDomains = effective.webDomainTokens.isEmpty
+      ? nil : effective.webDomainTokens
+
+    logShieldState(label: "applyShields", written: effective)
+  }
+
+  func logShieldState(label: String, written: FamilyActivitySelection? = nil) {
+    let storedData = SharedStore.defaults.data(forKey: SharedStore.Key.familyActivitySelection)
+    let readBackApps = store.shield.applications
+    let readBackWeb = store.shield.webDomains
+    let categoriesReadBackDescription: String = {
+      switch store.shield.applicationCategories {
+      case .some(.all): return "all"
+      case .some(.specific(let set, except: _)): return "specific(\(set.count))"
+      case .none: return "nil"
+      @unknown default: return "unknown"
+      }
+    }()
+    let appGroupReachable = SharedStore.defaults.dictionaryRepresentation().keys.contains(SharedStore.Key.familyActivitySelection)
+
+    print("[Level][diag] \(label):")
+    print("  auth.rawValue=\(authorizationStatus.rawValue) isAuthorized=\(isAuthorized)")
+    print("  selection(mem) apps=\(selection.applicationTokens.count) cats=\(selection.categoryTokens.count) web=\(selection.webDomainTokens.count)")
+    if let written {
+      print("  selection(effective) apps=\(written.applicationTokens.count) cats=\(written.categoryTokens.count) web=\(written.webDomainTokens.count)")
+    }
+    print("  sharedDefaults.suiteReachable=\(appGroupReachable) bytes=\(storedData?.count ?? -1)")
+    print("  store(name=LevelMain) readback apps=\(readBackApps?.count ?? -1) cats=\(categoriesReadBackDescription) web=\(readBackWeb?.count ?? -1)")
   }
 
   func clearShields() {

@@ -6,23 +6,31 @@ import SwiftUI
 final class HomeViewModel: ObservableObject {
   @Published var todayScreenTime: TimeInterval = 0
   @Published var yesterdayScreenTime: TimeInterval = 0
-  @Published var momentumScore: Int = 50
+  @Published var momentumScore: Int = 100
   @Published var streak: Int = 0
   @Published var unlocksRemaining: Int = 10
   @Published var unlocksTotal: Int = 10
+  @Published var allowanceMinutesTotal: Int = 30
+  @Published var allowanceMinutesUsed: Int = 0
   @Published var weeklyDays: [WeeklyDayData] = []
   @Published var reasons: [String] = []
   @Published var goalMet: Bool = false
   @Published var momentumTrendScores: [Double] = []
   @Published var momentumTrendLabels: [String] = []
   @Published var recentTrigger: String?
+  @Published var isTrackingBaseline: Bool = true
+  @Published var baselineSeconds: TimeInterval = 0
 
   var xpPoints: Int { SharedStore.defaults.integer(forKey: "totalXP") }
 
+  var allowanceSubtitle: String {
+    let remaining = max(0, allowanceMinutesTotal - allowanceMinutesUsed)
+    return "\(remaining)m of \(allowanceMinutesTotal)m left today"
+  }
+
   var todayTimeSaved: TimeInterval {
-    let baseline = SharedStore.defaults.double(forKey: "baselineSeconds")
-    let b = baseline > 0 ? baseline : 3.5 * 3600
-    return max(0, b - todayScreenTime)
+    guard !isTrackingBaseline else { return 0 }
+    return max(0, baselineSeconds - todayScreenTime)
   }
 
   var timeSavedFormatted: String {
@@ -48,18 +56,29 @@ final class HomeViewModel: ObservableObject {
 
     engine?.updateToday()
 
+    switch BaselineCalculator.resolve(context: context) {
+    case .tracking:
+      isTrackingBaseline = true
+      baselineSeconds = 0
+    case .ready(let seconds):
+      isTrackingBaseline = false
+      baselineSeconds = seconds
+    }
+
     if let today = engine?.todayRecord() {
       todayScreenTime = today.totalScreenTime
-      momentumScore = Int(today.momentumScore)
+      momentumScore = Int(today.momentumScore.rounded())
       unlocksRemaining = max(0, today.unlockLimit - today.unlockCount)
       unlocksTotal = today.unlockLimit
       goalMet = today.goalMet
+      allowanceMinutesTotal = max(1, Int((today.dailyAllowanceSeconds / 60).rounded()))
+      allowanceMinutesUsed = min(allowanceMinutesTotal, Int((today.totalScreenTime / 60).rounded()))
     }
 
-    let unlockCount = SharedStore.defaults.integer(forKey: "todayUnlockCount")
-    let unlockLimit = SharedStore.defaults.integer(forKey: "defaultUnlockLimit").clamped(fallback: 10)
-    unlocksRemaining = max(0, unlockLimit - unlockCount)
-    unlocksTotal = unlockLimit
+    let allowanceFromDefaults = SharedStore.defaults.integer(forKey: "dailyAllowanceMinutes")
+    if allowanceFromDefaults > 0 {
+      allowanceMinutesTotal = allowanceFromDefaults
+    }
 
     streak = engine?.currentStreak() ?? 0
 

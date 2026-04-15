@@ -1,9 +1,13 @@
 import FamilyControls
+import ManagedSettings
 import SwiftUI
 
 struct AppPickerView: View {
   @EnvironmentObject private var screenTime: ScreenTimeManager
   let onPickTapped: () -> Void
+
+  private let tileSize: CGFloat = 72
+  private let columns = [GridItem(.adaptive(minimum: 72, maximum: 80), spacing: 12, alignment: .top)]
 
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
@@ -38,7 +42,7 @@ struct AppPickerView: View {
       if screenTime.selectedItemCount == 0 {
         emptyState
       } else {
-        pickedList
+        pickedGrid
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -58,30 +62,22 @@ struct AppPickerView: View {
     )
   }
 
-  private var pickedList: some View {
+  private var pickedGrid: some View {
     ZStack(alignment: .topTrailing) {
-      ScrollView(showsIndicators: false) {
-        VStack(alignment: .leading, spacing: 12) {
-          ForEach(Array(screenTime.selection.categoryTokens), id: \.self) { token in
-            Label(token)
-              .labelStyle(.titleAndIcon)
-          }
-          ForEach(Array(screenTime.selection.applicationTokens), id: \.self) { token in
-            Label(token)
-              .labelStyle(.titleAndIcon)
-          }
-          ForEach(Array(screenTime.selection.webDomainTokens), id: \.self) { token in
-            Label(token)
-              .labelStyle(.titleAndIcon)
-          }
+      LazyVGrid(columns: columns, alignment: .leading, spacing: 12) {
+        ForEach(Array(screenTime.selection.categoryTokens), id: \.self) { token in
+          appTile { Label(token).labelStyle(.iconOnly) }
         }
-        .font(.levelBody)
-        .environment(\.colorScheme, .light)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .padding(.trailing, 24)
+        ForEach(Array(screenTime.selection.applicationTokens), id: \.self) { token in
+          appTile { Label(token).labelStyle(.iconOnly) }
+        }
+        ForEach(Array(screenTime.selection.webDomainTokens), id: \.self) { token in
+          appTile { Label(token).labelStyle(.iconOnly) }
+        }
       }
-      .frame(maxWidth: .infinity, maxHeight: 180)
+      .environment(\.colorScheme, .light)
+      .padding(16)
+      .padding(.trailing, 28)
       .background(
         RoundedRectangle(cornerRadius: 16, style: .continuous)
           .fill(Color.cream)
@@ -90,6 +86,21 @@ struct AppPickerView: View {
       CountBadge(count: screenTime.selectedItemCount)
         .offset(x: -12, y: 12)
     }
+  }
+
+  private func appTile<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    ZStack {
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
+        .fill(Color.white)
+      content()
+        .font(.system(size: 48))
+        .scaleEffect(1.5)
+      RoundedRectangle(cornerRadius: 16, style: .continuous)
+        .strokeBorder(Color.black.opacity(0.06), lineWidth: 1)
+    }
+    .frame(width: tileSize, height: tileSize)
+    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+    .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
   }
 }
 

@@ -9,57 +9,51 @@ struct LevelCard<Content: View>: View {
   var body: some View {
     content()
       .padding(padding)
-      .background(background)
-      .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .background(
+        RoundedRectangle(cornerRadius: 16, style: .continuous)
+          .fill(background)
+      )
       .overlay(
         RoundedRectangle(cornerRadius: 16, style: .continuous)
-          .strokeBorder(Color.white.opacity(0.2), lineWidth: 1)
+          .stroke(Color.white.opacity(0.2), lineWidth: 1)
       )
       .shadow(
-        color: shadowColor,
-        radius: shadowRadius,
+        color: Color.black.opacity(shadowOpacity),
+        radius: 12,
         x: 0,
-        y: shadowY
+        y: 6
       )
   }
 
-  private var shadowColor: Color {
-    isLuminous ? Color.teaGreen.opacity(0.3) : Color.black.opacity(0.12)
-  }
-
-  private var shadowRadius: CGFloat {
-    isLuminous ? 30 : 24
-  }
-
-  private var shadowY: CGFloat {
-    isLuminous ? 10 : 8
-  }
-
-  private var isLuminous: Bool {
-    background == .teaGreen
+  private var shadowOpacity: Double {
+    if background == .teaGreen || background == .pastelPink {
+      return 0.2
+    }
+    return 0.25
   }
 }
 
 #Preview {
   ZStack {
     Color.vintageGrape.ignoresSafeArea()
-    VStack(spacing: 16) {
+    VStack(spacing: 20) {
       LevelCard(background: .teaGreen) {
-        Text("Tea Green card — glows")
+        Text("Tea Green — glows")
           .font(.levelBody)
           .foregroundStyle(Color.vintageGrape)
       }
       LevelCard(background: .cream) {
-        Text("Cream card — lifted")
+        Text("Cream — lifted")
           .font(.levelBody)
           .foregroundStyle(Color.vintageGrape)
       }
       LevelCard(background: .pastelPink) {
-        Text("Pink card")
+        Text("Pink — glows")
           .font(.levelBody)
           .foregroundStyle(Color.rose)
       }
     }
-    .padding(20)
+    .padding(24)
   }
 }

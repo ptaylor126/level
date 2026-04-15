@@ -1,61 +1,124 @@
 import SwiftUI
 
 struct MomentumIntroView: View {
-  @State private var scoreVisible = false
-  @State private var arrowVisible = false
+  @Binding var hasInteracted: Bool
+  @State private var score: Int = 100
+  @State private var drained: Bool = false
+  @State private var refilled: Bool = false
+  @State private var visibleLines: Int = 0
+
+  private let lines: [String] = [
+    "Minutes on your blocked apps drain the tank.",
+    "Focus sessions refill it.",
+    "Find your level. Start each day full."
+  ]
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 24) {
-      VStack(alignment: .leading, spacing: 12) {
-        Text("Meet your momentum score.")
-          .font(LevelFont.bold(28))
-          .foregroundStyle(Color.cream)
-          .minimumScaleFactor(0.7)
-          .staged(0.05)
-        Text("Your score starts at 50 out of 100. Good days push it up. Bad days bring it down a little \u{2014} not to zero. It's not about being perfect. It's about the trend.")
-          .font(.levelBody)
-          .foregroundStyle(Color.cream.opacity(0.75))
-          .lineSpacing(4)
-          .staged(0.15)
-      }
+    VStack(alignment: .leading, spacing: 20) {
+      Text("This is your Level.")
+        .font(LevelFont.bold(28))
+        .foregroundStyle(Color.cream)
+        .staged(0.05)
 
-      HStack {
-        Spacer()
-        VStack(spacing: 8) {
-          ZStack {
-            Text("50")
-              .font(.levelDisplay)
-              .foregroundStyle(Color.darkGreen)
-              .padding(.horizontal, 24)
-              .padding(.vertical, 12)
-              .background(Color.teaGreen)
-              .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-              .scaleEffect(scoreVisible ? 1 : 0.5)
-              .opacity(scoreVisible ? 1 : 0)
+      MomentumTankView(score: score, height: 240)
+        .padding(.vertical, 8)
+        .staged(0.15)
 
-            Image(systemName: "arrow.up.right")
-              .font(.system(size: 28, weight: .bold))
-              .foregroundStyle(Color.teaGreen)
-              .offset(x: 50, y: -30)
-              .scaleEffect(arrowVisible ? 1 : 0)
-              .opacity(arrowVisible ? 1 : 0)
+      Text(promptText)
+        .font(.levelCaption)
+        .foregroundStyle(Color.cream.opacity(0.55))
+        .staged(0.2)
+
+      VStack(spacing: 10) {
+        if !drained {
+          tapButton(
+            title: "Tap here if you scroll when bored",
+            systemImage: "arrow.down"
+          ) {
+            drained = true
+            score = 45
           }
-
-          Text("OUT OF 100")
-            .font(.levelLabel)
-            .tracking(0.5)
-            .foregroundStyle(Color.cream.opacity(0.5))
-            .opacity(scoreVisible ? 1 : 0)
+          tapButton(
+            title: "Tap here if you scroll to avoid work",
+            systemImage: "arrow.down"
+          ) {
+            drained = true
+            score = 35
+          }
+        } else if !refilled {
+          tapButton(
+            title: "Now lock your apps to fill it back up",
+            systemImage: "arrow.up"
+          ) {
+            refilled = true
+            score = 100
+            if !hasInteracted {
+              revealLines()
+            }
+          }
         }
-        .padding(.vertical, 32)
-        Spacer()
       }
-      .onAppear {
-        withAnimation(.spring(response: 0.6, dampingFraction: 0.7).delay(0.3)) {
-          scoreVisible = true
+      .staged(0.25)
+
+      VStack(alignment: .leading, spacing: 12) {
+        ForEach(lines.indices, id: \.self) { index in
+          if index < visibleLines {
+            Text(lines[index])
+              .font(.levelCaption)
+              .foregroundStyle(Color.vintageGrape)
+              .multilineTextAlignment(.leading)
+              .padding(.horizontal, 20)
+              .padding(.vertical, 10)
+              .background(
+                Capsule(style: .continuous)
+                  .fill(Color.cream.opacity(0.6))
+              )
+              .transition(.opacity.combined(with: .move(edge: .bottom)))
+          }
         }
-        withAnimation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.7)) {
-          arrowVisible = true
+      }
+      .animation(.spring(response: 0.45, dampingFraction: 0.85), value: visibleLines)
+    }
+  }
+
+  private var promptText: String {
+    if !drained { return "Tap one to see what happens." }
+    if !refilled { return "Good. Now fill it back up." }
+    return "That's the loop."
+  }
+
+  private func tapButton(title: String, systemImage: String, action: @escaping () -> Void) -> some View {
+    Button(action: action) {
+      HStack {
+        Text(title)
+          .font(LevelFont.bold(15))
+          .foregroundStyle(Color.cream)
+          .multilineTextAlignment(.leading)
+        Spacer()
+        Image(systemName: systemImage)
+          .font(.system(size: 14, weight: .bold))
+          .foregroundStyle(Color.cream.opacity(0.7))
+      }
+      .padding(.horizontal, 16)
+      .padding(.vertical, 14)
+      .background(
+        RoundedRectangle(cornerRadius: 12, style: .continuous)
+          .fill(Color.cream.opacity(0.10))
+      )
+      .overlay(
+        RoundedRectangle(cornerRadius: 12, style: .continuous)
+          .strokeBorder(Color.cream.opacity(0.28), lineWidth: 1)
+      )
+    }
+    .buttonStyle(.plain)
+  }
+
+  private func revealLines() {
+    for index in lines.indices {
+      DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.3) {
+        visibleLines = index + 1
+        if index == lines.count - 1 {
+          hasInteracted = true
         }
       }
     }

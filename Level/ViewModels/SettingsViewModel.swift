@@ -9,6 +9,7 @@ final class SettingsViewModel: ObservableObject {
   @Published var defaultDelay: Int = 10
   @Published var delayIncrement: Int = 10
   @Published var unlockLimit: Int = 10
+  @Published var dailyAllowanceMinutes: Int = 30
   @Published var notifyWeeklyRecap: Bool = true
   @Published var notifyMorningSummary: Bool = false
   @Published var notifyStreakAtRisk: Bool = false
@@ -27,6 +28,7 @@ final class SettingsViewModel: ObservableObject {
       defaultDelay = s.defaultDelaySeconds
       delayIncrement = s.delayIncrementSeconds
       unlockLimit = s.defaultUnlockLimit
+      dailyAllowanceMinutes = s.dailyAllowanceMinutes
       notifyWeeklyRecap = s.notifyWeeklyRecap
       notifyMorningSummary = s.notifyMorningSummary
       notifyStreakAtRisk = s.notifyStreakAtRisk
@@ -45,6 +47,7 @@ final class SettingsViewModel: ObservableObject {
     appSettings?.defaultDelaySeconds = defaultDelay
     appSettings?.delayIncrementSeconds = delayIncrement
     appSettings?.defaultUnlockLimit = unlockLimit
+    appSettings?.dailyAllowanceMinutes = dailyAllowanceMinutes
     appSettings?.notifyWeeklyRecap = notifyWeeklyRecap
     appSettings?.notifyMorningSummary = notifyMorningSummary
     appSettings?.notifyStreakAtRisk = notifyStreakAtRisk
@@ -56,6 +59,7 @@ final class SettingsViewModel: ObservableObject {
     SharedStore.defaults.set(defaultDelay, forKey: "defaultDelaySeconds")
     SharedStore.defaults.set(delayIncrement, forKey: "delayIncrementSeconds")
     SharedStore.defaults.set(unlockLimit, forKey: "defaultUnlockLimit")
+    SharedStore.defaults.set(dailyAllowanceMinutes, forKey: "dailyAllowanceMinutes")
 
     if let settings = appSettings {
       NotificationManager.shared.scheduleAll(settings: settings)
