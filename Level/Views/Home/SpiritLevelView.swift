@@ -126,8 +126,6 @@ struct MomentumTankView: View {
 
         glassRim
 
-        momentumLabel
-
         ForEach(badges) { badge in
           TankBadgeFloat(badge: badge)
             .position(x: w / 2, y: max(24, h - fillH))
@@ -215,22 +213,6 @@ struct MomentumTankView: View {
     }
   }
 
-  private var momentumLabel: some View {
-    VStack {
-      HStack {
-        Text("MOMENTUM")
-          .font(.levelLabel)
-          .tracking(1.2)
-          .foregroundStyle(Color.cream.opacity(0.55))
-        Spacer()
-      }
-      Spacer()
-    }
-    .padding(.horizontal, 16)
-    .padding(.top, 14)
-    .allowsHitTesting(false)
-  }
-
   // MARK: Liquid
 
   private func liquidLayer(width w: CGFloat, height h: CGFloat, fillHeight fillH: CGFloat) -> some View {
@@ -280,32 +262,45 @@ struct MomentumTankView: View {
 
   private func scoreText(width w: CGFloat, height h: CGFloat, fillHeight fillH: CGFloat) -> some View {
     let label = "\(clampedScore)"
-    // Scale: 1-digit biggest, 2-digit slightly smaller, 3-digit still fills nicely
+    // 20% smaller than before to clear the top margin at score 100
     let size: CGFloat = {
       switch label.count {
-      case 1: return 140
-      case 2: return 120
-      default: return 104
+      case 1: return 112
+      case 2: return 96
+      default: return 84
       }
     }()
 
-    return ZStack {
-      Text(label)
-        .font(LevelFont.extraBold(size))
-        .foregroundStyle(Color.mutedGrape.opacity(0.55))
-        .contentTransition(.numericText(value: displayedScore))
+    let approxTextHeight = size * 0.78
+    let waterlineY = h - fillH
+    let topBound = approxTextHeight / 2 + 10
+    let bottomBound = h - approxTextHeight / 2 - 8
+    let baseY = max(topBound, min(bottomBound, waterlineY))
 
-      Text(label)
-        .font(LevelFont.extraBold(size))
-        .foregroundStyle(Color.cream)
-        .contentTransition(.numericText(value: displayedScore))
-        .mask(alignment: .bottom) {
-          Rectangle()
-            .frame(height: fillH)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        }
+    return TimelineView(.animation) { timeline in
+      let t = timeline.date.timeIntervalSinceReferenceDate
+      let bob = CGFloat(sin(t * 1.9)) * 1.5
+
+      ZStack {
+        Text(label)
+          .font(LevelFont.extraBold(size))
+          .foregroundStyle(Color.mutedGrape.opacity(0.55))
+          .contentTransition(.numericText(value: displayedScore))
+
+        Text(label)
+          .font(LevelFont.extraBold(size))
+          .foregroundStyle(Color.cream)
+          .contentTransition(.numericText(value: displayedScore))
+          .mask(alignment: .bottom) {
+            Rectangle()
+              .frame(height: fillH)
+              .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+          }
+      }
+      .position(x: w / 2, y: baseY + bob)
     }
-    .frame(width: w, height: h, alignment: .center)
+    .frame(width: w, height: h)
+    .animation(.spring(response: 0.9, dampingFraction: 0.85), value: fillH)
   }
 
   // MARK: Animation handling
