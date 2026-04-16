@@ -8,7 +8,6 @@ struct RootView: View {
   @EnvironmentObject private var schedule: ScheduleManager
   @Query private var profiles: [UserProfile]
   @Query private var settingsRecords: [AppSettings]
-  @State private var showCountdown = false
 
   private var colorScheme: ColorScheme? {
     switch settingsRecords.first?.appearanceMode {
@@ -19,43 +18,30 @@ struct RootView: View {
   }
 
   var body: some View {
-    ZStack {
-      Group {
-        if let profile = profiles.first {
-          if profile.onboardingComplete {
-            MainTabView()
-              .onAppear { resumeMonitoring(profile: profile) }
-          } else {
-            OnboardingFlow(profile: profile)
-          }
+    Group {
+      if let profile = profiles.first {
+        if profile.onboardingComplete {
+          MainTabView()
+            .onAppear { resumeMonitoring(profile: profile) }
         } else {
-          Color.vintageGrape
-            .ignoresSafeArea()
-            .task { seedProfile() }
+          OnboardingFlow(profile: profile)
         }
-      }
-
-      if showCountdown {
-        CountdownView(
-          path: .pathA,
-          onDismiss: {
-            withAnimation(.easeInOut(duration: 0.3)) {
-              showCountdown = false
-            }
-          }
-        )
-        .transition(.opacity)
-        .zIndex(100)
+      } else {
+        Color.vintageGrape
+          .ignoresSafeArea()
+          .task { seedProfile() }
       }
     }
-    .preferredColorScheme(showCountdown ? .dark : colorScheme)
+    .preferredColorScheme(colorScheme)
     .onChange(of: scenePhase) { _, phase in
       if phase == .active {
-        checkPendingCountdown()
+        screenTime.checkSessionExpiry()
+        screenTime.checkFocusSessionExpiry()
       }
     }
     .onAppear {
-      checkPendingCountdown()
+      screenTime.checkSessionExpiry()
+      screenTime.checkFocusSessionExpiry()
     }
   }
 
@@ -80,32 +66,8 @@ struct RootView: View {
 
   private func resumeMonitoring(profile: UserProfile) {
     screenTime.refreshAuthorizationStatus()
-    guard screenTime.isAuthorized else {
-      #if DEBUG
-      print("[Level] resumeMonitoring skipped: not authorized")
-      #endif
-      return
-    }
+    guard screenTime.isAuthorized else { return }
     screenTime.syncReasonsToDefaults(profile.reasons)
     screenTime.startMonitoring()
-  }
-
-  private func checkPendingCountdown() {
-    let unlockCount = SharedStore.defaults.integer(forKey: "todayUnlockCount")
-    let unlockLimit = SharedStore.defaults.integer(forKey: "defaultUnlockLimit")
-    let limit = unlockLimit > 0 ? unlockLimit : 10
-    if unlockCount >= limit { return }
-
-    let hasRecentShield: Bool = {
-      guard let ts = SharedStore.defaults.object(forKey: "lastShieldShownTimestamp") as? Date else { return false }
-      return Date().timeIntervalSince(ts) < 120
-    }()
-
-    if hasRecentShield {
-      SharedStore.defaults.set(Date(), forKey: "pendingUnlockTimestamp")
-      withAnimation(.easeInOut(duration: 0.3)) {
-        showCountdown = true
-      }
-    }
   }
 }

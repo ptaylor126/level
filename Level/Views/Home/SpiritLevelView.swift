@@ -120,15 +120,15 @@ struct MomentumTankView: View {
         liquidLayer(width: w, height: h, fillHeight: fillH)
           .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
-        if showsScore {
-          scoreText(width: w, height: h, fillHeight: fillH)
-        }
-
         glassRim
+
+        if showsScore {
+          buoyView(width: w, height: h, fillHeight: fillH)
+        }
 
         ForEach(badges) { badge in
           TankBadgeFloat(badge: badge)
-            .position(x: w / 2, y: max(24, h - fillH))
+            .position(x: w / 2 + 44, y: buoyCenterY(height: h, fillHeight: fillH))
         }
       }
       .frame(width: w, height: h)
@@ -258,45 +258,58 @@ struct MomentumTankView: View {
     }
   }
 
-  // MARK: Score text (split at waterline)
+  // MARK: Buoy
 
-  private func scoreText(width w: CGFloat, height h: CGFloat, fillHeight fillH: CGFloat) -> some View {
-    let label = "\(clampedScore)"
-    // 20% smaller than before to clear the top margin at score 100
-    let size: CGFloat = {
-      switch label.count {
-      case 1: return 112
-      case 2: return 96
-      default: return 84
-      }
-    }()
+  private static let buoyDiameter: CGFloat = 50
+  private static let buoyMargin: CGFloat = 6
 
-    let approxTextHeight = size * 0.78
+  private func buoyBaseY(height h: CGFloat, fillHeight fillH: CGFloat) -> CGFloat {
+    let r = Self.buoyDiameter / 2
+    let topBound = r + Self.buoyMargin
+    let bottomBound = h - r - Self.buoyMargin
     let waterlineY = h - fillH
-    let topBound = approxTextHeight / 2 + 10
-    let bottomBound = h - approxTextHeight / 2 - 8
-    let baseY = max(topBound, min(bottomBound, waterlineY))
+    return max(topBound, min(bottomBound, waterlineY))
+  }
+
+  private func buoyCenterY(height h: CGFloat, fillHeight fillH: CGFloat) -> CGFloat {
+    let t = Date().timeIntervalSinceReferenceDate
+    let bob = CGFloat(sin(t * 1.9)) * 1.5
+    return buoyBaseY(height: h, fillHeight: fillH) + bob
+  }
+
+  private func buoyView(width w: CGFloat, height h: CGFloat, fillHeight fillH: CGFloat) -> some View {
+    let baseY = buoyBaseY(height: h, fillHeight: fillH)
+    let label = "\(clampedScore)"
 
     return TimelineView(.animation) { timeline in
       let t = timeline.date.timeIntervalSinceReferenceDate
       let bob = CGFloat(sin(t * 1.9)) * 1.5
 
       ZStack {
-        Text(label)
-          .font(LevelFont.extraBold(size))
-          .foregroundStyle(Color.mutedGrape.opacity(0.55))
-          .contentTransition(.numericText(value: displayedScore))
+        Circle()
+          .fill(Color.pastelPink)
+          .overlay(
+            Circle()
+              .fill(
+                LinearGradient(
+                  colors: [Color.white.opacity(0.35), Color.clear],
+                  startPoint: .top,
+                  endPoint: .center
+                )
+              )
+          )
+          .overlay(
+            Circle()
+              .strokeBorder(Color.white.opacity(0.5), lineWidth: 1)
+          )
+          .shadow(color: Color.black.opacity(0.18), radius: 4, x: 0, y: 2)
 
         Text(label)
-          .font(LevelFont.extraBold(size))
-          .foregroundStyle(Color.cream)
+          .font(LevelFont.extraBold(20))
+          .foregroundStyle(Color.vintageGrape)
           .contentTransition(.numericText(value: displayedScore))
-          .mask(alignment: .bottom) {
-            Rectangle()
-              .frame(height: fillH)
-              .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-          }
       }
+      .frame(width: Self.buoyDiameter, height: Self.buoyDiameter)
       .position(x: w / 2, y: baseY + bob)
     }
     .frame(width: w, height: h)
@@ -354,20 +367,38 @@ private struct TankBadgeFloat: View {
   @State private var lifted = false
   @State private var faded = false
 
+  private var isPositive: Bool { badge.delta >= 0 }
+  private var fill: Color { isPositive ? Color.teaGreen : Color.cream.opacity(0.85) }
+  private var textColor: Color { isPositive ? Color.darkGreen : Color.mutedGrape }
+  private var label: String { badge.delta > 0 ? "+\(badge.delta)" : "\(badge.delta)" }
+
   var body: some View {
-    FloatingBadge(delta: badge.delta)
+    Text(label)
+      .font(LevelFont.bold(13))
+      .foregroundStyle(textColor)
+      .padding(.horizontal, 10)
+      .padding(.vertical, 4)
+      .background(
+        Capsule(style: .continuous)
+          .fill(fill)
+          .overlay(
+            Capsule(style: .continuous)
+              .strokeBorder(Color.white.opacity(0.45), lineWidth: 1)
+          )
+          .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+      )
       .scaleEffect(appeared ? 1.0 : 0.8)
       .opacity(faded ? 0 : 1)
-      .offset(y: lifted ? -80 : 0)
+      .offset(y: lifted ? -44 : 0)
       .onAppear {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
           appeared = true
         }
-        withAnimation(.easeOut(duration: 1.3)) {
+        withAnimation(.easeOut(duration: 1.1)) {
           lifted = true
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-          withAnimation(.easeIn(duration: 0.6)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+          withAnimation(.easeIn(duration: 0.55)) {
             faded = true
           }
         }

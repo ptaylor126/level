@@ -4,10 +4,12 @@ import SwiftUI
 struct HomeView: View {
   @Environment(\.modelContext) private var context
   @Environment(\.scenePhase) private var scenePhase
+  @EnvironmentObject private var screenTime: ScreenTimeManager
   @StateObject private var viewModel = HomeViewModel()
   @State private var appeared = false
   @State private var showTriggerPrompt = false
-  @State private var showPathBCountdown = false
+  @State private var showFocusPicker = false
+  @State private var showEndFocusConfirmation = false
 
   var body: some View {
     ZStack {
@@ -19,17 +21,13 @@ struct HomeView: View {
 
           progressRing
 
+          focusSessionSection
+
           weekDots
 
           timeSavedCard
 
-          ManagedAppsCard(
-            unlocksSubtitle: viewModel.allowanceSubtitle,
-            onTapApp: {
-              SharedStore.defaults.set(Date(), forKey: "pendingUnlockTimestamp")
-              showPathBCountdown = true
-            }
-          )
+          ManagedAppsCard(unlocksSubtitle: viewModel.allowanceSubtitle)
 
           reasonCard
         }
@@ -74,10 +72,21 @@ struct HomeView: View {
         .transition(.move(edge: .bottom).combined(with: .opacity))
       }
     }
-    .fullScreenCover(isPresented: $showPathBCountdown) {
-      CountdownView(path: .pathB, onDismiss: {
-        showPathBCountdown = false
-      })
+    .sheet(isPresented: $showFocusPicker) {
+      FocusSessionPicker { minutes in
+        screenTime.startFocusSession(durationMinutes: minutes)
+        showFocusPicker = false
+      }
+      .presentationDetents([.medium])
+      .presentationDragIndicator(.visible)
+    }
+    .alert("End your session?", isPresented: $showEndFocusConfirmation) {
+      Button("End session", role: .destructive) {
+        screenTime.endFocusSession(completed: false)
+      }
+      Button("Keep going", role: .cancel) {}
+    } message: {
+      Text("You'll lose 20 XP.")
     }
   }
 
@@ -157,6 +166,33 @@ struct HomeView: View {
         .foregroundStyle(Color.cream.opacity(0.6))
     }
     .padding(.vertical, 4)
+  }
+
+  // MARK: - Focus Session
+
+  @ViewBuilder
+  private var focusSessionSection: some View {
+    if screenTime.focusSessionActive, let remaining = screenTime.focusSessionTimeRemaining {
+      FocusSessionActiveCard(
+        timeRemaining: remaining,
+        onEndEarly: { showEndFocusConfirmation = true }
+      )
+    } else {
+      Button(action: { showFocusPicker = true }) {
+        HStack {
+          Image(systemName: "moon.fill")
+            .font(.system(size: 16, weight: .semibold))
+          Text("Go Dark")
+            .font(LevelFont.bold(17))
+        }
+        .foregroundStyle(Color.vintageGrape)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 16)
+        .background(Color.teaGreen)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+      }
+      .buttonStyle(.plain)
+    }
   }
 
   // MARK: - Week Dots
@@ -276,6 +312,169 @@ struct HomeView: View {
         showTriggerPrompt = true
       }
     }
+  }
+}
+
+// MARK: - Focus Session Active Card
+
+private struct FocusSessionActiveCard: View {
+  let timeRemaining: TimeInterval
+  let onEndEarly: () -> Void
+  @State private var displayRemaining: TimeInterval
+
+  init(timeRemaining: TimeInterval, onEndEarly: @escaping () -> Void) {
+    self.timeRemaining = timeRemaining
+    self.onEndEarly = onEndEarly
+    self._displayRemaining = State(initialValue: timeRemaining)
+  }
+
+  private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
+  var body: some View {
+    LevelCard(background: .deepGrape, showBorder: false) {
+      VStack(spacing: 12) {
+        HStack {
+          Image(systemName: "moon.fill")
+            .foregroundStyle(Color.teaGreen)
+          Text("Focus session active")
+            .font(LevelFont.bold(17))
+            .foregroundStyle(Color.cream)
+          Spacer()
+        }
+
+        Text(formattedTime)
+          .font(LevelFont.extraBold(36))
+          .foregroundStyle(Color.teaGreen)
+          .monospacedDigit()
+
+        Button(action: onEndEarly) {
+          Text("End session")
+            .font(LevelFont.medium(14))
+            .foregroundStyle(Color.cream.opacity(0.6))
+        }
+        .buttonStyle(.plain)
+      }
+    }
+    .onReceive(timer) { _ in
+      displayRemaining = max(0, displayRemaining - 1)
+    }
+  }
+
+  private var formattedTime: String {
+    let total = Int(displayRemaining)
+    let h = total / 3600
+    let m = (total % 3600) / 60
+    let s = total % 60
+    if h > 0 {
+      return String(format: "%d:%02d:%02d", h, m, s)
+    }
+    return String(format: "%d:%02d", m, s)
+  }
+}
+
+// MARK: - Focus Session Picker
+
+struct FocusSessionPicker: View {
+  let onStart: (Int) -> Void
+  @State private var selectedMinutes = 60
+  @State private var customMinutes = ""
+  @State private var showCustom = false
+  @Environment(\.dismiss) private var dismiss
+
+  private let presets = [30, 60, 120]
+
+  var body: some View {
+    VStack(spacing: 24) {
+      VStack(spacing: 8) {
+        Text("Go Dark")
+          .font(LevelFont.bold(24))
+          .foregroundStyle(Color.vintageGrape)
+        Text("Lock your apps and recharge your tank.")
+          .font(.levelBody)
+          .foregroundStyle(Color.mutedGrape)
+          .multilineTextAlignment(.center)
+      }
+      .padding(.top, 24)
+
+      VStack(spacing: 12) {
+        ForEach(presets, id: \.self) { minutes in
+          Button(action: { selectedMinutes = minutes; showCustom = false }) {
+            HStack {
+              Text(formatPreset(minutes))
+                .font(LevelFont.medium(17))
+                .foregroundStyle(Color.vintageGrape)
+              Spacer()
+              if selectedMinutes == minutes && !showCustom {
+                Image(systemName: "checkmark.circle.fill")
+                  .foregroundStyle(Color.teaGreen)
+              }
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 14)
+            .background(
+              RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(selectedMinutes == minutes && !showCustom ? Color.teaGreen.opacity(0.15) : Color.cream)
+            )
+          }
+          .buttonStyle(.plain)
+        }
+
+        Button(action: { showCustom = true }) {
+          HStack {
+            if showCustom {
+              TextField("Minutes", text: $customMinutes)
+                .keyboardType(.numberPad)
+                .font(LevelFont.medium(17))
+                .foregroundStyle(Color.vintageGrape)
+                .frame(width: 80)
+              Text("minutes")
+                .font(LevelFont.medium(17))
+                .foregroundStyle(Color.mutedGrape)
+            } else {
+              Text("Custom")
+                .font(LevelFont.medium(17))
+                .foregroundStyle(Color.vintageGrape)
+            }
+            Spacer()
+            if showCustom {
+              Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(Color.teaGreen)
+            }
+          }
+          .padding(.horizontal, 20)
+          .padding(.vertical, 14)
+          .background(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+              .fill(showCustom ? Color.teaGreen.opacity(0.15) : Color.cream)
+          )
+        }
+        .buttonStyle(.plain)
+      }
+      .padding(.horizontal, 20)
+
+      Button(action: {
+        let minutes = showCustom ? (Int(customMinutes) ?? 60) : selectedMinutes
+        onStart(max(1, minutes))
+      }) {
+        Text("Start session")
+          .font(LevelFont.bold(17))
+          .foregroundStyle(Color.vintageGrape)
+          .frame(maxWidth: .infinity)
+          .padding(.vertical, 16)
+          .background(Color.teaGreen)
+          .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+      }
+      .buttonStyle(.plain)
+      .padding(.horizontal, 20)
+
+      Spacer()
+    }
+  }
+
+  private func formatPreset(_ minutes: Int) -> String {
+    if minutes < 60 { return "\(minutes) min" }
+    let h = minutes / 60
+    return h == 1 ? "1 hour" : "\(h) hours"
   }
 }
 

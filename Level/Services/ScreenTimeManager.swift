@@ -14,6 +14,8 @@ extension FamilyActivitySelection {
 final class ScreenTimeManager: ObservableObject {
   @Published var selection: FamilyActivitySelection
   @Published var authorizationStatus: AuthorizationStatus
+  @Published var focusSessionActive = false
+  @Published var focusSessionEndDate: Date?
 
   private let center = AuthorizationCenter.shared
   private let activityCenter = DeviceActivityCenter()
@@ -22,6 +24,8 @@ final class ScreenTimeManager: ObservableObject {
   init() {
     self.selection = Self.loadStoredSelection() ?? FamilyActivitySelection()
     self.authorizationStatus = center.authorizationStatus
+    self.focusSessionActive = SharedStore.defaults.bool(forKey: "focusSessionActive")
+    self.focusSessionEndDate = SharedStore.defaults.object(forKey: "focusSessionEndTimestamp") as? Date
   }
 
   var isAuthorized: Bool {
@@ -30,9 +34,6 @@ final class ScreenTimeManager: ObservableObject {
 
   func refreshAuthorizationStatus() {
     authorizationStatus = center.authorizationStatus
-    #if DEBUG
-    print("[Level] refreshAuth status=\(authorizationStatus.rawValue)")
-    #endif
   }
 
   var selectedItemCount: Int {
@@ -154,63 +155,65 @@ final class ScreenTimeManager: ObservableObject {
     store.shield.webDomains = nil
   }
 
-  // MARK: - Session timer
+  // MARK: - Session expiry (unlock sessions from shield)
 
-  private var sessionTimer: Timer?
-
-  func startSession() {
-    let unlockCount = SharedStore.defaults.integer(forKey: "todayUnlockCount")
-    SharedStore.defaults.set(unlockCount + 1, forKey: "todayUnlockCount")
-
-    clearShields()
-
+  func checkSessionExpiry() {
+    guard let start = SharedStore.defaults.object(forKey: "sessionStartTimestamp") as? Date else { return }
     let sessionSeconds = SharedStore.defaults.integer(forKey: "sessionLengthSeconds")
     let duration = sessionSeconds > 0 ? TimeInterval(sessionSeconds) : 300
-
-    sessionTimer?.invalidate()
-    sessionTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { [weak self] _ in
-      Task { @MainActor in
-        self?.applyShields()
-      }
+    if Date().timeIntervalSince(start) >= duration {
+      SharedStore.defaults.removeObject(forKey: "sessionStartTimestamp")
+      applyShields()
     }
   }
 
-  func cancelSession() {
-    sessionTimer?.invalidate()
-    sessionTimer = nil
+  // MARK: - Focus session
+
+  func startFocusSession(durationMinutes: Int) {
+    let endDate = Date().addingTimeInterval(TimeInterval(durationMinutes * 60))
+    SharedStore.defaults.set(true, forKey: "focusSessionActive")
+    SharedStore.defaults.set(Date(), forKey: "focusSessionStartTimestamp")
+    SharedStore.defaults.set(endDate, forKey: "focusSessionEndTimestamp")
+    SharedStore.defaults.set(durationMinutes * 60, forKey: "focusSessionDurationSeconds")
+    focusSessionActive = true
+    focusSessionEndDate = endDate
     applyShields()
   }
 
-  // MARK: - Pending countdown
+  func endFocusSession(completed: Bool) {
+    let startTimestamp = SharedStore.defaults.object(forKey: "focusSessionStartTimestamp") as? Date
+    let elapsed = startTimestamp.map { Date().timeIntervalSince($0) } ?? 0
 
-  var hasPendingCountdown: Bool {
-    guard let timestamp = SharedStore.defaults.object(forKey: "lastShieldTimestamp") as? Date else {
-      return false
+    SharedStore.defaults.set(false, forKey: "focusSessionActive")
+    SharedStore.defaults.removeObject(forKey: "focusSessionEndTimestamp")
+    SharedStore.defaults.removeObject(forKey: "focusSessionStartTimestamp")
+    SharedStore.defaults.removeObject(forKey: "focusSessionDurationSeconds")
+    focusSessionActive = false
+    focusSessionEndDate = nil
+
+    if completed {
+      let minutes = Int(elapsed / 60)
+      let xp = SharedStore.defaults.integer(forKey: "totalXP")
+      SharedStore.defaults.set(xp + minutes, forKey: "totalXP")
+    } else {
+      let xp = SharedStore.defaults.integer(forKey: "totalXP")
+      SharedStore.defaults.set(max(0, xp - 20), forKey: "totalXP")
     }
-    return Date().timeIntervalSince(timestamp) < 30
+
+    let previousFocus = SharedStore.defaults.double(forKey: "todayFocusSessionSeconds")
+    SharedStore.defaults.set(previousFocus + elapsed, forKey: "todayFocusSessionSeconds")
   }
 
-  func pendingCountdownSeconds() -> Int {
-    let baseDelay = SharedStore.defaults.integer(forKey: "defaultDelaySeconds")
-    let increment = SharedStore.defaults.integer(forKey: "delayIncrementSeconds")
-    let opens = SharedStore.defaults.integer(forKey: "todayOpenAttempts")
-    let base = baseDelay > 0 ? baseDelay : 10
-    let inc = increment > 0 ? increment : 10
-    return base + (inc * max(0, opens - 1))
+  func checkFocusSessionExpiry() {
+    guard focusSessionActive,
+          let endDate = SharedStore.defaults.object(forKey: "focusSessionEndTimestamp") as? Date,
+          endDate <= Date() else { return }
+    endFocusSession(completed: true)
   }
 
-  func currentReason() -> String {
-    let reasons = SharedStore.defaults.stringArray(forKey: "userReasons") ?? []
-    if reasons.isEmpty {
-      return ["Do you actually need to open this?",
-              "You've got better things to do.",
-              "Is this worth your time right now?",
-              "What were you about to do before this?"].randomElement()!
-    }
-    return reasons.randomElement()!
-  }
-
-  func clearPendingCountdown() {
-    SharedStore.defaults.removeObject(forKey: "lastShieldTimestamp")
+  var focusSessionTimeRemaining: TimeInterval? {
+    guard focusSessionActive, let endDate = focusSessionEndDate else { return nil }
+    let remaining = endDate.timeIntervalSince(Date())
+    return remaining > 0 ? remaining : nil
   }
 }

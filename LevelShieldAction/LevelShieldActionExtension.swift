@@ -33,13 +33,33 @@ class LevelShieldActionExtension: ShieldActionDelegate {
     _ action: ShieldAction,
     completionHandler: @escaping (ShieldActionResponse) -> Void
   ) {
+    let isFocusSession = defaults?.bool(forKey: "focusSessionActive") == true
+    let currentMode = defaults?.string(forKey: "currentLevelMode") ?? ""
+    let isRest = currentMode == "rest"
+    let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
+    let unlockLimit = (defaults?.integer(forKey: "defaultUnlockLimit")).flatMap { $0 > 0 ? $0 : nil } ?? 10
+    let exhausted = unlockCount >= unlockLimit
+
     switch action {
     case .primaryButtonPressed:
-      defaults?.set(Date(), forKey: "pendingUnlockTimestamp")
-      defaults?.set(Date(), forKey: "lastShieldShownTimestamp")
+      if isFocusSession || isRest || exhausted {
+        completionHandler(.close)
+        return
+      }
+
+      // "Open anyway": clear shields, count unlock, start session
+      let store = ManagedSettingsStore(named: .init("LevelMain"))
+      store.shield.applications = nil
+      store.shield.applicationCategories = nil
+      store.shield.webDomains = nil
+
+      defaults?.set(unlockCount + 1, forKey: "todayUnlockCount")
+      defaults?.set(Date(), forKey: "sessionStartTimestamp")
+
       completionHandler(.close)
 
     case .secondaryButtonPressed:
+      // "I'm good": award 10 XP
       let declined = defaults?.integer(forKey: "todayDeclinedCount") ?? 0
       defaults?.set(declined + 1, forKey: "todayDeclinedCount")
       let xp = defaults?.integer(forKey: "totalXP") ?? 0

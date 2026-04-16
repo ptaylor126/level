@@ -41,9 +41,36 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
 
     let grape = UIColor(red: 71/255, green: 49/255, blue: 68/255, alpha: 1)
     let cream = UIColor(red: 255/255, green: 248/255, blue: 240/255, alpha: 1)
+    let muted = UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
     let appIcon = UIImage(named: "ShieldIcon", in: Bundle(for: LevelShieldExtension.self), compatibleWith: nil)
 
-    // Rest Level: fully blocked, no unlock option
+    // Focus session: fully locked, show time remaining
+    if let endTimestamp = defaults?.object(forKey: "focusSessionEndTimestamp") as? Date,
+       defaults?.bool(forKey: "focusSessionActive") == true {
+      if endTimestamp > Date() {
+        let remaining = Int(endTimestamp.timeIntervalSince(Date()))
+        let minutes = remaining / 60
+        let seconds = remaining % 60
+        let timeText = minutes > 0
+          ? "\(minutes)m \(seconds)s remaining"
+          : "\(seconds)s remaining"
+
+        return ShieldConfiguration(
+          backgroundBlurStyle: .systemMaterialDark,
+          backgroundColor: grape,
+          icon: appIcon,
+          title: ShieldConfiguration.Label(text: "You're in a focus session.", color: cream),
+          subtitle: ShieldConfiguration.Label(text: timeText, color: cream),
+          primaryButtonLabel: ShieldConfiguration.Label(text: "I'm good", color: grape),
+          primaryButtonBackgroundColor: cream,
+          secondaryButtonLabel: nil
+        )
+      } else {
+        defaults?.set(false, forKey: "focusSessionActive")
+      }
+    }
+
+    // Rest Level: fully blocked
     let currentMode = defaults?.string(forKey: "currentLevelMode") ?? ""
     if currentMode == "rest" {
       return ShieldConfiguration(
@@ -63,7 +90,6 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     if defaults?.object(forKey: "firstAttemptTimestamp") == nil {
       defaults?.set(Date(), forKey: "firstAttemptTimestamp")
     }
-    defaults?.set(Date(), forKey: "lastShieldShownTimestamp")
 
     let opensToday = defaults?.integer(forKey: "todayOpenAttempts") ?? 0
     defaults?.set(opensToday + 1, forKey: "todayOpenAttempts")
@@ -71,7 +97,6 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     let unlockCount = defaults?.integer(forKey: "todayUnlockCount") ?? 0
     let unlockLimit = defaults?.integer(forKey: "defaultUnlockLimit").nonZero ?? 10
     let exhausted = unlockCount >= unlockLimit
-    let attemptText = "Attempt \(opensToday + 1) today."
 
     if exhausted {
       return ShieldConfiguration(
@@ -80,17 +105,17 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
         icon: appIcon,
         title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
         subtitle: ShieldConfiguration.Label(
-          text: "You've used all your opens today.\n\nSee you tomorrow.",
+          text: "You've used all your opens today.",
           color: cream
         ),
-        primaryButtonLabel: ShieldConfiguration.Label(text: "Not now", color: grape),
+        primaryButtonLabel: ShieldConfiguration.Label(text: "OK", color: grape),
         primaryButtonBackgroundColor: cream,
         secondaryButtonLabel: nil
       )
     }
 
-    let subtitle = "\nRemember:\n\u{25B8} \(reason)\n\n\(attemptText)"
-    let muted = UIColor(red: 107/255, green: 80/255, blue: 104/255, alpha: 1)
+    let attemptText = "Attempt \(opensToday + 1) today."
+    let subtitle = "Remember why it's locked:\n▸ \(reason)\n\n\(attemptText)"
 
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
@@ -98,9 +123,9 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
       icon: appIcon,
       title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
       subtitle: ShieldConfiguration.Label(text: subtitle, color: cream),
-      primaryButtonLabel: ShieldConfiguration.Label(text: "OK, I'll do that", color: grape),
+      primaryButtonLabel: ShieldConfiguration.Label(text: "Open anyway", color: grape),
       primaryButtonBackgroundColor: cream,
-      secondaryButtonLabel: ShieldConfiguration.Label(text: "Actually, I'm good", color: muted)
+      secondaryButtonLabel: ShieldConfiguration.Label(text: "I'm good", color: muted)
     )
   }
 
@@ -126,7 +151,6 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     defaults?.set(0, forKey: "todayUnlockCount")
     defaults?.set(0, forKey: "todayDeclinedCount")
     defaults?.removeObject(forKey: "firstAttemptTimestamp")
-    defaults?.removeObject(forKey: "lastShieldShownTimestamp")
     defaults?.removeObject(forKey: "reasonPlaylist")
     defaults?.set(false, forKey: "triggerPromptShownThisSession")
     defaults?.set(Date(), forKey: "lastDayReset")

@@ -12,11 +12,6 @@ struct LevelApp: App {
         .environmentObject(screenTime)
         .environmentObject(schedule)
         .tint(Color.teaGreen)
-        .onOpenURL { url in
-          if url.scheme == "level" && url.host == "timer" {
-            SharedStore.defaults.set(Date(), forKey: "pendingCountdownTimestamp")
-          }
-        }
         .task {
           schedule.configure(screenTime: screenTime)
         }
