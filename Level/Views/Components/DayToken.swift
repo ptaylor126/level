@@ -14,21 +14,7 @@ struct DayToken: View {
     ZStack {
       Circle().fill(baseFill)
 
-      switch state {
-      case .empty:
-        Circle()
-          .stroke(Color.black.opacity(0.55), lineWidth: 2)
-          .blur(radius: 1.5)
-          .mask(
-            Circle().fill(
-              LinearGradient(
-                colors: [Color.black, Color.clear],
-                startPoint: .top,
-                endPoint: .bottom
-              )
-            )
-          )
-      case .completed, .missed:
+      if state == .completed || state == .missed {
         Circle()
           .fill(
             LinearGradient(
@@ -52,9 +38,6 @@ struct DayToken: View {
             )
           )
       }
-
-      Circle()
-        .stroke(Color.white.opacity(0.15), lineWidth: 0.5)
     }
     .frame(width: size, height: size)
     .shadow(
@@ -67,7 +50,7 @@ struct DayToken: View {
 
   private var baseFill: Color {
     switch state {
-    case .empty: return Color.deepGrape
+    case .empty: return Color.black.opacity(0.15)
     case .completed: return Color.teaGreen
     case .missed: return Color.pastelPink.opacity(0.55)
     }

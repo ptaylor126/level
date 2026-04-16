@@ -103,9 +103,9 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
         backgroundBlurStyle: .systemMaterialDark,
         backgroundColor: grape,
         icon: appIcon,
-        title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
+        title: ShieldConfiguration.Label(text: "Level with me", color: cream),
         subtitle: ShieldConfiguration.Label(
-          text: "You've used all your opens today.",
+          text: "\nYou've used all your opens today.",
           color: cream
         ),
         primaryButtonLabel: ShieldConfiguration.Label(text: "OK", color: grape),
@@ -115,13 +115,13 @@ class LevelShieldExtension: ShieldConfigurationDataSource {
     }
 
     let attemptText = "Attempt \(opensToday + 1) today."
-    let subtitle = "Remember why it's locked:\n▸ \(reason)\n\n\(attemptText)"
+    let subtitle = "\nRemember why it's locked:\n▸ \(reason)\n\n\(attemptText)"
 
     return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
       backgroundColor: grape,
       icon: appIcon,
-      title: ShieldConfiguration.Label(text: "Level with me.", color: cream),
+      title: ShieldConfiguration.Label(text: "Level with me", color: cream),
       subtitle: ShieldConfiguration.Label(text: subtitle, color: cream),
       primaryButtonLabel: ShieldConfiguration.Label(text: "Open anyway", color: grape),
       primaryButtonBackgroundColor: cream,

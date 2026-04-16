@@ -101,7 +101,7 @@ struct MomentumTankView: View {
   private var clampedScore: Int { max(0, min(100, Int(displayedScore.rounded()))) }
   private var fillFraction: CGFloat {
     let raw = max(0, min(100, displayedScore)) / 100.0
-    return CGFloat(raw) * 0.95
+    return CGFloat(raw) * 0.85
   }
   private var tiltDegrees: Double {
     let clamped = max(-1.0, min(1.0, tilt.roll / 0.6))
@@ -152,65 +152,13 @@ struct MomentumTankView: View {
 
   private var tankBackground: some View {
     RoundedRectangle(cornerRadius: 16, style: .continuous)
-      .fill(
-        LinearGradient(
-          colors: [
-            Color.deepGrape,
-            Color.vintageGrape
-          ],
-          startPoint: .top,
-          endPoint: .bottom
-        )
-      )
-      .overlay(
-        RoundedRectangle(cornerRadius: 16, style: .continuous)
-          .fill(
-            LinearGradient(
-              colors: [Color.white.opacity(0.06), Color.clear],
-              startPoint: .topLeading,
-              endPoint: .bottomTrailing
-            )
-          )
-      )
+      .fill(Color.vintageGrape)
   }
 
   private var glassRim: some View {
-    ZStack {
-      // Dark inner shadow at top edge (depth)
-      RoundedRectangle(cornerRadius: 16, style: .continuous)
-        .fill(
-          LinearGradient(
-            stops: [
-              .init(color: Color.black.opacity(0.35), location: 0.0),
-              .init(color: Color.black.opacity(0.0), location: 0.18)
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-          )
-        )
-        .blendMode(.multiply)
-        .allowsHitTesting(false)
-
-      // Subtle top-down highlight
-      RoundedRectangle(cornerRadius: 16, style: .continuous)
-        .fill(
-          LinearGradient(
-            stops: [
-              .init(color: Color.white.opacity(0.08), location: 0.0),
-              .init(color: Color.white.opacity(0.0), location: 0.35)
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-          )
-        )
-        .allowsHitTesting(false)
-
-      // Sharp 1px physical rim
-      RoundedRectangle(cornerRadius: 16, style: .continuous)
-        .strokeBorder(Color.white.opacity(0.20), lineWidth: 1)
-        .blendMode(.overlay)
-        .allowsHitTesting(false)
-    }
+    RoundedRectangle(cornerRadius: 16, style: .continuous)
+      .strokeBorder(Color.white.opacity(0.20), lineWidth: 1)
+      .allowsHitTesting(false)
   }
 
   // MARK: Liquid
@@ -268,6 +216,7 @@ struct MomentumTankView: View {
     let topBound = r + Self.buoyMargin
     let bottomBound = h - r - Self.buoyMargin
     let waterlineY = h - fillH
+    // Centre of buoy sits on the waterline (half submerged)
     return max(topBound, min(bottomBound, waterlineY))
   }
 
@@ -298,15 +247,11 @@ struct MomentumTankView: View {
                 )
               )
           )
-          .overlay(
-            Circle()
-              .strokeBorder(Color.white.opacity(0.5), lineWidth: 1)
-          )
           .shadow(color: Color.black.opacity(0.18), radius: 4, x: 0, y: 2)
 
         Text(label)
           .font(LevelFont.extraBold(20))
-          .foregroundStyle(Color.vintageGrape)
+          .foregroundStyle(Color.white)
           .contentTransition(.numericText(value: displayedScore))
       }
       .frame(width: Self.buoyDiameter, height: Self.buoyDiameter)

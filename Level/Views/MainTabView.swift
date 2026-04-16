@@ -1,56 +1,83 @@
 import SwiftUI
 
-struct MainTabView: View {
-  init() {
-    let appearance = UITabBarAppearance()
-    appearance.configureWithOpaqueBackground()
-    appearance.backgroundColor = UIColor(Color.deepGrape)
-    appearance.shadowColor = .clear
+enum Tab: Int, CaseIterable {
+  case home, stats, schedule, social, settings
 
-    UITabBar.appearance().standardAppearance = appearance
-    UITabBar.appearance().scrollEdgeAppearance = appearance
+  var icon: String {
+    switch self {
+    case .home: return "house.fill"
+    case .stats: return "chart.bar.fill"
+    case .schedule: return "calendar"
+    case .social: return "person.2.fill"
+    case .settings: return "gearshape.fill"
+    }
+  }
+
+  var label: String {
+    switch self {
+    case .home: return "Home"
+    case .stats: return "Stats"
+    case .schedule: return "Schedule"
+    case .social: return "Social"
+    case .settings: return "Settings"
+    }
+  }
+}
+
+struct MainTabView: View {
+  @State private var selectedTab: Tab = .home
+
+  init() {
+    UITabBar.appearance().isHidden = true
   }
 
   var body: some View {
-    TabView {
-      HomeView()
-        .tabItem {
-          Image(systemName: "house.fill")
-          Text("Home")
-        }
-        .tag(0)
+    ZStack(alignment: .bottom) {
+      TabView(selection: $selectedTab) {
+        HomeView()
+          .tag(Tab.home)
+        StatsView()
+          .tag(Tab.stats)
+        ScheduleView()
+          .tag(Tab.schedule)
+        SocialView()
+          .tag(Tab.social)
+        SettingsView()
+          .tag(Tab.settings)
+      }
 
-      StatsView()
-        .tabItem {
-          Image(systemName: "chart.bar.fill")
-          Text("Stats")
-        }
-        .tag(1)
-
-      ScheduleView()
-        .tabItem {
-          Image(systemName: "calendar")
-          Text("Schedule")
-        }
-        .tag(2)
-
-      SocialView()
-        .tabItem {
-          Image(systemName: "person.2.fill")
-          Text("Social")
-        }
-        .tag(3)
-
-      SettingsView()
-        .tabItem {
-          Image(systemName: "gearshape.fill")
-          Text("Settings")
-        }
-        .tag(4)
+      pillTabBar
     }
-    .tint(Color.cream)
-    .onAppear {
-      UITabBar.appearance().unselectedItemTintColor = UIColor(Color.mutedGrape)
+  }
+
+  private var pillTabBar: some View {
+    HStack(spacing: 0) {
+      ForEach(Tab.allCases, id: \.self) { tab in
+        Button {
+          selectedTab = tab
+        } label: {
+          VStack(spacing: 4) {
+            Image(systemName: tab.icon)
+              .font(.system(size: 20, weight: .medium))
+            Text(tab.label)
+              .font(LevelFont.medium(10))
+          }
+          .foregroundStyle(tab == selectedTab ? Color.teaGreen : Color.vintageGrape)
+          .frame(maxWidth: .infinity)
+          .padding(.vertical, 10)
+          .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+      }
     }
+    .padding(.horizontal, 8)
+    .padding(.vertical, 4)
+    .background(
+      Capsule(style: .continuous)
+        .fill(Color.cream)
+        .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 2)
+    )
+    .padding(.horizontal, 20)
+    .padding(.bottom, 8)
   }
 }

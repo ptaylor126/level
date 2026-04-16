@@ -379,7 +379,6 @@ struct FocusSessionPicker: View {
   @State private var selectedMinutes = 60
   @State private var customMinutes = ""
   @State private var showCustom = false
-  @Environment(\.dismiss) private var dismiss
 
   private let presets = [30, 60, 120]
 
@@ -388,32 +387,33 @@ struct FocusSessionPicker: View {
       VStack(spacing: 8) {
         Text("Go Dark")
           .font(LevelFont.bold(24))
-          .foregroundStyle(Color.vintageGrape)
+          .foregroundStyle(Color.white)
         Text("Lock your apps and recharge your tank.")
           .font(.levelBody)
-          .foregroundStyle(Color.mutedGrape)
+          .foregroundStyle(Color.cream.opacity(0.7))
           .multilineTextAlignment(.center)
       }
       .padding(.top, 24)
 
       VStack(spacing: 12) {
         ForEach(presets, id: \.self) { minutes in
+          let isSelected = selectedMinutes == minutes && !showCustom
           Button(action: { selectedMinutes = minutes; showCustom = false }) {
             HStack {
               Text(formatPreset(minutes))
                 .font(LevelFont.medium(17))
-                .foregroundStyle(Color.vintageGrape)
+                .foregroundStyle(isSelected ? Color.vintageGrape : Color.cream)
               Spacer()
-              if selectedMinutes == minutes && !showCustom {
+              if isSelected {
                 Image(systemName: "checkmark.circle.fill")
-                  .foregroundStyle(Color.teaGreen)
+                  .foregroundStyle(Color.vintageGrape)
               }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 14)
             .background(
               RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(selectedMinutes == minutes && !showCustom ? Color.teaGreen.opacity(0.15) : Color.cream)
+                .fill(isSelected ? Color.teaGreen : Color.black.opacity(0.15))
             )
           }
           .buttonStyle(.plain)
@@ -429,23 +429,23 @@ struct FocusSessionPicker: View {
                 .frame(width: 80)
               Text("minutes")
                 .font(LevelFont.medium(17))
-                .foregroundStyle(Color.mutedGrape)
+                .foregroundStyle(Color.vintageGrape.opacity(0.7))
             } else {
               Text("Custom")
                 .font(LevelFont.medium(17))
-                .foregroundStyle(Color.vintageGrape)
+                .foregroundStyle(Color.cream)
             }
             Spacer()
             if showCustom {
               Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(Color.teaGreen)
+                .foregroundStyle(Color.vintageGrape)
             }
           }
           .padding(.horizontal, 20)
           .padding(.vertical, 14)
           .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-              .fill(showCustom ? Color.teaGreen.opacity(0.15) : Color.cream)
+              .fill(showCustom ? Color.teaGreen : Color.black.opacity(0.15))
           )
         }
         .buttonStyle(.plain)
@@ -460,15 +460,17 @@ struct FocusSessionPicker: View {
           .font(LevelFont.bold(17))
           .foregroundStyle(Color.vintageGrape)
           .frame(maxWidth: .infinity)
-          .padding(.vertical, 16)
+          .padding(.vertical, 20)
           .background(Color.teaGreen)
           .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+          .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
       }
       .buttonStyle(.plain)
       .padding(.horizontal, 20)
 
       Spacer()
     }
+    .background(Color.vintageGrape)
   }
 
   private func formatPreset(_ minutes: Int) -> String {
